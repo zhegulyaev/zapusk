@@ -1,1553 +1,1285 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кирилл Достаёт Ваню!</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --blue: #4FACFE;
-            --orange: #FF9F43;
-            --red: #FF6B6B;
-            --green: #26DE81;
-            --yellow: #FECA57;
-            --purple: #A29BFE;
-            --pink: #FD79A8;
-            --dark: #2D3436;
-            --bg: #E8F4FD;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: var(--bg);
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-            user-select: none;
-        }
-
-        /* ===== LOADING SCREEN ===== */
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        #loading-screen h1 {
-            font-size: 48px;
-            color: white;
-            font-weight: 900;
-            text-shadow: 0 4px 0 rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-            animation: bounce 1s infinite ease-in-out;
-        }
-
-        #loading-screen p {
-            color: rgba(255,255,255,0.8);
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .loading-bar-wrap {
-            width: 300px;
-            height: 20px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            margin-top: 30px;
-            overflow: hidden;
-            border: 3px solid rgba(255,255,255,0.4);
-        }
-
-        .loading-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--yellow), var(--orange));
-            border-radius: 20px;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        /* ===== MAIN MENU ===== */
-        #main-menu {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 50%, #90EE90 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            display: none;
-        }
-
-        .menu-title {
-            font-size: 56px;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 0 40px rgba(255,200,0,0.5);
-            text-align: center;
-            margin-bottom: 10px;
-            animation: titleFloat 3s infinite ease-in-out;
-        }
-
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .menu-subtitle {
-            font-size: 20px;
-            color: rgba(255,255,255,0.9);
-            font-weight: 700;
-            margin-bottom: 50px;
-            text-shadow: 0 2px 0 rgba(0,0,0,0.1);
-        }
-
-        .characters-preview {
-            display: flex;
-            gap: 60px;
-            margin-bottom: 50px;
-            align-items: flex-end;
-        }
-
-        .char-preview {
-            text-align: center;
-            animation: previewBounce 2s infinite ease-in-out;
-        }
-
-        .char-preview:last-child { animation-delay: 0.5s; }
-
-        @keyframes previewBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .char-preview-sprite {
-            font-size: 90px;
-            display: block;
-            filter: drop-shadow(0 8px 0 rgba(0,0,0,0.15));
-        }
-
-        .char-preview-name {
-            font-size: 22px;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 3px 0 rgba(0,0,0,0.2);
-            margin-top: 8px;
-        }
-
-        .char-preview-role {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            font-weight: 700;
-        }
-
-        .vs-badge {
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--yellow);
-            text-shadow: 0 4px 0 rgba(0,0,0,0.2);
-            align-self: center;
-        }
-
-        .menu-btn {
-            padding: 20px 60px;
-            font-size: 24px;
-            font-weight: 900;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            transition: all 0.2s ease;
-            border-bottom: 6px solid rgba(0,0,0,0.2);
-            margin: 8px;
-        }
-
-        .menu-btn:hover { transform: translateY(-3px); border-bottom-width: 9px; }
-        .menu-btn:active { transform: translateY(3px); border-bottom-width: 3px; }
-
-        .btn-start { background: linear-gradient(135deg, var(--green), #1DD1A1); }
-        .btn-levels { background: linear-gradient(135deg, var(--blue), #3742fa); }
-
-        /* ===== LEVEL SELECT ===== */
-        #level-select {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(180deg, #2D1B69, #6C5CE7);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        .level-select-title {
-            font-size: 40px;
-            font-weight: 900;
-            color: var(--yellow);
-            text-shadow: 0 4px 0 rgba(0,0,0,0.3);
-            margin-bottom: 40px;
-        }
-
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-
-        .level-btn {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
-            border: 4px solid rgba(255,255,255,0.2);
-            border-bottom-width: 6px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .level-btn:hover {
-            transform: translateY(-4px) scale(1.05);
-            background: rgba(255,255,255,0.2);
-            border-color: var(--yellow);
-        }
-
-        .level-btn.locked {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .level-btn.locked:hover { transform: none; }
-
-        .level-btn .level-num { font-size: 28px; }
-        .level-btn .level-name { font-size: 11px; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.2; }
-
-        /* ===== GAME SCREEN ===== */
-        #game-screen {
-            position: fixed;
-            inset: 0;
-            display: none;
-        }
-
-        /* Sky & Ground */
-        .sky {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, #87CEEB 0%, #B8E6F5 60%, #90EE90 60%, #228B22 100%);
-        }
-
-        /* Sun */
-        .sun {
-            position: absolute;
-            top: 30px;
-            right: 80px;
-            width: 80px;
-            height: 80px;
-            background: var(--yellow);
-            border-radius: 50%;
-            box-shadow: 0 0 40px rgba(254, 202, 87, 0.6);
-            animation: sunPulse 3s infinite ease-in-out;
-        }
-
-        @keyframes sunPulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(254,202,87,0.6); transform: scale(1); }
-            50% { box-shadow: 0 0 70px rgba(254,202,87,0.9); transform: scale(1.05); }
-        }
-
-        /* Clouds in game */
-        .game-cloud {
-            position: absolute;
-            background: white;
-            border-radius: 50px;
-            opacity: 0.85;
-        }
-        .game-cloud::before, .game-cloud::after {
-            content: '';
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-
-        /* Houses / Apartment */
-        .building {
-            position: absolute;
-            bottom: 40%;
-        }
-
-        .apartment {
-            width: 300px;
-            height: 280px;
-            background: linear-gradient(180deg, #E8D5B7, #D4B896);
-            border: 4px solid #C4A87A;
-            border-radius: 8px 8px 0 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .apartment-windows {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            padding: 20px;
-            margin-top: 10px;
-        }
-
-        .window {
-            height: 60px;
-            background: linear-gradient(135deg, #87CEEB, #5BA4CF);
-            border-radius: 6px;
-            border: 3px solid #8B7355;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .window::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%;
-            width: 3px;
-            height: 100%;
-            background: rgba(139,115,85,0.5);
-        }
-
-        .window.lit { background: linear-gradient(135deg, #FECA57, #F39C12); }
-        .window.vanya-window { background: linear-gradient(135deg, #FF6B9D, #e84393); }
-
-        .apartment-door {
-            width: 60px;
-            height: 80px;
-            background: linear-gradient(180deg, #8B6914, #6B4F10);
-            border: 3px solid #5A3D0A;
-            border-radius: 6px 6px 0 0;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .apartment-roof {
-            width: 320px;
-            height: 60px;
-            background: linear-gradient(180deg, #CC4444, #AA2222);
-            clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
-            position: absolute;
-            top: -55px;
-            left: -10px;
-        }
-
-        /* ===== HUD ===== */
-        #hud {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 20px;
-            z-index: 50;
-        }
-
-        .hud-box {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 14px;
-            padding: 8px 16px;
-            color: white;
-            font-weight: 800;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .patience-bar-wrap {
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .patience-bar {
-            height: 18px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.3);
-            margin-top: 4px;
-        }
-
-        .patience-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--green), #1DD1A1);
-            border-radius: 10px;
-            transition: width 0.5s ease, background 0.5s ease;
-            width: 100%;
-        }
-
-        .patience-fill.low { background: linear-gradient(90deg, var(--red), #EE5A24); }
-        .patience-fill.med { background: linear-gradient(90deg, var(--orange), #F39C12); }
-
-        .level-badge {
-            background: linear-gradient(135deg, var(--yellow), var(--orange));
-            border-color: var(--orange);
-        }
-
-        .score-badge {
-            background: linear-gradient(135deg, var(--purple), #6C5CE7);
-        }
-
-        /* ===== CHARACTERS ON SCREEN ===== */
-        #characters-area {
-            position: absolute;
-            bottom: 40%;
-            left: 0;
-            right: 0;
-            height: 200px;
-            z-index: 20;
-        }
-
-        .character {
-            position: absolute;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: left 0.4s ease, bottom 0.3s ease;
-        }
-
-        .char-sprite {
-            font-size: 72px;
-            filter: drop-shadow(0 6px 0 rgba(0,0,0,0.15));
-            transition: transform 0.3s ease;
-            line-height: 1;
-        }
-
-        .char-name-tag {
-            background: white;
-            border-radius: 10px;
-            padding: 4px 12px;
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--dark);
-            margin-top: 6px;
-            border: 3px solid #EEE;
-            border-bottom-width: 4px;
-            white-space: nowrap;
-        }
-
-        .char-name-tag.kirill { border-color: var(--orange); color: #E55039; }
-        .char-name-tag.vanya { border-color: var(--blue); color: #2980B9; }
-
-        /* Speech bubble */
-        .speech-bubble {
-            position: absolute;
-            bottom: 110%;
-            background: white;
-            border-radius: 18px;
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--dark);
-            min-width: 140px;
-            max-width: 220px;
-            text-align: center;
-            border: 3px solid #EEE;
-            border-bottom-width: 5px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            line-height: 1.4;
-            animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 30;
-        }
-
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -14px;
-            left: 24px;
-            border: 10px solid transparent;
-            border-top-color: #EEE;
-        }
-
-        .speech-bubble::before {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 25px;
-            border: 9px solid transparent;
-            border-top-color: white;
-            z-index: 1;
-        }
-
-        .speech-bubble.kirill-bubble { border-color: var(--orange); background: #FFF8F0; }
-        .speech-bubble.kirill-bubble::after { border-top-color: var(--orange); }
-        .speech-bubble.kirill-bubble::before { border-top-color: #FFF8F0; }
-
-        .speech-bubble.vanya-bubble { border-color: var(--blue); background: #F0F8FF; right: 0; left: auto; }
-        .speech-bubble.vanya-bubble::after { border-top-color: var(--blue); right: 24px; left: auto; }
-        .speech-bubble.vanya-bubble::before { border-top-color: #F0F8FF; right: 25px; left: auto; }
-
-        @keyframes bubblePop {
-            from { opacity: 0; transform: scale(0.5) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* Emotion popup */
-        .emotion-popup {
-            position: absolute;
-            font-size: 40px;
-            animation: emotionFly 1.5s ease forwards;
-            pointer-events: none;
-            z-index: 40;
-        }
-
-        @keyframes emotionFly {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            60% { opacity: 1; transform: translateY(-60px) scale(1.3); }
-            100% { opacity: 0; transform: translateY(-100px) scale(0.8); }
-        }
-
-        /* ===== ACTION PANEL ===== */
-        #action-panel {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 38%;
-            background: linear-gradient(180deg, rgba(45,52,54,0.95), rgba(30,30,30,0.98));
-            border-top: 4px solid var(--yellow);
-            z-index: 30;
-            padding: 16px 20px;
-            overflow: hidden;
-        }
-
-        .panel-top {
-            display: flex;
-            gap: 12px;
-            height: 100%;
-        }
-
-        /* Situation box */
-        #situation-box {
-            flex: 1.2;
-            background: rgba(255,255,255,0.05);
-            border: 3px solid rgba(255,255,255,0.1);
-            border-radius: 18px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow: hidden;
-        }
-
-        .situation-header {
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--yellow);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #situation-text {
-            font-size: 14px;
-            color: rgba(255,255,255,0.85);
-            line-height: 1.5;
-            font-weight: 600;
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        #situation-text::-webkit-scrollbar { width: 4px; }
-        #situation-text::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 2px; }
-        #situation-text::-webkit-scrollbar-thumb { background: var(--yellow); border-radius: 2px; }
-
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 8px;
-            padding: 4px 10px;
-            font-size: 11px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .ai-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: aiPulse 1s infinite;
-        }
-
-        @keyframes aiPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.5); }
-        }
-
-        /* Actions box */
-        #actions-box {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .actions-header {
-            font-size: 13px;
-            font-weight: 800;
-            color: rgba(255,255,255,0.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .actions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .action-btn {
-            padding: 10px 8px;
-            border-radius: 14px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-bottom-width: 5px;
-            background: rgba(255,255,255,0.08);
-            color: white;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            line-height: 1.2;
-            text-align: center;
-        }
-
-        .action-btn .action-emoji { font-size: 24px; }
-        .action-btn .action-text { font-size: 12px; }
-
-        .action-btn:hover {
-            background: rgba(255,255,255,0.18);
-            transform: translateY(-3px);
-            border-color: var(--yellow);
-        }
-
-        .action-btn:active {
-            transform: translateY(2px);
-            border-bottom-width: 2px;
-        }
-
-        .action-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* Vanya response box */
-        #vanya-box {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 3px solid rgba(79,172,254,0.3);
-            border-radius: 18px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow: hidden;
-        }
-
-        .vanya-header {
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #vanya-response {
-            font-size: 14px;
-            color: rgba(255,255,255,0.8);
-            line-height: 1.5;
-            font-weight: 600;
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        #vanya-response::-webkit-scrollbar { width: 4px; }
-        #vanya-response::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
-
-        .typing-dots {
-            display: inline-flex;
-            gap: 4px;
-            align-items: center;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--blue);
-            border-radius: 50%;
-            animation: typingBounce 1.2s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingBounce {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(-6px); opacity: 1; }
-        }
-
-        /* ===== VICTORY / GAME OVER ===== */
-        .overlay-screen {
-            position: fixed;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-        }
-
-        #victory-screen {
-            background: linear-gradient(135deg, rgba(26,213,129,0.95), rgba(29,209,161,0.95));
-            backdrop-filter: blur(10px);
-        }
-
-        #gameover-screen {
-            background: linear-gradient(135deg, rgba(231,76,60,0.95), rgba(192,57,43,0.95));
-            backdrop-filter: blur(10px);
-        }
-
-        .overlay-emoji {
-            font-size: 100px;
-            animation: bounce 1s infinite ease-in-out;
-            filter: drop-shadow(0 8px 0 rgba(0,0,0,0.2));
-            margin-bottom: 16px;
-        }
-
-        .overlay-title {
-            font-size: 52px;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 5px 0 rgba(0,0,0,0.2);
-            margin-bottom: 12px;
-        }
-
-        .overlay-subtitle {
-            font-size: 20px;
-            color: rgba(255,255,255,0.85);
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-align: center;
-            max-width: 500px;
-            line-height: 1.4;
-        }
-
-        #vanya-reaction-text {
-            font-size: 16px;
-            color: rgba(255,255,255,0.7);
-            font-weight: 600;
-            max-width: 500px;
-            text-align: center;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .stars-row {
-            display: flex;
-            gap: 12px;
-            margin: 16px 0 30px;
-        }
-
-        .star-icon {
-            font-size: 48px;
-            animation: starPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0;
-        }
-
-        @keyframes starPop {
-            to { opacity: 1; transform: scale(1) rotate(10deg); }
-        }
-
-        .overlay-btns {
-            display: flex;
-            gap: 16px;
-        }
-
-        /* ===== PARTICLES ===== */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 150;
-            animation: particleFly 1.5s ease forwards;
-            font-size: 24px;
-        }
-
-        @keyframes particleFly {
-            0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.3); }
-        }
-
-        /* ===== KIRILL ANIMATION STATES ===== */
-        .kirill-run { animation: kirillRun 0.4s infinite alternate ease-in-out; }
-        @keyframes kirillRun {
-            from { transform: rotate(-5deg) scaleX(1); }
-            to { transform: rotate(5deg) scaleX(1); }
-        }
-
-        .kirill-prank { animation: kirillPrank 0.5s infinite ease-in-out; }
-        @keyframes kirillPrank {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.1); }
-        }
-
-        .vanya-angry { animation: vanyaAngry 0.3s infinite ease-in-out; }
-        @keyframes vanyaAngry {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(3deg); }
-        }
-
-        .vanya-shocked { animation: vanyaShocked 0.5s ease; }
-        @keyframes vanyaShocked {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3) rotate(-5deg); }
-            100% { transform: scale(1); }
-        }
-
-        /* Screen shake */
-        @keyframes screenShake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(8px); }
-            60% { transform: translateX(-5px); }
-            80% { transform: translateX(5px); }
-        }
-
-        .shake { animation: screenShake 0.4s ease; }
-
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Иван и Альтушка — Эпическое Приключение</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--purple:#7C4DFF;--pink:#FF6B9D;--dark:#0D0011;--darker:#050008;
+--cyan:#00FFF5;--yellow:#FFE600;--green:#39FF14;--red:#FF073A;
+--bg:#0D0011;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);overflow:hidden;height:100vh;width:100vw;user-select:none;}
+
+/* ======= CANVAS LAYER ======= */
+#bg-canvas{position:fixed;inset:0;z-index:0;}
+
+/* ======= LOADING ======= */
+#loading{
+  position:fixed;inset:0;z-index:9999;
+  background:radial-gradient(ellipse at center,#1a0033 0%,#000 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  transition:opacity .8s ease;
+}
+#loading h1{font-size:52px;font-weight:900;color:var(--cyan);
+  text-shadow:0 0 30px var(--cyan),0 0 60px var(--purple);
+  animation:glow 2s infinite ease-in-out;letter-spacing:2px;text-align:center;}
+#loading .sub{color:var(--pink);font-size:20px;font-weight:700;opacity:.8;}
+.load-bar-wrap{width:400px;max-width:90vw;height:24px;background:rgba(255,255,255,.1);
+  border-radius:20px;border:2px solid rgba(255,255,255,.2);overflow:hidden;}
+.load-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink),var(--cyan));
+  border-radius:20px;width:0%;transition:width .1s;animation:loadShimmer 1.5s infinite;}
+@keyframes loadShimmer{
+  0%{filter:brightness(1)}50%{filter:brightness(1.4)}100%{filter:brightness(1)}}
+@keyframes glow{
+  0%,100%{text-shadow:0 0 30px var(--cyan),0 0 60px var(--purple);}
+  50%{text-shadow:0 0 60px var(--cyan),0 0 100px var(--purple),0 0 140px var(--pink);}
+}
+.load-tip{color:rgba(255,255,255,.5);font-size:14px;font-weight:600;font-style:italic;}
+
+/* ======= SCREEN BASE ======= */
+.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;}
+
+/* ======= MAIN MENU ======= */
+#menu{background:transparent;}
+.menu-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(124,77,255,.3) 0%,transparent 70%);}
+.menu-title{position:relative;z-index:2;text-align:center;margin-bottom:10px;}
+.menu-title h1{font-size:58px;font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(124,77,255,.8));
+  animation:titlePulse 3s infinite ease-in-out;}
+.menu-title p{color:rgba(255,255,255,.7);font-size:18px;font-weight:700;margin-top:8px;}
+@keyframes titlePulse{
+  0%,100%{filter:drop-shadow(0 0 20px rgba(124,77,255,.8));}
+  50%{filter:drop-shadow(0 0 40px rgba(0,255,245,.9));}
+}
+.menu-ivan{font-size:110px;animation:ivanFloat 3s infinite ease-in-out;
+  filter:drop-shadow(0 10px 30px rgba(124,77,255,.6));margin:20px 0;position:relative;z-index:2;}
+@keyframes ivanFloat{
+  0%,100%{transform:translateY(0) rotate(-3deg);}
+  50%{transform:translateY(-20px) rotate(3deg);}
+}
+.menu-btns{display:flex;flex-direction:column;gap:14px;position:relative;z-index:2;align-items:center;}
+.gbtn{
+  padding:16px 52px;font-size:20px;font-weight:900;font-family:'Nunito',sans-serif;
+  border:none;border-radius:16px;cursor:pointer;transition:all .2s ease;
+  position:relative;overflow:hidden;letter-spacing:.5px;
+}
+.gbtn::before{
+  content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent);
+  border-radius:inherit;pointer-events:none;
+}
+.gbtn:hover{transform:translateY(-4px) scale(1.03);}
+.gbtn:active{transform:translateY(2px) scale(.98);}
+.gbtn-play{background:linear-gradient(135deg,var(--purple),var(--pink));color:white;
+  box-shadow:0 8px 0 #4a1a8a,0 12px 30px rgba(124,77,255,.5);}
+.gbtn-play:hover{box-shadow:0 12px 0 #4a1a8a,0 20px 40px rgba(124,77,255,.7);}
+.gbtn-play:active{box-shadow:0 2px 0 #4a1a8a;}
+.gbtn-guide{background:linear-gradient(135deg,#1a1a2e,#2d1b69);color:var(--cyan);
+  border:2px solid rgba(0,255,245,.3);box-shadow:0 6px 0 #0a0a1a,0 0 20px rgba(0,255,245,.2);}
+
+/* ======= TUTORIAL ======= */
+#tutorial{background:radial-gradient(ellipse at center,rgba(20,0,40,0.95),rgba(0,0,0,.98));}
+.tut-box{
+  max-width:700px;width:90%;background:rgba(255,255,255,.04);
+  border:2px solid rgba(124,77,255,.4);border-radius:24px;padding:36px;
+  backdrop-filter:blur(20px);
+}
+.tut-title{font-size:32px;font-weight:900;color:var(--cyan);margin-bottom:20px;text-align:center;
+  text-shadow:0 0 20px var(--cyan);}
+.tut-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.tut-step{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;
+  background:rgba(255,255,255,.05);border-radius:14px;border:1px solid rgba(255,255,255,.08);}
+.tut-icon{font-size:32px;min-width:40px;text-align:center;}
+.tut-text h4{color:white;font-size:16px;font-weight:800;margin-bottom:4px;}
+.tut-text p{color:rgba(255,255,255,.6);font-size:14px;font-weight:600;line-height:1.4;}
+
+/* ======= GAME SCREEN ======= */
+#game{position:fixed;inset:0;z-index:10;display:none;overflow:hidden;}
+
+/* ===== CITY LAYERS (PARALLAX) ===== */
+#city-wrap{position:absolute;inset:0;overflow:hidden;}
+.city-layer{position:absolute;bottom:0;left:0;width:200%;height:100%;background-repeat:repeat-x;background-position:bottom;}
+#layer-bg{background:linear-gradient(180deg,#0D0011 0%,#1a0033 40%,#0D0011 100%);width:100%;height:100%;}
+#layer-far{
+  height:100%;
+  background:
+    radial-gradient(ellipse 3px 80px at 20% 50%,rgba(124,77,255,.15),transparent),
+    radial-gradient(ellipse 3px 60px at 35% 60%,rgba(0,255,245,.1),transparent),
+    radial-gradient(ellipse 3px 70px at 55% 45%,rgba(255,107,157,.1),transparent),
+    radial-gradient(ellipse 3px 90px at 75% 55%,rgba(124,77,255,.12),transparent),
+    radial-gradient(ellipse 3px 65px at 90% 50%,rgba(0,255,245,.08),transparent);
+  animation:farScroll 40s linear infinite;
+  width:300%;left:-100%;
+}
+@keyframes farScroll{from{transform:translateX(0)}to{transform:translateX(33.33%)}}
+
+/* Ground */
+#ground{position:absolute;bottom:0;left:0;right:0;height:160px;
+  background:linear-gradient(180deg,#1a0030 0%,#120025 30%,#0a0018 100%);
+  border-top:3px solid rgba(124,77,255,.4);
+  box-shadow:0 -20px 60px rgba(124,77,255,.2);}
+.ground-line{position:absolute;top:0;left:0;right:0;height:100%;
+  background:repeating-linear-gradient(90deg,
+    rgba(124,77,255,.06) 0px,rgba(124,77,255,.06) 1px,
+    transparent 1px,transparent 80px);}
+.ground-glow{position:absolute;top:-40px;left:0;right:0;height:40px;
+  background:linear-gradient(180deg,transparent,rgba(124,77,255,.15));}
+
+/* Neon path */
+.neon-path{position:absolute;bottom:158px;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--pink),var(--purple),transparent);
+  animation:pathFlow 3s linear infinite;box-shadow:0 0 15px var(--purple);}
+@keyframes pathFlow{
+  0%{background-position:0%}100%{background-position:200%}
+}
+
+/* ===== BUILDINGS ===== */
+#buildings{position:absolute;bottom:160px;left:0;width:300%;display:flex;align-items:flex-end;gap:0;
+  animation:buildingScroll 30s linear infinite;}
+@keyframes buildingScroll{from{transform:translateX(0)}to{transform:translateX(-33.33%)}}
+.building{display:inline-block;position:relative;background:linear-gradient(180deg,#1a0030,#0d0020);
+  border:1px solid rgba(124,77,255,.2);flex-shrink:0;}
+.building-win{position:absolute;background:rgba(255,230,0,.15);border:1px solid rgba(255,230,0,.3);border-radius:2px;}
+.building-win.lit{background:rgba(255,230,0,.4);box-shadow:0 0 8px rgba(255,230,0,.3);}
+.building-win.pink-lit{background:rgba(255,107,157,.4);box-shadow:0 0 8px rgba(255,107,157,.5);}
+.building-sign{position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  font-size:10px;font-weight:900;color:var(--cyan);white-space:nowrap;letter-spacing:1px;
+  text-shadow:0 0 8px var(--cyan);animation:signBlink 2s infinite;}
+@keyframes signBlink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ===== IVAN CHARACTER ===== */
+#ivan-wrap{position:absolute;bottom:160px;left:120px;z-index:30;transition:bottom .1s;}
+#ivan{font-size:72px;display:block;filter:drop-shadow(0 0 20px rgba(124,77,255,.8));
+  transition:transform .1s;line-height:1;}
+#ivan.run{animation:ivanRun .3s infinite alternate;}
+@keyframes ivanRun{from{transform:rotate(-5deg) scaleX(1);}to{transform:rotate(5deg) scaleX(1);}}
+#ivan.jump{animation:ivanJump .5s ease;}
+@keyframes ivanJump{0%{transform:translateY(0);}40%{transform:translateY(-80px);}100%{transform:translateY(0);}}
+#ivan.dance{animation:ivanDance .4s infinite;}
+@keyframes ivanDance{0%{transform:rotate(-10deg);}50%{transform:rotate(10deg);}100%{transform:rotate(-10deg);}}
+
+/* ===== ENTITIES ===== */
+.entity{position:absolute;bottom:160px;font-size:60px;z-index:20;
+  filter:drop-shadow(0 0 10px rgba(255,107,157,.6));
+  animation:entityFloat 2s infinite ease-in-out;}
+@keyframes entityFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+/* ===== HUD ===== */
+#hud{position:absolute;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;gap:12px;padding:12px 20px;
+  background:linear-gradient(180deg,rgba(0,0,0,.8),transparent);}
+.hud-pill{
+  display:flex;align-items:center;gap:8px;padding:8px 16px;
+  background:rgba(255,255,255,.07);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.12);border-radius:50px;
+  color:white;font-size:14px;font-weight:800;
+}
+.hud-pill.hearts{border-color:rgba(255,7,58,.4);}
+.hud-pill.score-pill{border-color:rgba(255,230,0,.3);}
+.hud-pill.speed-pill{border-color:rgba(0,255,245,.3);}
+.heart-icon{font-size:18px;filter:drop-shadow(0 0 6px var(--red));}
+.score-num{color:var(--yellow);font-size:16px;text-shadow:0 0 10px var(--yellow);}
+.combo-badge{
+  display:none;padding:6px 16px;background:linear-gradient(135deg,var(--yellow),var(--orange));
+  border-radius:50px;color:white;font-weight:900;font-size:14px;
+  animation:comboPulse .5s infinite alternate;
+}
+@keyframes comboPulse{from{transform:scale(1);}to{transform:scale(1.1);}  }
+.distance-bar-wrap{flex:1;max-width:250px;}
+.dist-label{font-size:11px;color:rgba(255,255,255,.5);font-weight:700;margin-bottom:4px;display:flex;justify-content:space-between;}
+.dist-bar{height:10px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.15);}
+.dist-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:10px;
+  transition:width .3s ease;box-shadow:0 0 8px var(--purple);}
+
+/* ===== MOBILE CONTROLS ===== */
+#controls{position:absolute;bottom:0;left:0;right:0;height:160px;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;padding:20px 30px;}
+.ctrl-btn{
+  width:70px;height:70px;border-radius:50%;border:3px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);backdrop-filter:blur(10px);
+  font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .1s;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.ctrl-btn:active{background:rgba(255,255,255,.25);transform:scale(.9);}
+.ctrl-left-group{display:flex;gap:16px;}
+.ctrl-jump{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  border:3px solid rgba(255,255,255,.3);font-size:36px;
+  box-shadow:0 6px 0 #4a1a8a,0 0 30px rgba(124,77,255,.5);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .1s;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.ctrl-jump:active{transform:scale(.92);box-shadow:0 2px 0 #4a1a8a;}
+
+/* ===== PAUSE MENU ===== */
+#pause-menu{
+  position:absolute;inset:0;z-index:80;display:none;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(20px);
+  flex-direction:column;align-items:center;justify-content:center;gap:20px;
+}
+.pause-title{font-size:48px;font-weight:900;color:var(--cyan);
+  text-shadow:0 0 30px var(--cyan);}
+
+/* ===== AI CHAT PANEL ===== */
+#ai-panel{
+  position:absolute;right:0;top:80px;bottom:170px;width:300px;z-index:50;
+  display:flex;flex-direction:column;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(20px);
+  border-left:2px solid rgba(124,77,255,.3);
+  transform:translateX(100%);transition:transform .4s ease;
+}
+#ai-panel.open{transform:translateX(0);}
+.ai-panel-header{padding:14px 16px;background:rgba(124,77,255,.15);
+  border-bottom:1px solid rgba(124,77,255,.2);display:flex;align-items:center;gap:10px;}
+.ai-avatar{font-size:32px;animation:aiAvatarPulse 2s infinite;}
+@keyframes aiAvatarPulse{0%,100%{filter:drop-shadow(0 0 5px var(--pink));}50%{filter:drop-shadow(0 0 15px var(--pink));}}
+.ai-header-text h3{color:var(--pink);font-size:15px;font-weight:900;}
+.ai-header-text p{color:rgba(255,255,255,.5);font-size:12px;font-weight:600;}
+.ai-dot{width:8px;height:8px;background:var(--green);border-radius:50%;margin-left:auto;
+  animation:aiDotPulse 1s infinite;}
+@keyframes aiDotPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
+#ai-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+#ai-messages::-webkit-scrollbar{width:3px;}
+#ai-messages::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px;}
+.ai-msg{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;font-weight:600;max-width:90%;}
+.ai-msg-ai{background:rgba(124,77,255,.2);border:1px solid rgba(124,77,255,.3);color:rgba(255,255,255,.9);align-self:flex-start;}
+.ai-msg-user{background:rgba(255,107,157,.2);border:1px solid rgba(255,107,157,.3);color:rgba(255,255,255,.9);align-self:flex-end;}
+.ai-typing{display:flex;gap:5px;padding:10px 14px;}
+.ai-typing span{width:8px;height:8px;background:var(--purple);border-radius:50%;animation:typBounce 1.2s infinite;}
+.ai-typing span:nth-child(2){animation-delay:.2s;}
+.ai-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typBounce{0%,100%{transform:translateY(0);opacity:.5;}50%{transform:translateY(-6px);opacity:1;}}
+.ai-input-row{padding:12px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.08);}
+#ai-input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;padding:8px 12px;color:white;font-size:13px;font-family:'Nunito',sans-serif;
+  font-weight:600;outline:none;}
+#ai-input:focus{border-color:var(--purple);}
+#ai-send{padding:8px 14px;background:linear-gradient(135deg,var(--purple),var(--pink));
+  border:none;border-radius:10px;color:white;font-size:16px;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .2s;}
+#ai-send:hover{transform:scale(1.05);}
+
+/* ===== AI PANEL TOGGLE ===== */
+#ai-toggle{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:51;
+  width:40px;height:80px;background:rgba(124,77,255,.4);backdrop-filter:blur(10px);
+  border:1px solid rgba(124,77,255,.4);border-right:none;border-radius:14px 0 0 14px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:20px;transition:all .3s;writing-mode:vertical-rl;color:white;font-weight:900;
+}
+#ai-toggle:hover{background:rgba(124,77,255,.6);}
+
+/* ===== EVENTS / ENCOUNTERS ===== */
+#encounter-panel{
+  position:absolute;bottom:170px;left:50%;transform:translateX(-50%) translateY(20px);
+  width:90%;max-width:600px;z-index:60;opacity:0;transition:all .4s ease;pointer-events:none;
+}
+#encounter-panel.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all;}
+.enc-card{
+  background:rgba(10,0,20,.9);backdrop-filter:blur(20px);border-radius:20px;
+  border:2px solid rgba(124,77,255,.5);overflow:hidden;
+}
+.enc-top{padding:16px 20px;display:flex;align-items:center;gap:16px;
+  background:linear-gradient(135deg,rgba(124,77,255,.15),rgba(255,107,157,.1));}
+.enc-char{font-size:64px;filter:drop-shadow(0 0 15px var(--pink));animation:encBounce 1s infinite ease-in-out;}
+@keyframes encBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.enc-info{flex:1;}
+.enc-name{font-size:20px;font-weight:900;color:var(--pink);text-shadow:0 0 10px var(--pink);}
+.enc-desc{font-size:13px;color:rgba(255,255,255,.7);font-weight:600;margin-top:4px;line-height:1.4;}
+.enc-vibe-bar{height:8px;background:rgba(255,255,255,.1);border-radius:10px;margin-top:8px;overflow:hidden;}
+.enc-vibe-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:10px;
+  transition:width .5s ease;}
+.enc-choices{display:flex;gap:8px;padding:12px;}
+.enc-choice{flex:1;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;color:white;font-size:13px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .2s;text-align:center;}
+.enc-choice:hover{background:rgba(124,77,255,.3);border-color:var(--purple);}
+.enc-choice.good:hover{background:rgba(0,255,245,.15);border-color:var(--cyan);}
+.enc-choice.bad:hover{background:rgba(255,7,58,.15);border-color:var(--red);}
+
+/* ===== FLOATING TEXTS ===== */
+.float-text{position:fixed;font-size:22px;font-weight:900;pointer-events:none;z-index:100;
+  animation:floatUp 1.5s ease forwards;white-space:nowrap;}
+@keyframes floatUp{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  60%{opacity:1;transform:translateY(-60px) scale(1.2);}
+  100%{opacity:0;transform:translateY(-100px) scale(.8);}
+}
+
+/* ===== VICTORY/OVER ===== */
+.end-screen{
+  position:fixed;inset:0;z-index:200;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+  backdrop-filter:blur(20px);
+}
+#win-screen{background:radial-gradient(ellipse at center,rgba(57,255,20,.15),rgba(0,0,0,.95));}
+#over-screen{background:radial-gradient(ellipse at center,rgba(255,7,58,.15),rgba(0,0,0,.95));}
+.end-emoji{font-size:100px;animation:endBounce 1s infinite ease-in-out;
+  filter:drop-shadow(0 0 30px rgba(255,230,0,.8));}
+@keyframes endBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-20px) scale(1.05);}}
+.end-title{font-size:52px;font-weight:900;text-align:center;line-height:1.1;}
+.win-title{background:linear-gradient(135deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.over-title{background:linear-gradient(135deg,var(--red),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.end-subtitle{font-size:20px;color:rgba(255,255,255,.8);font-weight:700;text-align:center;max-width:500px;line-height:1.4;}
+.end-ai-quote{
+  max-width:500px;padding:16px 20px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(124,77,255,.3);border-radius:16px;
+  color:rgba(255,255,255,.7);font-size:15px;font-weight:600;font-style:italic;
+  line-height:1.5;text-align:center;
+}
+.stats-row{display:flex;gap:20px;}
+.stat-box{text-align:center;padding:16px 24px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:14px;}
+.stat-val{font-size:36px;font-weight:900;color:var(--yellow);}
+.stat-label{font-size:13px;color:rgba(255,255,255,.5);font-weight:700;margin-top:4px;}
+.end-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+
+/* ===== POWER-UPS ===== */
+.powerup{position:absolute;z-index:25;font-size:40px;
+  animation:powerupFloat 1.5s infinite ease-in-out,powerupSpin 3s linear infinite;
+  filter:drop-shadow(0 0 15px var(--yellow));cursor:pointer;}
+@keyframes powerupFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+@keyframes powerupSpin{from{filter:drop-shadow(0 0 10px var(--yellow));}to{filter:drop-shadow(0 0 25px var(--cyan));}}
+
+/* ===== PARTICLES ===== */
+.particle{position:fixed;pointer-events:none;z-index:150;
+  animation:particleExplode var(--dur) ease forwards;font-size:var(--size);}
+@keyframes particleExplode{
+  0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.2);}
+}
+
+/* ===== MISC ===== */
+.neon-text{text-shadow:0 0 10px currentColor;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+</style>
 </head>
 <body>
 
-<!-- ============================= -->
-<!-- LOADING SCREEN -->
-<!-- ============================= -->
-<div id="loading-screen">
-    <h1>🎮 Загрузка...</h1>
-    <p>Кирилл готовит пакости!</p>
-    <div class="loading-bar-wrap">
-        <div class="loading-bar" id="loading-bar"></div>
-    </div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- ======= LOADING ======= -->
+<div id="loading">
+  <h1>💜 Иван и Альтушка</h1>
+  <p class="sub">Эпическое Ночное Приключение</p>
+  <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
+  <p class="load-tip" id="load-tip">Настраиваем неоновые огни...</p>
 </div>
 
-<!-- ============================= -->
-<!-- MAIN MENU -->
-<!-- ============================= -->
-<div id="main-menu">
-    <div class="menu-title">😈 Кирилл Достаёт Ваню! 😤</div>
-    <div class="menu-subtitle">Лучший симулятор соседа-вредителя</div>
-
-    <div class="characters-preview">
-        <div class="char-preview">
-            <span class="char-preview-sprite">😈</span>
-            <div class="char-preview-name">Кирилл</div>
-            <div class="char-preview-role">Мастер пакостей</div>
-        </div>
-        <div class="vs-badge">VS</div>
-        <div class="char-preview">
-            <span class="char-preview-sprite">😤</span>
-            <div class="char-preview-name">Ваня</div>
-            <div class="char-preview-role">Терпеливый сосед</div>
-        </div>
-    </div>
-
-    <button class="menu-btn btn-start" onclick="startGame(1)">▶ Начать игру</button>
-    <button class="menu-btn btn-levels" onclick="showLevelSelect()">🗺️ Выбор уровня</button>
+<!-- ======= MAIN MENU ======= -->
+<div class="screen" id="menu">
+  <div class="menu-bg"></div>
+  <div class="menu-title">
+    <h1>ИВАН<br>В ПОИСКАХ АЛЬТУШКИ</h1>
+    <p>✨ Ночной город полон загадочных встреч ✨</p>
+  </div>
+  <div class="menu-ivan" id="menu-ivan">🧔</div>
+  <div class="menu-btns">
+    <button class="gbtn gbtn-play" onclick="showScreen('tutorial')">▶ НАЧАТЬ ИГРУ</button>
+    <button class="gbtn gbtn-guide" onclick="showScreen('tutorial')">📖 КАК ИГРАТЬ</button>
+  </div>
+  <p style="color:rgba(255,255,255,.3);font-size:13px;font-weight:600;position:relative;z-index:2;margin-top:20px;">🎵 Включи звук для полного погружения</p>
 </div>
 
-<!-- ============================= -->
-<!-- LEVEL SELECT -->
-<!-- ============================= -->
-<div id="level-select" style="display:none;flex-direction:column;align-items:center;justify-content:center;">
-    <div class="level-select-title">🗺️ Выбери уровень пакости</div>
-    <div class="levels-grid" id="levels-grid"></div>
-    <button class="menu-btn" style="background:linear-gradient(135deg,#636e72,#2d3436);font-size:18px;padding:14px 40px;" onclick="showMenu()">← Назад</button>
+<!-- ======= TUTORIAL ======= -->
+<div class="screen" id="tutorial">
+  <div class="tut-box">
+    <div class="tut-title">📖 КАК ИГРАТЬ</div>
+    <div class="tut-steps">
+      <div class="tut-step">
+        <div class="tut-icon">🧔</div>
+        <div class="tut-text">
+          <h4>Управление Иваном</h4>
+          <p>← → — бежать, ↑ / Пробел — прыгать. На мобиле — кнопки снизу экрана</p>
+        </div>
+      </div>
+      <div class="tut-step">
+        <div class="tut-icon">💜</div>
+        <div class="tut-text">
+          <h4>Встречай альтушек</h4>
+          <p>Каждая девушка — уникальный персонаж с AI-диалогом. Выбирай ответы wisely!</p>
+        </div>
+      </div>
+      <div class="tut-step">
+        <div class="tut-icon">⚡</div>
+        <div class="tut-text">
+          <h4>Собирай бонусы</h4>
+          <p>💎 — очки, ⚡ — ускорение, 🛡️ — щит. Избегай 💀 и 🔥!</p>
+        </div>
+      </div>
+      <div class="tut-step">
+        <div class="tut-icon">🤖</div>
+        <div class="tut-text">
+          <h4>AI-подруга Луна</h4>
+          <p>Нажми 💬 справа — Луна даст советы и поговорит с тобой через Gemini AI!</p>
+        </div>
+      </div>
+    </div>
+    <button class="gbtn gbtn-play" style="width:100%;" onclick="startGame()">🚀 ПОЕХАЛИ!</button>
+  </div>
 </div>
 
-<!-- ============================= -->
-<!-- GAME SCREEN -->
-<!-- ============================= -->
-<div id="game-screen">
-    <!-- Background -->
-    <div class="sky">
-        <!-- Sun -->
-        <div class="sun"></div>
+<!-- ======= GAME ======= -->
+<div id="game">
+  <!-- City -->
+  <div id="city-wrap">
+    <div id="layer-bg"></div>
+    <div id="layer-far" class="city-layer"></div>
+    <div id="buildings"></div>
+    <div class="ground-glow"></div>
+    <div id="ground"><div class="ground-line"></div></div>
+    <div class="neon-path"></div>
+  </div>
 
-        <!-- Clouds -->
-        <div class="game-cloud" style="width:150px;height:50px;top:80px;left:100px;">
-            <span style="width:70px;height:60px;background:white;border-radius:50%;position:absolute;top:-35px;left:20px;display:block;"></span>
-            <span style="width:55px;height:50px;background:white;border-radius:50%;position:absolute;top:-28px;left:65px;display:block;"></span>
-        </div>
-        <div class="game-cloud" style="width:120px;height:40px;top:120px;left:600px;">
-            <span style="width:55px;height:48px;background:white;border-radius:50%;position:absolute;top:-28px;left:18px;display:block;"></span>
-            <span style="width:45px;height:40px;background:white;border-radius:50%;position:absolute;top:-22px;left:55px;display:block;"></span>
-        </div>
+  <!-- Ivan -->
+  <div id="ivan-wrap"><span id="ivan">🧔</span></div>
+
+  <!-- Entities container -->
+  <div id="entities"></div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="hud-pill hearts" id="hearts-hud">❤️❤️❤️</div>
+    <div class="hud-pill score-pill">⭐ <span class="score-num" id="score-num">0</span></div>
+    <div class="hud-pill speed-pill">⚡ <span id="speed-num">1x</span></div>
+    <div class="combo-badge" id="combo-badge">🔥 x<span id="combo-num">1</span> COMBO!</div>
+    <div class="distance-bar-wrap">
+      <div class="dist-label"><span>🎯 Прогресс</span><span id="dist-pct">0%</span></div>
+      <div class="dist-bar"><div class="dist-fill" id="dist-fill" style="width:0%"></div></div>
     </div>
+    <button onclick="togglePause()" style="margin-left:auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 16px;color:white;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;">⏸</button>
+  </div>
 
-    <!-- Building -->
-    <div class="building" style="left:50%;transform:translateX(-50%);">
-        <div style="position:relative;">
-            <div class="apartment-roof"></div>
-            <div class="apartment">
-                <div class="apartment-windows">
-                    <div class="window lit"></div>
-                    <div class="window vanya-window" id="vanya-window"></div>
-                    <div class="window"></div>
-                    <div class="window lit"></div>
-                    <div class="window"></div>
-                    <div class="window lit"></div>
-                </div>
-                <div class="apartment-door"></div>
-            </div>
+  <!-- Encounter panel -->
+  <div id="encounter-panel">
+    <div class="enc-card">
+      <div class="enc-top">
+        <div class="enc-char" id="enc-char">🧙</div>
+        <div class="enc-info">
+          <div class="enc-name" id="enc-name">???</div>
+          <div class="enc-desc" id="enc-desc">Загадочная встреча...</div>
+          <div class="enc-vibe-bar"><div class="enc-vibe-fill" id="enc-vibe" style="width:50%"></div></div>
         </div>
+      </div>
+      <div class="enc-choices" id="enc-choices"></div>
     </div>
+  </div>
 
-    <!-- HUD -->
-    <div id="hud">
-        <div class="hud-box level-badge">
-            <span>🎮</span>
-            <span id="hud-level">Уровень 1</span>
-        </div>
-        <div class="hud-box score-badge">
-            <span>⭐</span>
-            <span id="hud-score">0 очков</span>
-        </div>
-        <div class="hud-box patience-bar-wrap">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.8);">
-                <span>😊 Терпение Вани</span>
-                <span id="patience-pct">100%</span>
-            </div>
-            <div class="patience-bar">
-                <div class="patience-fill" id="patience-fill"></div>
-            </div>
-        </div>
-        <div class="hud-box">
-            <span>💢</span>
-            <span id="hud-pranks">Пакостей: 0</span>
-        </div>
-        <div class="hud-box" style="background:rgba(254,202,87,0.2);border-color:var(--yellow);">
-            <span>🎯</span>
-            <span id="hud-goal">Цель: доведи до <span style="color:var(--red);">0%</span></span>
-        </div>
+  <!-- Controls -->
+  <div id="controls">
+    <div class="ctrl-left-group">
+      <div class="ctrl-btn" id="btn-left" ontouchstart="keys.left=true" ontouchend="keys.left=false">←</div>
+      <div class="ctrl-btn" id="btn-right" ontouchstart="keys.right=true" ontouchend="keys.right=false">→</div>
     </div>
+    <div class="ctrl-jump" ontouchstart="doJump()">🚀</div>
+  </div>
 
-    <!-- Characters -->
-    <div id="characters-area">
-        <div class="character" id="kirill-char" style="left:15%;">
-            <div id="kirill-bubble-slot"></div>
-            <span class="char-sprite" id="kirill-sprite">😈</span>
-            <div class="char-name-tag kirill">😈 Кирилл</div>
-        </div>
-        <div class="character" id="vanya-char" style="right:15%;">
-            <div id="vanya-bubble-slot"></div>
-            <span class="char-sprite" id="vanya-sprite">😐</span>
-            <div class="char-name-tag vanya">😤 Ваня</div>
-        </div>
+  <!-- AI Panel Toggle -->
+  <div id="ai-toggle" onclick="toggleAIPanel()">💬</div>
+
+  <!-- AI Chat Panel -->
+  <div id="ai-panel">
+    <div class="ai-panel-header">
+      <div class="ai-avatar">🌙</div>
+      <div class="ai-header-text">
+        <h3>ЛУНА — AI-подруга</h3>
+        <p>Gemini 2.0 Flash • Всегда онлайн</p>
+      </div>
+      <div class="ai-dot"></div>
     </div>
-
-    <!-- Action Panel -->
-    <div id="action-panel">
-        <div class="panel-top">
-            <!-- Situation -->
-            <div id="situation-box">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div class="situation-header">📍 Ситуация</div>
-                    <div class="ai-badge">
-                        <div class="ai-dot"></div>
-                        AI Gemini
-                    </div>
-                </div>
-                <div id="situation-text">Кирилл снова в деле! Выбери свою пакость...</div>
-            </div>
-
-            <!-- Actions -->
-            <div id="actions-box">
-                <div class="actions-header">⚡ Действия Кирилла</div>
-                <div class="actions-grid" id="actions-grid">
-                    <!-- filled by JS -->
-                </div>
-            </div>
-
-            <!-- Vanya response -->
-            <div id="vanya-box">
-                <div class="vanya-header">
-                    <span>💬 Реакция Вани</span>
-                    <span id="vanya-mood-icon">😐</span>
-                </div>
-                <div id="vanya-response">Жду твоих пакостей, Кирилл...</div>
-            </div>
-        </div>
+    <div id="ai-messages">
+      <div class="ai-msg ai-msg-ai">💜 Привет! Я Луна, твоя AI-подруга. Помогу найти идеальную альтушку! Спрашивай что угодно 🖤</div>
     </div>
+    <div class="ai-input-row">
+      <input id="ai-input" placeholder="Напиши Луне..." onkeydown="if(event.key==='Enter')sendAIMessage()"/>
+      <button id="ai-send" onclick="sendAIMessage()">↑</button>
+    </div>
+  </div>
+
+  <!-- Pause -->
+  <div id="pause-menu">
+    <div class="pause-title">⏸ ПАУЗА</div>
+    <button class="gbtn gbtn-play" onclick="togglePause()">▶ Продолжить</button>
+    <button class="gbtn gbtn-guide" onclick="restartGame()">🔄 Заново</button>
+    <button class="gbtn" style="background:rgba(255,255,255,.1);color:white;box-shadow:0 4px 0 rgba(0,0,0,.3);" onclick="showScreen('menu')">🏠 Меню</button>
+  </div>
 </div>
 
-<!-- ============================= -->
-<!-- VICTORY SCREEN -->
-<!-- ============================= -->
-<div id="victory-screen" class="overlay-screen">
-    <div class="overlay-emoji">🏆</div>
-    <div class="overlay-title">Кирилл победил!</div>
-    <div class="overlay-subtitle" id="victory-subtitle">Ваня окончательно потерял терпение!</div>
-    <div id="vanya-reaction-text"></div>
-    <div class="stars-row" id="stars-row"></div>
-    <div class="overlay-btns">
-        <button class="menu-btn btn-start" onclick="nextLevel()">▶ Следующий уровень</button>
-        <button class="menu-btn" style="background:linear-gradient(135deg,#636e72,#2d3436);" onclick="showMenu()">🏠 Меню</button>
-    </div>
+<!-- ======= WIN ======= -->
+<div class="end-screen" id="win-screen">
+  <div class="end-emoji">💜</div>
+  <div class="end-title win-title">АЛЬТУШКА НАЙДЕНА!</div>
+  <div class="end-subtitle" id="win-subtitle">Иван наконец встретил свою судьбу в ночном городе!</div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-val" id="win-score">0</div><div class="stat-label">Очков</div></div>
+    <div class="stat-box"><div class="stat-val" id="win-girls">0</div><div class="stat-label">Встреч</div></div>
+    <div class="stat-box"><div class="stat-val" id="win-dist">0</div><div class="stat-label">Метров</div></div>
+  </div>
+  <div class="end-ai-quote" id="win-ai-quote">AI думает...</div>
+  <div class="end-btns">
+    <button class="gbtn gbtn-play" onclick="restartGame()">🔄 Играть снова</button>
+    <button class="gbtn gbtn-guide" onclick="showScreen('menu')">🏠 Меню</button>
+  </div>
 </div>
 
-<!-- ============================= -->
-<!-- GAME OVER SCREEN -->
-<!-- ============================= -->
-<div id="gameover-screen" class="overlay-screen">
-    <div class="overlay-emoji">😔</div>
-    <div class="overlay-title">Кирилл провалился!</div>
-    <div class="overlay-subtitle" id="gameover-subtitle">Ваня оказался крепче!</div>
-    <div id="gameover-vanya-text"></div>
-    <div class="overlay-btns">
-        <button class="menu-btn btn-start" onclick="restartLevel()">🔄 Повторить</button>
-        <button class="menu-btn" style="background:linear-gradient(135deg,#636e72,#2d3436);" onclick="showMenu()">🏠 Меню</button>
-    </div>
+<!-- ======= GAME OVER ======= -->
+<div class="end-screen" id="over-screen">
+  <div class="end-emoji">💔</div>
+  <div class="end-title over-title">ИВАН ОДИНОК...</div>
+  <div class="end-subtitle" id="over-subtitle">Город жесток, но не сдавайся — альтушка ждёт!</div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-val" id="over-score">0</div><div class="stat-label">Очков</div></div>
+    <div class="stat-box"><div class="stat-val" id="over-girls">0</div><div class="stat-label">Встреч</div></div>
+  </div>
+  <div class="end-ai-quote" id="over-ai-quote">AI думает...</div>
+  <div class="end-btns">
+    <button class="gbtn gbtn-play" onclick="restartGame()">🔄 Попробовать снова</button>
+    <button class="gbtn gbtn-guide" onclick="showScreen('menu')">🏠 Меню</button>
+  </div>
 </div>
 
 <script>
-// ================================================
-// GAME CONFIG & STATE
-// ================================================
+// =============================================
+// AI CONFIG
+// =============================================
 const OPENROUTER_API_KEY = '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';
 const AI_MODEL = 'google/gemini-2.0-flash-001';
 
-const LEVELS = [
-    {
-        id: 1,
-        name: "Утро злодея",
-        emoji: "🌅",
-        startPatience: 100,
-        description: "Раннее утро. Ваня только проснулся и ещё в хорошем настроении. Кирилл уже потирает руки!",
-        kirillMood: "😈",
-        vanyaMood: "😊",
-        actions: [
-            { emoji: "📢", text: "Громко петь", damage: 12, desc: "Орать под дверью" },
-            { emoji: "💦", text: "Облить водой", damage: 18, desc: "Из суперсоски" },
-            { emoji: "🔔", text: "Звонить", damage: 8, desc: "В дверь 10 раз" },
-            { emoji: "🐈", text: "Подсунуть кота", damage: 15, desc: "Орущего Мяусика" }
-        ]
-    },
-    {
-        id: 2,
-        name: "Обеденный хаос",
-        emoji: "🍱",
-        startPatience: 100,
-        description: "Ваня готовит обед. Кирилл нюхает запах и придумывает пакости!",
-        kirillMood: "😏",
-        vanyaMood: "😌",
-        actions: [
-            { emoji: "🧂", text: "Пересолить", damage: 20, desc: "Добавить соли" },
-            { emoji: "🌶️", text: "Острое", damage: 22, desc: "Перец в суп!" },
-            { emoji: "🎵", text: "Дудеть", damage: 14, desc: "На дудочке" },
-            { emoji: "🪲", text: "Пугалка", damage: 25, desc: "Резиновый жук" }
-        ]
-    },
-    {
-        id: 3,
-        name: "Ванин отдых",
-        emoji: "😴",
-        startPatience: 100,
-        description: "Ваня прилёг подремать! Кирилл видит идеальный момент для пакостей!",
-        kirillMood: "😈",
-        vanyaMood: "😴",
-        actions: [
-            { emoji: "📯", text: "Будильник", damage: 28, desc: "Громкий будильник" },
-            { emoji: "💨", text: "Пердушка", damage: 20, desc: "Под дверь" },
-            { emoji: "🕷️", text: "Паучок", damage: 30, desc: "Резиновый паук" },
-            { emoji: "🛒", text: "Тележка", damage: 16, desc: "Грохотать" }
-        ]
-    },
-    {
-        id: 4,
-        name: "Вечер пакостей",
-        emoji: "🌙",
-        startPatience: 90,
-        description: "Вечер. Ваня пытается расслабиться после тяжёлого дня. Кирилл НИКОГДА не отдыхает!",
-        kirillMood: "😈",
-        vanyaMood: "😐",
-        actions: [
-            { emoji: "🎸", text: "Рок-концерт", damage: 25, desc: "За стенкой" },
-            { emoji: "🦆", text: "Утка в ванной", damage: 18, desc: "Резиновая утка" },
-            { emoji: "📺", text: "Телик", damage: 20, desc: "На всю громкость" },
-            { emoji: "🍕", text: "Пицца-ловушка", damage: 15, desc: "Фальшивая пицца" }
-        ]
-    },
-    {
-        id: 5,
-        name: "Финальный босс",
-        emoji: "👑",
-        startPatience: 80,
-        description: "Ваня уже на взводе! Один финальный натиск — и победа Кирилла!",
-        kirillMood: "😈",
-        vanyaMood: "😤",
-        actions: [
-            { emoji: "💣", text: "Мега-пакость", damage: 35, desc: "Секретное оружие!" },
-            { emoji: "🤡", text: "Клоун", damage: 28, desc: "В лифте" },
-            { emoji: "🎃", text: "Страшилка", damage: 30, desc: "Бу! За углом" },
-            { emoji: "🪄", text: "Иллюзия", damage: 22, desc: "Невидимая стена" }
-        ]
+async function callAI(system, user, maxTokens=200){
+  try{
+    const r = await fetch('https://openrouter.ai/api/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':`Bearer ${OPENROUTER_API_KEY}`,'Content-Type':'application/json'},
+      body:JSON.stringify({model:AI_MODEL,messages:[{role:'system',content:system},{role:'user',content:user}],max_tokens:maxTokens,temperature:0.95})
+    });
+    const d = await r.json();
+    return d.choices?.[0]?.message?.content?.trim() || null;
+  }catch(e){return null;}
+}
+
+// =============================================
+// AUDIO ENGINE
+// =============================================
+let audioCtx;
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+}
+
+function playTone(freq, type='sine', dur=0.15, vol=0.3, delay=0){
+  if(!audioCtx) return;
+  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  o.type=type; o.frequency.setValueAtTime(freq, audioCtx.currentTime+delay);
+  g.gain.setValueAtTime(vol, audioCtx.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+delay+dur);
+  o.start(audioCtx.currentTime+delay);
+  o.stop(audioCtx.currentTime+delay+dur+0.05);
+}
+
+function sfxJump(){playTone(300,'sine',.05,.4);playTone(500,'sine',.1,.3,.05);}
+function sfxCoin(){playTone(880,'sine',.08,.4);playTone(1100,'sine',.12,.3,.08);}
+function sfxHurt(){playTone(200,'sawtooth',.2,.4);playTone(150,'sawtooth',.2,.3,.1);}
+function sfxPowerup(){[0,.1,.2,.3].forEach(d=>playTone(440+d*300,'sine',.1,.35,d));}
+function sfxEncounter(){[0,.15,.3].forEach(d=>playTone(330+d*220,'triangle',.15,.3,d));}
+function sfxWin(){[0,.2,.4,.6,.8,1].forEach((d,i)=>playTone([440,550,660,880,1100,1320][i],'sine',.2,.4,d));}
+function sfxLose(){[0,.2,.4].forEach((d,i)=>playTone([300,250,180][i],'sawtooth',.3,.4,d));}
+function sfxSuccess(){playTone(660,'sine',.1,.4);playTone(880,'sine',.15,.4,.1);}
+function sfxStep(){playTone(80+Math.random()*40,'square',.04,.08);}
+
+// Background music
+let bgMusicNodes=[];
+function startBGMusic(){
+  if(!audioCtx) return;
+  stopBGMusic();
+  const notes=[261,293,329,349,392,440,493,523];
+  let t=audioCtx.currentTime;
+  const pattern=[0,2,4,5,7,5,4,2];
+  function loop(){
+    pattern.forEach((n,i)=>{
+      const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type='triangle'; o.frequency.value=notes[n];
+      g.gain.setValueAtTime(0,t+i*0.25);
+      g.gain.linearRampToValueAtTime(0.08,t+i*0.25+0.05);
+      g.gain.exponentialRampToValueAtTime(0.001,t+i*0.25+0.2);
+      o.start(t+i*0.25); o.stop(t+i*0.25+0.25);
+      bgMusicNodes.push(o);
+    });
+    t+=2;
+    bgMusicTimer=setTimeout(loop,1800);
+  }
+  loop();
+}
+let bgMusicTimer;
+function stopBGMusic(){clearTimeout(bgMusicTimer);bgMusicNodes.forEach(n=>{try{n.stop();}catch(e){}});bgMusicNodes=[];}
+
+// =============================================
+// CANVAS STARFIELD
+// =============================================
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+let stars=[];
+function initCanvas(){
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  stars=Array.from({length:150},()=>({
+    x:Math.random()*canvas.width, y:Math.random()*canvas.height*.6,
+    r:Math.random()*2+.5, speed:Math.random()*.3+.1,
+    brightness:Math.random(), phase:Math.random()*Math.PI*2,
+    color:`hsl(${270+Math.random()*90},100%,80%)`
+  }));
+}
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const t=Date.now()/1000;
+  stars.forEach(s=>{
+    const b=0.3+0.7*Math.abs(Math.sin(t*s.speed+s.phase));
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=s.color;
+    ctx.globalAlpha=b;
+    ctx.fill();
+    // Twinkle cross
+    if(s.r>1.5){
+      ctx.globalAlpha=b*0.4;
+      ctx.strokeStyle=s.color;
+      ctx.lineWidth=0.5;
+      ctx.beginPath();
+      ctx.moveTo(s.x-s.r*3,s.y); ctx.lineTo(s.x+s.r*3,s.y);
+      ctx.moveTo(s.x,s.y-s.r*3); ctx.lineTo(s.x,s.y+s.r*3);
+      ctx.stroke();
     }
+  });
+  ctx.globalAlpha=1;
+}
+
+// =============================================
+// GAME STATE
+// =============================================
+const G={
+  running:false, paused:false, gameOver:false,
+  score:0, distance:0, maxDistance:3000,
+  hearts:3, maxHearts:3,
+  speed:3, baseSpeed:3,
+  combo:1, lastCollect:0,
+  girlsMet:0, successfulDates:0,
+  shield:false, shieldTimer:0,
+  speedBoost:false, speedTimer:0,
+  stepTimer:0,
+  // Ivan physics
+  ivanX:120, ivanY:0, ivanVY:0,
+  onGround:true, jumping:false,
+  // Entities
+  entities:[], nextEntityIn:0,
+  // Encounter
+  inEncounter:false,
+};
+
+const keys={left:false,right:false,up:false};
+
+// Girl characters
+const ALTUSHKI=[
+  {emoji:'🖤',name:'Настя',style:'Emo-girl',desc:'Любит MCR и пишет стихи в темноте',vibe:70,
+   intro:['Ты слышал новый альбом Bring Me the Horizon?','Жизнь — боль, но с правильным плейлистом терпимо','Не трогай мои наушники!'],
+   good:['Говорить об эмо-музыке','Написать грустный стих','Позвать на концерт'],
+   bad:['Предложить послушать попсу','Сказать что эмо немодно']
+  },
+  {emoji:'💜',name:'Лиза',style:'Alt-girl',desc:'Дреды, пирсинг, 17 тату с глубоким смыслом',vibe:60,
+   intro:['Каждая тату — это глава моей жизни','Стандарты — для скучных людей','Ты видел закат в 3 ночи?'],
+   good:['Спросить про татуировки','Выпить крафтового кофе','Обсудить андеграунд арт'],
+   bad:['Сказать что тату пройдут','Предложить в Макдак']
+  },
+  {emoji:'🌙',name:'Вика',style:'Witch-girl',desc:'Коллекционирует кристаллы и читает таро',vibe:55,
+   intro:['Сатурн в ретрограде влияет на нас обоих','Твоя аура фиолетовая — это хороший знак','Хочешь узнаешь судьбу?'],
+   good:['Попросить расклад таро','Купить кристалл аметист','Обсудить Луну'],
+   bad:['Назвать это мошенничеством','Игнорировать её знаки']
+  },
+  {emoji:'🎸',name:'Катя',style:'Punk-rocker',desc:'Лидер группы, играет на бас-гитаре',vibe:65,
+   intro:['Гитаристы — переоценены, бас — душа музыки','Мы выступаем в пятницу в подвале','Ты умеешь хотя бы на треугольнике?'],
+   good:['Прийти на концерт','Сыграть на чём-нибудь','Обсудить панк-культуру'],
+   bad:['Сказать что рок умер','Попросить тихую музыку']
+  },
+  {emoji:'🌸',name:'Маша',style:'Soft-alt',desc:'Пастельные тона и heavy metal в наушниках',vibe:75,
+   intro:['Не суди по розовым волосам','Мой плейлист — от Billie Eilish до Slayer','Хочешь выпить розового чая?'],
+   good:['Угостить маффином','Погулять в парке ночью','Обсудить контрасты в жизни'],
+   bad:['Смеяться над противоречиями','Быть слишком серьёзным']
+  },
 ];
 
-// AI Personalities
-const KIRILL_PERSONALITY = `Ты играешь роль Кирилла — смешного, безобидного, но очень надоедливого соседа-вредителя. 
-Твоя цель — довести Ваню до белого каления своими глупыми пакостями. 
-Кирилл всегда веселится, доволен собой, говорит с юмором и самодовольно. 
-Отвечай коротко (1-2 предложения), смешно, как мультяшный злодей. На русском языке.`;
+const OBSTACLES=[
+  {emoji:'💀',type:'hard',dmg:1,msg:'Скелет преградил путь!'},
+  {emoji:'🔥',type:'hard',dmg:1,msg:'Огонь! Аyyy!'},
+  {emoji:'😤',type:'hard',dmg:1,msg:'Злой бывший!'},
+  {emoji:'🐕',type:'soft',dmg:1,msg:'Собака хаски!'},
+];
 
-const VANYA_PERSONALITY = `Ты играешь роль Вани — обычного мужика-соседа, которого достаёт Кирилл. 
-Ваня поначалу терпит, потом раздражается, потом злится, а в конце взрывается.
-Реагируй на пакости Кирилла смешно и эмоционально, в зависимости от того, насколько ты выведен из себя.
-Если терпение > 60% — терпишь и бурчишь. 40-60% — явно раздражён. 20-40% — злишься. < 20% — истеришь.
-Отвечай коротко (1-2 предложения), смешно, по-народному. На русском языке.`;
+const COLLECTIBLES=[
+  {emoji:'💎',type:'gem',pts:50},{emoji:'💿',type:'disc',pts:30},
+  {emoji:'🎵',type:'note',pts:20},{emoji:'⭐',type:'star',pts:40},
+  {emoji:'💜',type:'heart',pts:35},
+];
 
-let gameState = {
-    currentLevel: 1,
-    patience: 100,
-    score: 0,
-    pranksCount: 0,
-    isAIThinking: false,
-    levelData: null,
-    unlockedLevels: 3
-};
+const POWERUPS=[
+  {emoji:'⚡',type:'speed',dur:5000,msg:'ТУРБО РЕЖИМ!'},
+  {emoji:'🛡️',type:'shield',dur:7000,msg:'ЩИТ АКТИВИРОВАН!'},
+  {emoji:'💊',type:'heal',dur:0,msg:'Аптечка!'},
+  {emoji:'🧲',type:'magnet',dur:4000,msg:'МАГНИТ!'},
+];
 
-// ================================================
-// AI FUNCTIONS
-// ================================================
-async function askAI(systemPrompt, userMessage) {
-    try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                'Content-Type': 'application/json',
-                'HTTP-Referer': window.location.href
-            },
-            body: JSON.stringify({
-                model: AI_MODEL,
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: userMessage }
-                ],
-                max_tokens: 150,
-                temperature: 0.9
-            })
-        });
-        const data = await response.json();
-        return data.choices?.[0]?.message?.content || 'Хм...';
-    } catch(e) {
-        console.error('AI error:', e);
-        return null;
+// =============================================
+// BUILDING GENERATOR
+// =============================================
+function generateBuildings(){
+  const c=document.getElementById('buildings');
+  c.innerHTML='';
+  const signs=['NEON CLUB','VAPE BAR','ALT SHOP','DARK CAFE','INK TATTOO','ROCK N ROLL','UNDERGROUND'];
+  let totalW=0;
+  while(totalW < window.innerWidth*3.5){
+    const w=60+Math.floor(Math.random()*120);
+    const h=100+Math.floor(Math.random()*250);
+    const b=document.createElement('div');
+    b.className='building';
+    b.style.cssText=`width:${w}px;height:${h}px;margin-right:${4+Math.floor(Math.random()*20)}px;`;
+    // Windows
+    const rows=Math.floor(h/50), cols=Math.floor(w/35);
+    for(let r=0;r<rows;r++){
+      for(let cc=0;cc<cols;cc++){
+        const ww=document.createElement('div');
+        ww.className='building-win'+(Math.random()>.4?' lit':'')+(Math.random()>.8?' pink-lit':'');
+        ww.style.cssText=`width:${Math.min(25,w/cols-8)}px;height:30px;top:${10+r*45}px;left:${8+cc*(w/cols)}px;`;
+        b.appendChild(ww);
+      }
     }
+    // Sign
+    if(Math.random()>.6){
+      const s=document.createElement('div');
+      s.className='building-sign';
+      s.textContent=signs[Math.floor(Math.random()*signs.length)];
+      b.appendChild(s);
+    }
+    c.appendChild(b);
+    totalW+=w+24;
+  }
 }
 
-async function getKirillComment(action) {
-    const msg = `Кирилл только что сделал: "${action.text}" (${action.desc}). Прокомментируй своё злодейство!`;
-    return await askAI(KIRILL_PERSONALITY, msg);
+// =============================================
+// ENTITY SYSTEM
+// =============================================
+function spawnEntity(){
+  const roll=Math.random();
+  let type, data;
+  if(roll < 0.25 && !G.inEncounter){
+    // Girl encounter
+    type='girl';
+    data=ALTUSHKI[Math.floor(Math.random()*ALTUSHKI.length)];
+  } else if(roll < 0.5){
+    type='obstacle';
+    data=OBSTACLES[Math.floor(Math.random()*OBSTACLES.length)];
+  } else if(roll < 0.75){
+    type='collectible';
+    data=COLLECTIBLES[Math.floor(Math.random()*COLLECTIBLES.length)];
+  } else {
+    type='powerup';
+    data=POWERUPS[Math.floor(Math.random()*POWERUPS.length)];
+  }
+
+  const el=document.createElement('div');
+  el.textContent=data.emoji;
+  const y = type==='collectible' ? 60+Math.floor(Math.random()*80) : 0;
+  el.style.cssText=`position:absolute;font-size:${type==='girl'?72:50}px;
+    right:-80px;bottom:${160+y}px;z-index:20;
+    filter:drop-shadow(0 0 ${type==='girl'?15:8}px rgba(255,107,157,${type==='girl'?.8:.4}));
+    animation:entityFloat 2s infinite ease-in-out;transition:transform .1s;`;
+  document.getElementById('entities').appendChild(el);
+
+  return {el, type, data, x:window.innerWidth+80, y, dead:false};
 }
 
-async function getVanyaReaction(action, patienceLeft) {
-    const msg = `Кирилл сделал тебе: "${action.text}" (${action.desc}). 
-Твоё оставшееся терпение: ${patienceLeft}%. 
-Как ты реагируешь?`;
-    return await askAI(VANYA_PERSONALITY, msg);
+// =============================================
+// COLLISION
+// =============================================
+function checkCollision(entity){
+  const iX=G.ivanX, iY=G.ivanY;
+  const eX=entity.x, eY=entity.y;
+  const dist=Math.abs(iX-eX);
+  const yDist=Math.abs(iY-eY);
+  return dist<60 && yDist<70;
 }
 
-async function getVanyaFinalReaction(won) {
-    const msg = won
-        ? `Кирилл полностью довёл тебя до ручки! Твоё терпение на нуле. Как ты реагируешь в самом конце?`
-        : `Кирилл пытался тебя достать, но ты выдержал и победил! Что ты говоришь этому горе-соседу?`;
-    return await askAI(VANYA_PERSONALITY, msg);
-}
+function handleCollect(entity){
+  const {type,data}=entity;
+  entity.dead=true;
+  entity.el.remove();
+  spawnParticles(data.emoji, entity.x, window.innerHeight-160-entity.y);
 
-async function generateSituation(level) {
-    const msg = `Опиши смешную ситуацию для уровня "${level.name}". ${level.description} Опиши в 2-3 предложения что происходит.`;
-    const result = await askAI('Ты комментатор смешной игры про соседей. Отвечай по-русски, живо и смешно.', msg);
-    return result || level.description;
-}
-
-// ================================================
-// LOADING & MENU
-// ================================================
-function showLoading() {
-    const bar = document.getElementById('loading-bar');
-    let width = 0;
-    const interval = setInterval(() => {
-        width += Math.random() * 15;
-        if (width >= 100) {
-            width = 100;
-            clearInterval(interval);
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.display = 'none';
-                    showMenu();
-                }, 500);
-            }, 400);
-        }
-        bar.style.width = width + '%';
-    }, 120);
-}
-
-function showMenu() {
-    hideAll();
-    document.getElementById('main-menu').style.display = 'flex';
-}
-
-function showLevelSelect() {
-    hideAll();
-    const el = document.getElementById('level-select');
-    el.style.display = 'flex';
-
-    const grid = document.getElementById('levels-grid');
-    grid.innerHTML = '';
-    LEVELS.forEach(l => {
-        const btn = document.createElement('button');
-        btn.className = 'level-btn' + (l.id > gameState.unlockedLevels ? ' locked' : '');
-        btn.innerHTML = `<span class="level-num">${l.emoji}</span><span>${l.id}. ${l.name}</span><span class="level-name">${l.id > gameState.unlockedLevels ? '🔒' : '✅'}</span>`;
-        if (l.id <= gameState.unlockedLevels) {
-            btn.onclick = () => startGame(l.id);
-        }
-        grid.appendChild(btn);
-    });
-}
-
-function hideAll() {
-    document.getElementById('main-menu').style.display = 'none';
-    document.getElementById('level-select').style.display = 'none';
-    document.getElementById('game-screen').style.display = 'none';
-    document.getElementById('victory-screen').style.display = 'none';
-    document.getElementById('gameover-screen').style.display = 'none';
-}
-
-// ================================================
-// GAME START
-// ================================================
-async function startGame(levelId) {
-    const levelData = LEVELS.find(l => l.id === levelId);
-    if (!levelData) return;
-
-    gameState.currentLevel = levelId;
-    gameState.patience = levelData.startPatience;
-    gameState.score = 0;
-    gameState.pranksCount = 0;
-    gameState.levelData = levelData;
-    gameState.isAIThinking = false;
-
-    hideAll();
-    document.getElementById('game-screen').style.display = 'block';
-
-    // Update HUD
+  if(type==='collectible'){
+    const now=Date.now();
+    if(now-G.lastCollect<2000) G.combo=Math.min(G.combo+1,8);
+    else G.combo=1;
+    G.lastCollect=now;
+    const pts=data.pts*G.combo;
+    G.score+=pts;
+    sfxCoin();
+    floatText(`+${pts}${G.combo>1?' x'+G.combo:''}`,entity.x,window.innerHeight-200-entity.y,'#FFE600');
     updateHUD();
-
-    // Set sprites
-    document.getElementById('kirill-sprite').textContent = levelData.kirillMood;
-    document.getElementById('vanya-sprite').textContent = levelData.vanyaMood;
-
-    // Build action buttons
-    buildActions(levelData.actions);
-
-    // Set initial situation text
-    document.getElementById('situation-text').textContent = '⏳ AI генерирует ситуацию...';
-    document.getElementById('vanya-response').textContent = 'Жду твоих пакостей...';
-
-    // Get AI situation
-    const situation = await generateSituation(levelData);
-    document.getElementById('situation-text').textContent = situation;
-}
-
-function buildActions(actions) {
-    const grid = document.getElementById('actions-grid');
-    grid.innerHTML = '';
-    actions.forEach(action => {
-        const btn = document.createElement('button');
-        btn.className = 'action-btn';
-        btn.innerHTML = `<span class="action-emoji">${action.emoji}</span><span class="action-text">${action.text}</span><span style="font-size:10px;color:rgba(255,255,255,0.4);">${action.desc}</span>`;
-        btn.onclick = () => doAction(action);
-        grid.appendChild(btn);
-    });
-}
-
-// ================================================
-// MAIN GAME ACTION
-// ================================================
-async function doAction(action) {
-    if (gameState.isAIThinking) return;
-    gameState.isAIThinking = true;
-
-    // Disable buttons
-    setActionsEnabled(false);
-
-    // Kirill animation
-    const kirillSprite = document.getElementById('kirill-sprite');
-    kirillSprite.textContent = '😈';
-    kirillSprite.classList.add('kirill-prank');
-
-    // Show thinking in vanya box
-    document.getElementById('vanya-response').innerHTML = `
-        <div style="color:rgba(255,255,255,0.5);font-size:13px;">AI думает...</div>
-        <div class="typing-dots">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        </div>`;
-
-    // Spawn particles
-    spawnParticles(action.emoji);
-
-    // Get AI responses in parallel
-    const [kirillComment, vanyaReaction] = await Promise.all([
-        getKirillComment(action),
-        getVanyaReaction(action, Math.max(0, gameState.patience - action.damage))
-    ]);
-
-    // Apply damage
-    gameState.patience = Math.max(0, gameState.patience - action.damage);
-    gameState.score += action.damage * 10 + (gameState.pranksCount * 5);
-    gameState.pranksCount++;
-
-    // Update HUD
-    updateHUD();
-
-    // Stop kirill animation
-    kirillSprite.classList.remove('kirill-prank');
-    kirillSprite.textContent = '😈';
-
-    // Show speech bubbles
-    showKirillBubble(kirillComment || `Ха-ха! Получи ${action.text}!`);
-
-    // Vanya reaction
-    const vanyaMood = getVanyaMood();
-    document.getElementById('vanya-sprite').textContent = vanyaMood;
-    document.getElementById('vanya-mood-icon').textContent = vanyaMood;
-
-    const vanyaText = vanyaReaction || getFallbackVanyaReaction(gameState.patience);
-    document.getElementById('vanya-response').textContent = vanyaText;
-    showVanyaBubble(vanyaText);
-
-    // Vanya shake if very angry
-    if (gameState.patience < 30) {
-        document.getElementById('vanya-char').classList.add('vanya-angry');
-        document.getElementById('game-screen').classList.add('shake');
-        setTimeout(() => {
-            document.getElementById('vanya-char').classList.remove('vanya-angry');
-            document.getElementById('game-screen').classList.remove('shake');
-        }, 1000);
-    }
-
-    // Update situation
-    document.getElementById('situation-text').textContent =
-        `Кирилл применил: ${action.emoji} ${action.text}! Ваня отреагировал. Терпение: ${gameState.patience}%`;
-
-    // Check win/lose
-    setTimeout(async () => {
-        if (gameState.patience <= 0) {
-            await showVictory();
-        } else {
-            setActionsEnabled(true);
-            gameState.isAIThinking = false;
-        }
-    }, 1200);
-}
-
-function getVanyaMood() {
-    const p = gameState.patience;
-    if (p > 70) return '😒';
-    if (p > 50) return '😠';
-    if (p > 30) return '😤';
-    if (p > 15) return '😡';
-    return '🤯';
-}
-
-function getFallbackVanyaReaction(patience) {
-    if (patience > 60) return 'Кирилл, прекрати немедленно! Я пытаюсь жить спокойно!';
-    if (patience > 40) return 'Да что ж такое?! Сколько можно!';
-    if (patience > 20) return 'КИРИЛЛ!!! Я тебе сейчас устрою!!!';
-    return 'ВСЁ! ХВАТИТ! Я СХОЖУ С УМА!!!';
-}
-
-function updateHUD() {
-    document.getElementById('hud-level').textContent = `Уровень ${gameState.currentLevel}`;
-    document.getElementById('hud-score').textContent = `${gameState.score} очков`;
-    document.getElementById('hud-pranks').textContent = `Пакостей: ${gameState.pranksCount}`;
-
-    const fill = document.getElementById('patience-fill');
-    const pct = document.getElementById('patience-pct');
-    const p = gameState.patience;
-    fill.style.width = p + '%';
-    pct.textContent = p + '%';
-    fill.className = 'patience-fill' + (p < 25 ? ' low' : p < 50 ? ' med' : '');
-}
-
-function setActionsEnabled(enabled) {
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.disabled = !enabled;
-    });
-}
-
-// ================================================
-// SPEECH BUBBLES
-// ================================================
-function showKirillBubble(text) {
-    const slot = document.getElementById('kirill-bubble-slot');
-    slot.innerHTML = `<div class="speech-bubble kirill-bubble">${text}</div>`;
-    setTimeout(() => { slot.innerHTML = ''; }, 4000);
-}
-
-function showVanyaBubble(text) {
-    const slot = document.getElementById('vanya-bubble-slot');
-    slot.innerHTML = `<div class="speech-bubble vanya-bubble">${text}</div>`;
-    setTimeout(() => { slot.innerHTML = ''; }, 5000);
-}
-
-// ================================================
-// PARTICLES
-// ================================================
-function spawnParticles(emoji) {
-    const chars = ['😈', '💥', '⭐', '💢', emoji];
-    for (let i = 0; i < 10; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.textContent = chars[Math.floor(Math.random() * chars.length)];
-        p.style.left = (20 + Math.random() * 60) + '%';
-        p.style.top = (30 + Math.random() * 30) + '%';
-        p.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
-        p.style.setProperty('--dy', (Math.random() * -200 - 50) + 'px');
-        p.style.setProperty('--rot', (Math.random() * 360) + 'deg');
-        p.style.animationDelay = (Math.random() * 0.4) + 's';
-        p.style.fontSize = (16 + Math.random() * 20) + 'px';
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 2000);
-    }
-}
-
-// ================================================
-// VICTORY & GAME OVER
-// ================================================
-async function showVictory() {
-    const stars = calculateStars();
-    const finalReaction = await getVanyaFinalReaction(true);
-
-    if (gameState.currentLevel + 1 > gameState.unlockedLevels) {
-        gameState.unlockedLevels = Math.min(LEVELS.length, gameState.currentLevel + 1);
-    }
-
-    document.getElementById('victory-subtitle').textContent =
-        `🎉 Уровень ${gameState.currentLevel} пройден! Очки: ${gameState.score}`;
-    document.getElementById('vanya-reaction-text').textContent =
-        `Ваня: "${finalReaction || 'КИРИЛЛ! ТЫ НЕВЫНОСИМ!!!'}"`;
-
-    const starsRow = document.getElementById('stars-row');
-    starsRow.innerHTML = '';
-    for (let i = 0; i < 3; i++) {
-        const s = document.createElement('div');
-        s.className = 'star-icon';
-        s.textContent = i < stars ? '⭐' : '☆';
-        s.style.animationDelay = (0.3 + i * 0.2) + 's';
-        starsRow.appendChild(s);
-    }
-
-    // Confetti
-    for (let i = 0; i < 20; i++) {
-        const emojis = ['🎉', '🎊', '⭐', '🏆', '🎈'];
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = Math.random() * 50 + '%';
-        p.style.setProperty('--dx', (Math.random() * 300 - 150) + 'px');
-        p.style.setProperty('--dy', (Math.random() * 200 - 300) + 'px');
-        p.style.setProperty('--rot', (Math.random() * 720) + 'deg');
-        p.style.animationDelay = (Math.random() * 1) + 's';
-        p.style.animationDuration = '2.5s';
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 3000);
-    }
-
-    document.getElementById('victory-screen').style.display = 'flex';
-}
-
-async function showGameOver() {
-    const finalReaction = await getVanyaFinalReaction(false);
-    document.getElementById('gameover-subtitle').textContent = `Ваня устоял! Набрано очков: ${gameState.score}`;
-    document.getElementById('gameover-vanya-text').textContent =
-        `Ваня: "${finalReaction || 'Не дождёшься, Кирилл!'}"`;
-    document.getElementById('gameover-screen').style.display = 'flex';
-}
-
-function calculateStars() {
-    if (gameState.pranksCount <= 4) return 3;
-    if (gameState.pranksCount <= 7) return 2;
-    return 1;
-}
-
-function nextLevel() {
-    const next = gameState.currentLevel + 1;
-    if (next <= LEVELS.length) {
-        startGame(next);
+    if(G.combo>1){document.getElementById('combo-badge').style.display='flex';document.getElementById('combo-num').textContent=G.combo;}
+    else document.getElementById('combo-badge').style.display='none';
+  }
+  else if(type==='powerup'){
+    sfxPowerup();
+    floatText(data.msg,entity.x,window.innerHeight-200,'#39FF14');
+    applyPowerup(data);
+  }
+  else if(type==='obstacle'){
+    if(G.shield){
+      G.shield=false;
+      floatText('ЩИТ ПОГЛОТИЛ!',entity.x,window.innerHeight-200,'#00FFF5');
     } else {
-        showMenu();
-        // Could show "all levels complete" screen
-        alert('🏆 Поздравляем! Ты прошёл все уровни и Кирилл — величайший злодей всех времён!');
+      sfxHurt();
+      G.hearts=Math.max(0,G.hearts-data.dmg);
+      floatText(data.msg,entity.x,window.innerHeight-200,'#FF073A');
+      document.getElementById('game').classList.add('shake');
+      setTimeout(()=>document.getElementById('game').classList.remove('shake'),400);
+      updateHUD();
+      if(G.hearts<=0) endGame(false);
     }
+  }
+  else if(type==='girl'){
+    sfxEncounter();
+    G.girlsMet++;
+    triggerEncounter(data);
+  }
 }
 
-function restartLevel() {
-    startGame(gameState.currentLevel);
+function applyPowerup(data){
+  if(data.type==='speed'){G.speedBoost=true;G.speedTimer=data.dur;G.speed=G.baseSpeed*2.5;}
+  else if(data.type==='shield'){G.shield=true;G.shieldTimer=data.dur;}
+  else if(data.type==='heal'){G.hearts=Math.min(G.maxHearts,G.hearts+1);updateHUD();}
+  else if(data.type==='magnet'){/* collect nearby */}
 }
 
-// ================================================
-// INIT
-// ================================================
-window.onload = () => {
-    showLoading();
-};
+// =============================================
+// ENCOUNTER SYSTEM
+// =============================================
+let encCurrentGirl=null;
+let encVibe=50;
+
+async function triggerEncounter(girl){
+  if(G.inEncounter) return;
+  G.inEncounter=true;
+  G.running=false;
+  encCurrentGirl=girl;
+  encVibe=girl.vibe;
+
+  document.getElementById('enc-char').textContent=girl.emoji;
+  document.getElementById('enc-name').textContent=girl.style+' — '+girl.name;
+  document.getElementById('enc-vibe').style.width=encVibe+'%';
+
+  // Get AI intro
+  const aiIntro=await callAI(
+    `Ты ${girl.name} — ${girl.style}. ${girl.desc}. Ты встретила незнакомца Ивана. 
+     Ответь одной короткой фразой (максимум 15 слов) в своём стиле. По-русски.`,
+    'Иван подходит к тебе на улице ночного города.'
+  );
+  const introText=aiIntro || girl.intro[Math.floor(Math.random()*girl.intro.length)];
+  document.getElementById('enc-desc').textContent=`"${introText}"`;
+
+  // Build choices
+  const choices=document.getElementById('enc-choices');
+  choices.innerHTML='';
+  const allActions=[...girl.good.map(t=>({t,good:true})),...girl.bad.map(t=>({t,good:false}))];
+  const shown=allActions.sort(()=>Math.random()-.5).slice(0,3);
+  shown.forEach(a=>{
+    const b=document.createElement('button');
+    b.className='enc-choice '+(a.good?'good':'bad');
+    b.textContent=(a.good?'✅ ':'❌ ')+a.t;
+    b.onclick=()=>handleEncChoice(a, girl);
+    choices.appendChild(b);
+  });
+
+  document.getElementById('encounter-panel').classList.add('show');
+}
+
+async function handleEncChoice(choice, girl){
+  document.getElementById('encounter-panel').classList.remove('show');
+
+  const delta=choice.good ? 30+Math.floor(Math.random()*20) : -25-Math.floor(Math.random()*15);
+  encVibe=Math.max(0,Math.min(100,encVibe+delta));
+
+  const aiReply=await callAI(
+    `Ты ${girl.name} — ${girl.style}. ${girl.desc}. 
+     Иван ${choice.good?'сделал что-то правильное':'облажался'}: "${choice.t}".
+     Ответь короткой эмоциональной фразой (макс 15 слов). По-русски.`,
+    choice.t
+  );
+  const replyText=aiReply||(choice.good?'Хм, ты интересный...':'Фу, проваливай!');
+
+  floatText((choice.good?'💜 ':'💔 ')+replyText, window.innerWidth/2, window.innerHeight/2,
+    choice.good?'#FF6B9D':'#FF073A');
+
+  if(choice.good){
+    sfxSuccess();
+    G.score+=100+encVibe;
+    if(encVibe>=80){
+      G.successfulDates++;
+      floatText('❤️ СИМПАТИЯ! +200',window.innerWidth/2,window.innerHeight/2-60,'#FFE600');
+      G.score+=200;
+      spawnParticlesMany();
+    }
+  } else {
+    sfxHurt();
+  }
+
+  updateHUD();
+  setTimeout(()=>{
+    G.inEncounter=false;
+    G.running=true;
+    if(G.successfulDates>=3) endGame(true);
+  }, 2000);
+}
+
+// =============================================
+// GAME LOOP
+// =============================================
+let lastTime=0, animId;
+
+function gameLoop(ts){
+  animId=requestAnimationFrame(gameLoop);
+  const dt=Math.min((ts-lastTime)/1000, 0.05);
+  lastTime=ts;
+
+  drawStars();
+
+  if(!G.running || G.paused || G.gameOver) return;
+
+  // Ivan movement
+  if(keys.left) G.ivanX=Math.max(60,G.ivanX-G.speed*2);
+  if(keys.right) G.ivanX=Math.min(window.innerWidth*0.4,G.ivanX+G.speed*2);
+
+  // Ivan step sound
+  G.stepTimer+=dt;
+  if(G.stepTimer>0.25 && G.onGround && (keys.left||keys.right)){G.stepTimer=0;sfxStep();}
+
+  // Gravity
+  if(!G.onGround){
+    G.ivanVY-=0.6;
+    G.ivanY+=G.ivanVY;
+    if(G.ivanY<=0){G.ivanY=0;G.onGround=true;G.ivanVY=0;}
+  }
+
+  // Update Ivan DOM
+  const iw=document.getElementById('ivan-wrap');
+  iw.style.left=G.ivanX+'px';
+  iw.style.bottom=(160+G.ivanY)+'px';
+
+  // Ivan sprite state
+  const iSprite=document.getElementById('ivan');
+  if(!G.onGround) iSprite.textContent='🧔';
+  else if(keys.left||keys.right){iSprite.classList.add('run');iSprite.textContent='🧔';}
+  else{iSprite.classList.remove('run');iSprite.textContent='🧔';}
+  if(G.shield) iw.style.filter='drop-shadow(0 0 20px cyan)';
+  else iw.style.filter='drop-shadow(0 0 20px rgba(124,77,255,.8))';
+
+  // Distance / speed
+  G.distance+=G.speed*dt;
+  const pct=Math.min(100,G.distance/G.maxDistance*100);
+  document.getElementById('dist-fill').style.width=pct+'%';
+  document.getElementById('dist-pct').textContent=Math.floor(pct)+'%';
+
+  // Speed ramp
+  G.baseSpeed=3+G.distance/500;
+  if(!G.speedBoost) G.speed=G.baseSpeed;
+
+  // Timers
+  if(G.speedBoost){G.speedTimer-=dt*1000;if(G.speedTimer<=0){G.speedBoost=false;G.speed=G.baseSpeed;}}
+  if(G.shield){G.shieldTimer-=dt*1000;if(G.shieldTimer<=0){G.shield=false;}}
+
+  document.getElementById('speed-num').textContent=(G.speed/3).toFixed(1)+'x';
+
+  // Spawn entities
+  G.nextEntityIn-=dt;
+  if(G.nextEntityIn<=0 && !G.inEncounter){
+    G.entities.push(spawnEntity());
+    G.nextEntityIn=0.8+Math.random()*2;
+  }
+
+  // Update entities
+  G.entities=G.entities.filter(e=>{
+    if(e.dead) return false;
+    e.x-=G.speed*2.5;
+    if(e.x<-100){e.el.remove();return false;}
+    e.el.style.right='auto';
+    e.el.style.left=e.x+'px';
+    if(checkCollision(e)) handleCollect(e);
+    return !e.dead;
+  });
+
+  // Win condition
+  if(G.distance>=G.maxDistance) endGame(true);
+}
+
+function doJump(){
+  if(!G.onGround) return;
+  initAudio();
+  G.onGround=false;
+  G.ivanVY=18;
+  sfxJump();
+  document.getElementById('ivan').classList.add('jump');
+  setTimeout(()=>document.getElementById('ivan').classList.remove('jump'),500);
+}
+
+// =============================================
+// HUD UPDATE
+// =============================================
+function updateHUD(){
+  document.getElementById('score-num').textContent=G.score;
+  const h=document.getElementById('hearts-hud');
+  h.textContent='❤️'.repeat(G.hearts)+'🖤'.repeat(G.maxHearts-G.hearts)||'💔';
+}
+
+// =============================================
+// PARTICLES
+// =============================================
+function spawnParticles(emoji, x, y){
+  const emojis=[emoji,'✨','⭐','💜'];
+  for(let i=0;i<8;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    const dx=(Math.random()-0.5)*200, dy=-(Math.random()*150+50);
+    p.style.cssText=`left:${x}px;top:${y}px;--dx:${dx}px;--dy:${dy}px;--rot:${Math.random()*360}deg;--dur:${0.8+Math.random()*0.8}s;--size:${16+Math.random()*16}px;`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2000);
+  }
+}
+
+function spawnParticlesMany(){
+  const emojis=['💜','🖤','✨','💎','🌙','⭐'];
+  for(let i=0;i<25;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    const dx=(Math.random()-0.5)*400, dy=-(Math.random()*300);
+    p.style.cssText=`left:${Math.random()*window.innerWidth}px;top:${Math.random()*window.innerHeight}px;--dx:${dx}px;--dy:${dy}px;--rot:${Math.random()*720}deg;--dur:${1+Math.random()}s;--size:${20+Math.random()*24}px;animation-delay:${Math.random()*0.5}s;`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2500);
+  }
+}
+
+// =============================================
+// FLOATING TEXT
+// =============================================
+function floatText(text, x, y, color='white'){
+  const el=document.createElement('div');
+  el.className='float-text';
+  el.textContent=text;
+  el.style.cssText=`left:${Math.max(10,Math.min(window.innerWidth-200,x-60))}px;top:${Math.max(10,y)}px;color:${color};text-shadow:0 0 10px ${color};font-size:${text.length>15?16:22}px;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1600);
+}
+
+// =============================================
+// SCREEN MANAGEMENT
+// =============================================
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+  const s=document.getElementById(id);
+  if(s){s.style.display='flex';}
+}
+
+function hideEndScreens(){
+  document.getElementById('win-screen').style.display='none';
+  document.getElementById('over-screen').style.display='none';
+}
+
+// =============================================
+// GAME START / END
+// =============================================
+function startGame(){
+  initAudio();
+  showScreen(null);
+  document.getElementById('game').style.display='block';
+  hideEndScreens();
+
+  // Reset state
+  Object.assign(G,{
+    running:true,paused:false,gameOver:false,
+    score:0,distance:0,hearts:3,speed:3,baseSpeed:3,
+    combo:1,lastCollect:0,girlsMet:0,successfulDates:0,
+    shield:false,speedBoost:false,ivanX:120,ivanY:0,
+    ivanVY:0,onGround:true,entities:[],nextEntityIn:1,
+    inEncounter:false,stepTimer:0,
+  });
+
+  document.getElementById('entities').innerHTML='';
+  document.getElementById('encounter-panel').classList.remove('show');
+  document.getElementById('combo-badge').style.display='none';
+  updateHUD();
+  generateBuildings();
+  startBGMusic();
+
+  cancelAnimationFrame(animId);
+  lastTime=performance.now();
+  gameLoop(lastTime);
+}
+
+function restartGame(){
+  hideEndScreens();
+  startGame();
+}
+
+async function endGame(won){
+  G.gameOver=true;
+  G.running=false;
+  stopBGMusic();
+
+  if(won){sfxWin();spawnParticlesMany();}
+  else sfxLose();
+
+  const dist=Math.floor(G.distance);
+
+  if(won){
+    document.getElementById('win-score').textContent=G.score;
+    document.getElementById('win-girls').textContent=G.girlsMet;
+    document.getElementById('win-dist').textContent=dist+'м';
+    document.getElementById('win-screen').style.display='flex';
+    document.getElementById('win-ai-quote').textContent='AI думает...';
+    const q=await callAI(
+      'Ты нарратор романтической игры про Ивана и альтушек. Говори поэтично, по-русски.',
+      `Иван нашёл свою альтушку после ${dist} метров пути! Встретил ${G.girlsMet} девушек. Скажи что-то вдохновляющее (1-2 предложения).`
+    );
+    document.getElementById('win-ai-quote').textContent=q||'Любовь находят те, кто не боится идти вперёд в темноте!';
+  } else {
+    document.getElementById('over-score').textContent=G.score;
+    document.getElementById('over-girls').textContent=G.girlsMet;
+    document.getElementById('over-screen').style.display='flex';
+    document.getElementById('over-ai-quote').textContent='AI думает...';
+    const q=await callAI(
+      'Ты нарратор игры про одинокого Ивана. Говори с юмором и поддержкой, по-русски.',
+      `Иван не дошёл до альтушки. Прошёл ${dist}м, набрал ${G.score} очков. Утешь его смешно (1-2 предложения).`
+    );
+    document.getElementById('over-ai-quote').textContent=q||'Не расстраивайся! Альтушки ещё оценят твою настойчивость!';
+  }
+}
+
+function togglePause(){
+  G.paused=!G.paused;
+  document.getElementById('pause-menu').style.display=G.paused?'flex':'none';
+  if(!G.paused) startBGMusic(); else stopBGMusic();
+}
+
+// =============================================
+// AI CHAT (LUNA)
+// =============================================
+let aiPanelOpen=false;
+function toggleAIPanel(){
+  aiPanelOpen=!aiPanelOpen;
+  document.getElementById('ai-panel').classList.toggle('open',aiPanelOpen);
+  document.getElementById('ai-toggle').textContent=aiPanelOpen?'✕':'💬';
+}
+
+async function sendAIMessage(){
+  const input=document.getElementById('ai-input');
+  const text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  addAIMessage(text,'user');
+  const typing=addTyping();
+
+  const response=await callAI(
+    `Ты Луна — загадочная AI-подруга Ивана, который ищет альтушку в ночном городе.
+     Контекст: счёт ${G.score}, прошёл ${Math.floor(G.distance)}м, встретил ${G.girlsMet} девушек.
+     Ты немного мистическая, добрая, иногда с юмором. По-русски. Кратко (макс 50 слов).`,
+    text
+  );
+  typing.remove();
+  addAIMessage(response||'Звёзды говорят... иди вперёд! 💜','ai');
+}
+
+function addAIMessage(text, role){
+  const el=document.createElement('div');
+  el.className=`ai-msg ai-msg-${role}`;
+  el.textContent=text;
+  const msgs=document.getElementById('ai-messages');
+  msgs.appendChild(el);
+  msgs.scrollTop=msgs.scrollHeight;
+  return el;
+}
+
+function addTyping(){
+  const el=document.createElement('div');
+  el.className='ai-typing';
+  el.innerHTML='<span></span><span></span><span></span>';
+  document.getElementById('ai-messages').appendChild(el);
+  document.getElementById('ai-messages').scrollTop=9999;
+  return el;
+}
+
+// =============================================
+// KEYBOARD
+// =============================================
+document.addEventListener('keydown',e=>{
+  initAudio();
+  if(e.code==='ArrowLeft'||e.code==='KeyA') keys.left=true;
+  if(e.code==='ArrowRight'||e.code==='KeyD') keys.right=true;
+  if((e.code==='ArrowUp'||e.code==='Space'||e.code==='KeyW')&&!e.repeat) doJump();
+  if(e.code==='Escape'||e.code==='KeyP') togglePause();
+  if(e.code==='KeyC') toggleAIPanel();
+});
+document.addEventListener('keyup',e=>{
+  if(e.code==='ArrowLeft'||e.code==='KeyA') keys.left=false;
+  if(e.code==='ArrowRight'||e.code==='KeyD') keys.right=false;
+});
+
+// Mobile tap to start audio
+document.addEventListener('touchstart',()=>initAudio(),{once:true});
+document.addEventListener('click',()=>initAudio(),{once:true});
+
+window.addEventListener('resize',()=>{initCanvas();generateBuildings();});
+
+// =============================================
+// LOADING SEQUENCE
+// =============================================
+const TIPS=['Настраиваем неоновые огни...','Будим альтушек...','Красим волосы в фиолетовый...','Включаем ночной режим...','Заряжаем атмосферу...','Находим идеальный плейлист...'];
+let tipIdx=0;
+function nextTip(){
+  document.getElementById('load-tip').textContent=TIPS[tipIdx%TIPS.length];
+  tipIdx++;
+}
+const tipTimer=setInterval(nextTip,700);
+
+initCanvas();
+drawStars();
+requestAnimationFrame(function loop(){drawStars();if(document.getElementById('loading').style.opacity!=='0') requestAnimationFrame(loop);});
+
+const bar=document.getElementById('load-bar');
+let loadPct=0;
+const loadInterval=setInterval(()=>{
+  loadPct+=Math.random()*8+2;
+  bar.style.width=Math.min(100,loadPct)+'%';
+  if(loadPct>=100){
+    clearInterval(loadInterval);
+    clearInterval(tipTimer);
+    setTimeout(()=>{
+      document.getElementById('loading').style.opacity='0';
+      setTimeout(()=>{
+        document.getElementById('loading').style.display='none';
+        showScreen('menu');
+      },800);
+    },400);
+  }
+},150);
 </script>
 </body>
 </html>
