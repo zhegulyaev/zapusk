@@ -1,931 +1,2470 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ксюша на Охоте 💅</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#0a0014;overflow:hidden;height:100vh;width:100vw;user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FocusFlow — Читай по 3 минуты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg2: #111113;
+            --bg3: #1a1a1f;
+            --bg4: #222228;
+            --surface: #18181b;
+            --surface2: #27272a;
+            --border: #2e2e33;
+            --border2: #3f3f46;
+            --text: #fafafa;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --accent: #818cf8;
+            --accent2: #6366f1;
+            --accent3: #4f46e5;
+            --accent-glow: rgba(129, 140, 248, 0.15);
+            --accent-glow2: rgba(129, 140, 248, 0.08);
+            --green: #34d399;
+            --green-bg: rgba(52, 211, 153, 0.1);
+            --orange: #fb923c;
+            --orange-bg: rgba(251, 146, 60, 0.1);
+            --red: #f87171;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 64px rgba(0,0,0,0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-/* ====== CANVAS ====== */
-#bgCanvas{position:fixed;inset:0;z-index:0}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-/* ====== SCREENS ====== */
-.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center}
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* ====== LOADING ====== */
-#loading{display:flex;z-index:9999;
-  background:radial-gradient(ellipse at center,#1a0028,#000);gap:16px}
-#loading h1{font-size:46px;font-weight:900;text-align:center;
-  background:linear-gradient(135deg,#ff6b9d,#ff2d78,#ff6bb5);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:loadGlow 2s infinite;filter:drop-shadow(0 0 30px rgba(255,107,157,.8))}
-@keyframes loadGlow{0%,100%{filter:drop-shadow(0 0 30px rgba(255,107,157,.8))}50%{filter:drop-shadow(0 0 60px rgba(255,45,120,1))}}
-#loading .sub{color:rgba(255,255,255,.6);font-size:18px;font-weight:700}
-.lbar-w{width:350px;max-width:85vw;height:20px;background:rgba(255,255,255,.08);border-radius:20px;overflow:hidden;border:2px solid rgba(255,107,157,.3)}
-.lbar{height:100%;background:linear-gradient(90deg,#ff6b9d,#ff2d78,#c44569);border-radius:20px;width:0%;transition:width .1s}
-.ltip{color:rgba(255,255,255,.4);font-size:13px;font-weight:600;font-style:italic}
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
-/* ====== MENU ====== */
-#menu{background:transparent}
-.menu-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,45,120,.2),transparent 70%)}
-.menu-title{position:relative;z-index:2;text-align:center}
-.menu-title h1{font-size:52px;font-weight:900;line-height:1.1;
-  background:linear-gradient(135deg,#ff6b9d,#ff2d78,#c44569,#ff6bb5);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 25px rgba(255,45,120,.9));animation:titleP 3s infinite ease-in-out}
-@keyframes titleP{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,120,.9))}50%{filter:drop-shadow(0 0 50px rgba(255,107,157,1))}}
-.menu-title p{color:rgba(255,255,255,.6);font-size:17px;font-weight:700;margin-top:8px}
-.menu-chars{display:flex;gap:10px;margin:30px 0;position:relative;z-index:2;flex-wrap:wrap;justify-content:center}
-.menu-char{text-align:center;padding:16px;background:rgba(255,255,255,.04);border:2px solid rgba(255,255,255,.1);border-radius:20px;width:110px;transition:all .3s}
-.menu-char:hover{border-color:var(--pink);background:rgba(255,107,157,.1);transform:translateY(-8px)}
-.menu-char .ch-emoji{font-size:56px;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
-.menu-char .ch-name{font-size:14px;font-weight:800;color:white;margin-top:6px}
-.menu-char .ch-role{font-size:11px;color:rgba(255,255,255,.5);font-weight:600}
-.menu-ksyu{font-size:100px;animation:ksyuFloat 2.5s infinite ease-in-out;
-  filter:drop-shadow(0 0 30px rgba(255,107,157,.8));position:relative;z-index:2;display:block;text-align:center}
-@keyframes ksyuFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-15px) rotate(2deg)}}
-.menu-btns{display:flex;flex-direction:column;gap:12px;position:relative;z-index:2;align-items:center}
-.gbtn{padding:16px 52px;font-size:20px;font-weight:900;font-family:'Nunito',sans-serif;
-  border:none;border-radius:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;letter-spacing:.5px}
-.gbtn::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent);border-radius:inherit;pointer-events:none}
-.gbtn:hover{transform:translateY(-4px) scale(1.03)}
-.gbtn:active{transform:translateY(2px) scale(.98)}
-.gbtn-play{background:linear-gradient(135deg,#ff2d78,#ff6b9d);color:white;
-  box-shadow:0 8px 0 #a01050,0 12px 30px rgba(255,45,120,.5)}
-.gbtn-play:hover{box-shadow:0 12px 0 #a01050,0 20px 40px rgba(255,45,120,.7)}
-.gbtn-play:active{box-shadow:0 2px 0 #a01050}
-.gbtn-info{background:rgba(255,255,255,.06);color:var(--pink,#ff6b9d);border:2px solid rgba(255,107,157,.3);
-  box-shadow:0 6px 0 rgba(0,0,0,.3)}
+        /* === SCREENS === */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.4s ease;
+        }
+        .screen.active { display: flex; flex-direction: column; }
 
-/* ====== TUTORIAL ====== */
-#tutorial{background:rgba(0,0,0,.95);backdrop-filter:blur(20px)}
-.tut-box{max-width:650px;width:92%;background:rgba(255,255,255,.03);border:2px solid rgba(255,107,157,.3);border-radius:24px;padding:30px}
-.tut-t{font-size:30px;font-weight:900;color:#ff6b9d;margin-bottom:20px;text-align:center;text-shadow:0 0 20px #ff6b9d}
-.tut-steps{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.tut-s{display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,.03);border-radius:14px;border:1px solid rgba(255,255,255,.06)}
-.tut-i{font-size:32px;min-width:40px;text-align:center}
-.tut-txt h4{color:white;font-size:15px;font-weight:800;margin-bottom:3px}
-.tut-txt p{color:rgba(255,255,255,.55);font-size:13px;font-weight:600;line-height:1.4}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ====== GAME ====== */
-#game{position:fixed;inset:0;z-index:10;display:none;overflow:hidden}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* === BACKGROUND LAYERS === */
-#cityWrap{position:absolute;inset:0}
-#skyGrad{position:absolute;inset:0;
-  background:linear-gradient(180deg,#0a0014 0%,#1a0028 30%,#2d0a3e 50%,#1a0028 70%,#0a0014 100%)}
-.moon{position:absolute;top:60px;right:80px;width:90px;height:90px;
-  background:radial-gradient(circle at 35% 35%,#ffe0f0,#ffb3d0,#ff6b9d);
-  border-radius:50%;box-shadow:0 0 60px rgba(255,107,157,.6),0 0 120px rgba(255,107,157,.3);
-  animation:moonGlow 4s infinite ease-in-out}
-@keyframes moonGlow{0%,100%{box-shadow:0 0 60px rgba(255,107,157,.6)}50%{box-shadow:0 0 100px rgba(255,107,157,.9)}}
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
 
-/* Street / ground */
-#street{position:absolute;bottom:0;left:0;right:0;height:180px;
-  background:linear-gradient(180deg,#1a0a28 0%,#120820 50%,#0a0518 100%);
-  border-top:3px solid rgba(255,107,157,.4);box-shadow:0 -20px 60px rgba(255,107,157,.15)}
-.street-line{position:absolute;top:50%;left:0;right:0;height:4px;
-  background:repeating-linear-gradient(90deg,rgba(255,230,0,.6) 0px,rgba(255,230,0,.6) 40px,transparent 40px,transparent 80px);
-  animation:lineScroll 2s linear infinite}
-@keyframes lineScroll{from{transform:translateX(0)}to{transform:translateX(-80px)}}
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
 
-/* === HUD === */
-#hud{position:absolute;top:0;left:0;right:0;z-index:60;
-  display:flex;align-items:center;gap:10px;padding:10px 16px;
-  background:linear-gradient(180deg,rgba(0,0,0,.85),transparent)}
-.hud-p{display:flex;align-items:center;gap:6px;padding:6px 14px;
-  background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.1);border-radius:50px;
-  color:white;font-size:13px;font-weight:800}
-.hud-p.pink-b{border-color:rgba(255,107,157,.4)}
-.hud-p.gold-b{border-color:rgba(255,230,0,.3)}
-.hud-score{color:#ffe600;text-shadow:0 0 8px #ffe600}
-.hud-timer{color:#ff6b9d;text-shadow:0 0 8px #ff6b9d}
-/* Target portraits */
-.targets-row{display:flex;gap:6px;margin-left:auto}
-.target-port{width:44px;height:44px;border-radius:14px;
-  background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;font-size:24px;
-  position:relative;transition:all .3s}
-.target-port.caught{border-color:#39ff14;background:rgba(57,255,20,.15);box-shadow:0 0 12px rgba(57,255,20,.5)}
-.target-port.caught::after{content:'✓';position:absolute;bottom:-2px;right:-2px;
-  background:#39ff14;color:#000;font-size:10px;font-weight:900;width:16px;height:16px;
-  border-radius:50%;display:flex;align-items:center;justify-content:center}
-.target-port.active{border-color:#ff6b9d;animation:portPulse 1s infinite}
-@keyframes portPulse{0%,100%{box-shadow:0 0 5px rgba(255,107,157,.3)}50%{box-shadow:0 0 20px rgba(255,107,157,.8)}}
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(129, 140, 248, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(129, 140, 248, 0.2); }
+        }
 
-/* Progress */
-.prog-wrap{flex:1;max-width:200px}
-.prog-label{font-size:10px;color:rgba(255,255,255,.5);font-weight:700;display:flex;justify-content:space-between;margin-bottom:3px}
-.prog-bar{height:8px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
-.prog-fill{height:100%;background:linear-gradient(90deg,#ff2d78,#ff6b9d);border-radius:10px;transition:width .5s;box-shadow:0 0 8px #ff2d78}
+        /* === HEADER === */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 11, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
 
-/* === BOYS ON SCREEN === */
-.boy{position:absolute;z-index:20;transition:left .8s ease,bottom .3s ease;cursor:pointer}
-.boy-body{font-size:80px;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));
-  transition:transform .2s}
-.boy-name{position:absolute;top:-30px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
-  border:2px solid rgba(255,255,255,.15);border-radius:10px;
-  padding:3px 12px;font-size:12px;font-weight:900;color:white;white-space:nowrap}
-.boy-alert{position:absolute;top:-60px;left:50%;transform:translateX(-50%);
-  font-size:28px;animation:alertBounce 0.6s infinite;display:none}
-@keyframes alertBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
-.boy-bar-wrap{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
-  width:70px;height:8px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
-.boy-bar{height:100%;background:linear-gradient(90deg,#39ff14,#00ff88);border-radius:10px;width:0%;transition:width .3s}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
 
-/* Boy states */
-.boy.alert .boy-body{animation:boyAlert .3s infinite alternate}
-@keyframes boyAlert{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
-.boy.caught .boy-body{animation:boyCaught .5s ease;filter:drop-shadow(0 0 20px #39ff14) !important}
-@keyframes boyCaught{0%{transform:scale(1)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1)}}
-.boy.escaped .boy-body{animation:boyEscape 1s ease forwards}
-@keyframes boyEscape{to{transform:translateX(200px) scale(.5);opacity:0}}
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
 
-/* === KSYUSHA === */
-#ksyu{position:absolute;z-index:30;bottom:180px;left:50%;transform:translateX(-50%);
-  font-size:72px;filter:drop-shadow(0 0 25px rgba(255,107,157,.8));
-  transition:left .15s ease,bottom .2s;pointer-events:none}
-#ksyu.hunting{animation:ksyuHunt .3s infinite alternate}
-@keyframes ksyuHunt{from{transform:translateX(-50%) rotate(-3deg)}to{transform:translateX(-50%) rotate(3deg)}}
-#ksyu.victory{animation:ksyuVictory .5s infinite}
-@keyframes ksyuVictory{0%{transform:translateX(-50%) rotate(-10deg) scale(1)}50%{transform:translateX(-50%) rotate(10deg) scale(1.1)}100%{transform:translateX(-50%) rotate(-10deg) scale(1)}}
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
 
-/* === SWIPE TRAIL === */
-.swipe-trail{position:fixed;pointer-events:none;z-index:100}
-.trail-dot{position:absolute;width:12px;height:12px;border-radius:50%;
-  background:radial-gradient(circle,#ff6b9d,#ff2d78);
-  box-shadow:0 0 10px #ff6b9d;animation:trailFade .8s ease forwards}
-@keyframes trailFade{to{opacity:0;transform:scale(.2)}}
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+        }
 
-/* Swipe zone indicator */
-.swipe-zone{position:absolute;z-index:15;border:3px dashed rgba(255,107,157,.3);
-  border-radius:20px;pointer-events:none;display:none;
-  animation:zonePulse 1.5s infinite}
-@keyframes zonePulse{0%,100%{border-color:rgba(255,107,157,.2)}50%{border-color:rgba(255,107,157,.6)}}
+        .icon-btn:hover {
+            background: var(--surface2);
+            color: var(--text);
+            border-color: var(--border2);
+        }
 
-/* === ENCOUNTER PANEL === */
-#encounter{position:absolute;bottom:200px;left:50%;transform:translateX(-50%) translateY(30px);
-  width:92%;max-width:500px;z-index:70;opacity:0;transition:all .4s;pointer-events:none}
-#encounter.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all}
-.enc-card{background:rgba(10,0,20,.92);backdrop-filter:blur(20px);border-radius:20px;
-  border:2px solid rgba(255,107,157,.5);overflow:hidden}
-.enc-top{padding:14px 18px;display:flex;align-items:center;gap:14px;
-  background:linear-gradient(135deg,rgba(255,107,157,.1),rgba(255,45,120,.05))}
-.enc-ch{font-size:56px;filter:drop-shadow(0 0 12px rgba(255,107,157,.6));animation:encBounce 1s infinite ease-in-out}
-@keyframes encBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.enc-info{flex:1}
-.enc-nm{font-size:18px;font-weight:900;color:#ff6b9d;text-shadow:0 0 10px #ff6b9d}
-.enc-desc{font-size:12px;color:rgba(255,255,255,.6);font-weight:600;margin-top:3px;line-height:1.4}
-.enc-choices{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px}
-.enc-btn{padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;color:white;font-size:12px;font-weight:800;cursor:pointer;
-  font-family:'Nunito',sans-serif;transition:all .2s;text-align:center;line-height:1.3}
-.enc-btn:hover{background:rgba(255,107,157,.2);border-color:#ff6b9d}
-.enc-btn.flirt:hover{background:rgba(255,107,157,.3)}
-.enc-btn.bold:hover{background:rgba(255,45,120,.3)}
+        /* === MAIN CONTENT === */
+        .main {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px 20px 100px;
+        }
 
-/* === FLOATING TEXT === */
-.float-txt{position:fixed;font-weight:900;pointer-events:none;z-index:120;
-  animation:floatUp 1.5s ease forwards;white-space:nowrap;text-align:center}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}
-  50%{opacity:1;transform:translateY(-50px) scale(1.15)}
-  100%{opacity:0;transform:translateY(-90px) scale(.7)}}
+        /* === HERO === */
+        .hero {
+            text-align: center;
+            padding: 40px 0 32px;
+        }
 
-/* === PARTICLES === */
-.particle{position:fixed;pointer-events:none;z-index:150;
-  animation:pExplode var(--dur) ease forwards;font-size:var(--sz)}
-@keyframes pExplode{0%{opacity:1;transform:translate(0,0) rotate(0) scale(1)}
-  100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.1)}}
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-/* === END SCREENS === */
-.end-scr{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;
-  align-items:center;justify-content:center;gap:14px;backdrop-filter:blur(20px)}
-#winScreen{background:radial-gradient(ellipse at center,rgba(255,107,157,.15),rgba(0,0,0,.95))}
-#loseScreen{background:radial-gradient(ellipse at center,rgba(100,0,30,.15),rgba(0,0,0,.95))}
-.end-emoji{font-size:90px;animation:endB 1s infinite ease-in-out;filter:drop-shadow(0 0 30px rgba(255,107,157,.8))}
-@keyframes endB{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.05)}}
-.end-title{font-size:46px;font-weight:900;text-align:center;line-height:1.1}
-.win-t{background:linear-gradient(135deg,#ff6b9d,#ff2d78);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lose-t{background:linear-gradient(135deg,#ff073a,#c44569);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.end-sub{font-size:18px;color:rgba(255,255,255,.7);font-weight:700;text-align:center;max-width:450px;line-height:1.4}
-.end-ai{max-width:450px;padding:14px 18px;background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,107,157,.3);border-radius:14px;
-  color:rgba(255,255,255,.65);font-size:14px;font-weight:600;font-style:italic;line-height:1.5;text-align:center}
-.end-stats{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.es-box{text-align:center;padding:14px 22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px}
-.es-val{font-size:32px;font-weight:900;color:#ffe600}
-.es-lbl{font-size:12px;color:rgba(255,255,255,.4);font-weight:700;margin-top:3px}
-.end-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+        .hero p {
+            color: var(--text3);
+            font-size: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
-/* === INSTRUCTIONS OVERLAY === */
-#instrOverlay{position:absolute;inset:0;z-index:80;background:rgba(0,0,0,.7);
-  backdrop-filter:blur(10px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
-.instr-hand{font-size:80px;animation:instrSwipe 2s infinite ease-in-out}
-@keyframes instrSwipe{0%{transform:translateX(-40px) rotate(-20deg)}50%{transform:translateX(40px) rotate(20deg)}100%{transform:translateX(-40px) rotate(-20deg)}}
-.instr-text{color:white;font-size:22px;font-weight:900;text-align:center;text-shadow:0 0 15px #ff6b9d;max-width:350px;line-height:1.4}
-.instr-sub{color:rgba(255,255,255,.5);font-size:15px;font-weight:700}
+        /* === STREAK BAR === */
+        .streak-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 28px;
+        }
 
-/* Responsive */
-@media(max-width:600px){
-  .menu-title h1{font-size:36px}
-  .menu-char{width:90px;padding:10px}
-  .menu-char .ch-emoji{font-size:40px}
-  .ksyu-menu{font-size:70px !important}
-  .boy-body{font-size:60px}
-  #ksyu{font-size:56px}
-  .hud-p{padding:4px 10px;font-size:11px}
-  .target-port{width:36px;height:36px;font-size:18px}
-}
-</style>
+        .streak-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .streak-item .num {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .streak-item.fire .num { color: var(--orange); }
+        .streak-item.books .num { color: var(--accent); }
+        .streak-item.time .num { color: var(--green); }
+
+        .streak-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+        }
+
+        /* === SECTION TITLE === */
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title .badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        /* === ACTION CARDS === */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .action-card {
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .action-card:hover {
+            border-color: var(--accent);
+            background: var(--bg3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .action-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .action-card .label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .action-card .desc {
+            font-size: 11px;
+            color: var(--text3);
+        }
+
+        .action-card.full {
+            grid-column: 1 / -1;
+        }
+
+        /* === SEARCH BAR === */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .search-input::placeholder { color: var(--text3); }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: var(--radius);
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface2);
+            border-color: var(--border2);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text2);
+            padding: 8px 16px;
+        }
+
+        .btn-ghost:hover { color: var(--text); }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* === RECOMMENDATIONS === */
+        .recs-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .rec-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .rec-card:hover {
+            border-color: var(--accent);
+            background: var(--bg3);
+            transform: translateX(4px);
+        }
+
+        .rec-cover {
+            width: 48px;
+            height: 64px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .rec-info { flex: 1; min-width: 0; }
+
+        .rec-info .title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rec-info .author {
+            font-size: 12px;
+            color: var(--text3);
+            margin-bottom: 4px;
+        }
+
+        .rec-info .meta {
+            font-size: 11px;
+            color: var(--text3);
+            display: flex;
+            gap: 8px;
+        }
+
+        .rec-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--accent-glow2);
+            color: var(--accent);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* === LIBRARY === */
+        .library-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .lib-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lib-card:hover {
+            border-color: var(--accent);
+            background: var(--bg3);
+        }
+
+        .lib-cover {
+            width: 44px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent3), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .lib-info { flex: 1; min-width: 0; }
+
+        .lib-info .title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lib-progress-bar {
+            height: 4px;
+            background: var(--bg4);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .lib-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .lib-meta {
+            font-size: 11px;
+            color: var(--text3);
+        }
+
+        .lib-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .lib-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .lib-btn:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+
+        .lib-btn.play {
+            background: var(--accent3);
+            border-color: var(--accent3);
+            color: white;
+        }
+
+        .lib-btn.play:hover {
+            background: var(--accent2);
+        }
+
+        /* === READING SCREEN === */
+        .reader-screen {
+            background: var(--bg);
+            position: relative;
+        }
+
+        .reader-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(10, 10, 11, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .reader-title {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .reader-progress {
+            font-size: 12px;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-bar-mini {
+            width: 60px;
+            height: 3px;
+            background: var(--bg4);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-mini .fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .reader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 140px);
+            padding: 40px 24px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .context-hint {
+            font-size: 12px;
+            color: var(--text3);
+            text-align: center;
+            padding: 10px 16px;
+            background: var(--accent-glow2);
+            border-radius: var(--radius-xs);
+            margin-bottom: 32px;
+            max-width: 500px;
+            line-height: 1.5;
+            border: 1px solid rgba(129, 140, 248, 0.1);
+        }
+
+        .text-block {
+            font-family: 'Literata', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text);
+            text-align: left;
+            max-width: 580px;
+            animation: slideUp 0.5s ease;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        .text-block .highlight {
+            background: var(--accent-glow);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .reader-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: rgba(10, 10, 11, 0.9);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: var(--surface2);
+            border-color: var(--border2);
+        }
+
+        .nav-btn.primary {
+            background: var(--accent3);
+            border-color: var(--accent3);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--accent2);
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text3);
+        }
+
+        .timer-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* === SETTINGS MODAL === */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal {
+            background: var(--bg2);
+            border-radius: var(--radius) var(--radius) 0 0;
+            width: 100%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+            border: 1px solid var(--border);
+            border-bottom: none;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg2);
+            z-index: 10;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-body {
+            padding: 20px 24px 32px;
+        }
+
+        .setting-group {
+            margin-bottom: 24px;
+        }
+
+        .setting-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .setting-group input,
+        .setting-group select,
+        .setting-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .setting-group input:focus,
+        .setting-group textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .setting-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .setting-hint {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 6px;
+        }
+
+        .time-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .time-option {
+            flex: 1;
+            padding: 12px 8px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            color: var(--text2);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .time-option.active {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .time-option:hover:not(.active) {
+            border-color: var(--border2);
+            background: var(--bg4);
+        }
+
+        .time-option small {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+
+        /* === LOADING STATES === */
+        .loading-dots {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 1.2s ease infinite;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        /* === QUIZ === */
+        .quiz-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .quiz-container h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .quiz-question {
+            font-size: 15px;
+            color: var(--text2);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            color: var(--text);
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow2);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--green);
+            background: var(--green-bg);
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--red);
+            background: rgba(248, 113, 113, 0.1);
+        }
+
+        /* === UPLOAD AREA === */
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg2);
+            margin-bottom: 16px;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--accent);
+            background: var(--accent-glow2);
+        }
+
+        .upload-area .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .upload-area .title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .upload-area .hint {
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .format-tags {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .format-tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--bg4);
+            color: var(--text3);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* === PASTE AREA === */
+        .paste-area {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            color: var(--text);
+            font-family: 'Literata', Georgia, serif;
+            font-size: 14px;
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .paste-area:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px;
+            background: var(--surface2);
+            color: var(--text);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 2000;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* === EMPTY STATE === */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text3);
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .empty-state .title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 6px;
+        }
+
+        .empty-state .desc {
+            font-size: 13px;
+        }
+
+        /* === PREFERENCES CHIPS === */
+        .pref-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .pref-chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            color: var(--text2);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pref-chip.active {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .pref-chip:hover:not(.active) {
+            border-color: var(--border2);
+        }
+
+        /* === RESPONSIVE === */
+        @media (min-width: 768px) {
+            .modal {
+                border-radius: var(--radius);
+                max-height: 80vh;
+                margin: auto;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .modal-overlay {
+                align-items: center;
+            }
+
+            .hero h1 { font-size: 40px; }
+            .hero p { font-size: 16px; }
+
+            .text-block { font-size: 22px; }
+
+            .reader-content { padding: 60px 40px; }
+
+            .action-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .action-card.full {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .time-selector {
+                flex-wrap: wrap;
+            }
+
+            .streak-bar {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+        }
+
+        /* === auto scroll reading === */
+        .auto-scroll-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--bg3);
+            border-radius: var(--radius-xs);
+        }
+
+        .speed-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+        }
+
+        /* floating action */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: white;
+            border: none;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: var(--transition);
+            z-index: 50;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Генерация нейронкой — лоадер */
+        .generating-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 11, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1500;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .generating-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .gen-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .gen-text {
+            font-size: 15px;
+            color: var(--text2);
+            text-align: center;
+        }
+
+        .gen-text strong {
+            color: var(--text);
+            display: block;
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+    </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
 
-<!-- LOADING -->
-<div class="screen" id="loading" style="display:flex">
-  <h1>💅 Ксюша на Охоте</h1>
-  <p class="sub">Загружаем мужиков...</p>
-  <div class="lbar-w"><div class="lbar" id="lbar"></div></div>
-  <p class="ltip" id="ltip">Красим губы...</p>
+<!-- GENERATING OVERLAY -->
+<div class="generating-overlay" id="genOverlay">
+    <div class="gen-spinner"></div>
+    <div class="gen-text">
+        <strong>Нейронка думает...</strong>
+        <span id="genStatus">Подготавливаем книгу для чтения</span>
+    </div>
 </div>
 
-<!-- MENU -->
-<div class="screen" id="menu">
-  <div class="menu-glow"></div>
-  <div class="menu-title">
-    <h1>КСЮША<br>НА ОХОТЕ 💅</h1>
-    <p>Проведи пальцем сзади — поймай свою добычу!</p>
-  </div>
-  <div class="ksyu-menu" style="font-size:90px;text-align:center;position:relative;z-index:2;animation:ksyuFloat 2.5s infinite ease-in-out;filter:drop-shadow(0 0 30px rgba(255,107,157,.8))">👩</div>
-  <div class="menu-chars">
-    <div class="menu-char" id="mc-egor"><span class="ch-emoji">👦</span><div class="ch-name">Егор</div><div class="ch-role">Качок</div></div>
-    <div class="menu-char" id="mc-ivan"><span class="ch-emoji">🧔</span><div class="ch-name">Иван</div><div class="ch-role">Задрот</div></div>
-    <div class="menu-char" id="mc-kirill"><span class="ch-emoji">😎</span><div class="ch-name">Кирилл</div><div class="ch-role">Мажор</div></div>
-  </div>
-  <div class="menu-btns">
-    <button class="gbtn gbtn-play" onclick="showTutorial()">💋 НАЧАТЬ ОХОТУ</button>
-    <button class="gbtn gbtn-info" onclick="showTutorial()">📖 Как играть</button>
-  </div>
-  <p style="color:rgba(255,255,255,.3);font-size:12px;font-weight:600;position:relative;z-index:2;margin-top:16px">🔊 Включи звук! • AI-диалоги от Gemini</p>
-</div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-<!-- TUTORIAL -->
-<div class="screen" id="tutorial">
-  <div class="tut-box">
-    <div class="tut-t">📖 КАК ОХОТИТЬСЯ</div>
-    <div class="tut-steps">
-      <div class="tut-s"><div class="tut-i">👆</div><div class="tut-txt"><h4>Проведи пальцем СЗАДИ</h4><p>Когда парень повернётся спиной — быстро проведи пальцем по нему снизу вверх! Это "поглаживание"!</p></div></div>
-      <div class="tut-s"><div class="tut-i">⏱️</div><div class="tut-txt"><h4>Не попадись!</h4><p>Если проведёшь, когда он смотрит — получишь пощёчину! Жди, пока отвернётся.</p></div></div>
-      <div class="tut-s"><div class="tut-i">💬</div><div class="tut-txt"><h4>AI-флирт</h4><p>После удачного "поглаживания" — выбери фразу для флирта. AI генерирует уникальные реакции!</p></div></div>
-      <div class="tut-s"><div class="tut-i">🏆</div><div class="tut-txt"><h4>Поймай всех троих!</h4><p>Наполни шкалу симпатии каждого парня. 3 из 3 — победа!</p></div></div>
-    </div>
-    <button class="gbtn gbtn-play" style="width:100%" onclick="startGame()">🔥 ПОЕХАЛИ!</button>
-  </div>
-</div>
-
-<!-- GAME -->
-<div id="game">
-  <div id="cityWrap">
-    <div id="skyGrad"></div>
-    <div class="moon"></div>
-    <div id="street"><div class="street-line"></div></div>
-  </div>
-
-  <!-- HUD -->
-  <div id="hud">
-    <div class="hud-p pink-b">💋 <span class="hud-timer" id="hudTimer">60</span></div>
-    <div class="hud-p gold-b">⭐ <span class="hud-score" id="hudScore">0</span></div>
-    <div class="hud-p">💅 <span id="hudCatches">0</span>/3</div>
-    <div class="prog-wrap">
-      <div class="prog-label"><span>🎯 Охота</span><span id="progPct">0%</span></div>
-      <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-    </div>
-    <div class="targets-row">
-      <div class="target-port" id="tp-egor">👦</div>
-      <div class="target-port" id="tp-ivan">🧔</div>
-      <div class="target-port" id="tp-kirill">😎</div>
-    </div>
-  </div>
-
-  <!-- Ksyusha -->
-  <div id="ksyu">👩</div>
-
-  <!-- Boys container -->
-  <div id="boysArea"></div>
-
-  <!-- Encounter -->
-  <div id="encounter">
-    <div class="enc-card">
-      <div class="enc-top">
-        <div class="enc-ch" id="encCh">👦</div>
-        <div class="enc-info">
-          <div class="enc-nm" id="encNm">???</div>
-          <div class="enc-desc" id="encDesc">...</div>
+<!-- ==================== HOME SCREEN ==================== -->
+<div class="screen active" id="homeScreen">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">📖</div>
+            FocusFlow
         </div>
-      </div>
-      <div class="enc-choices" id="encChoices"></div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="showSettings()" title="Настройки">⚙️</button>
+        </div>
     </div>
-  </div>
+    
+    <div class="main">
+        <div class="hero">
+            <h1>Читай по 3 минуты</h1>
+            <p>Загрузи книгу или попроси нейронку — и читай без стресса, маленькими порциями</p>
+        </div>
 
-  <!-- Swipe instruction overlay (first time) -->
-  <div id="instrOverlay">
-    <div class="instr-hand">👆</div>
-    <div class="instr-text">Проведи пальцем СНИЗУ ВВЕРХ<br>по парню, когда он отвернётся!</div>
-    <div class="instr-sub">Тапни чтобы начать</div>
-  </div>
+        <!-- STREAK -->
+        <div class="streak-bar">
+            <div class="streak-item fire">
+                <span class="num" id="streakCount">0</span>
+                🔥 дней
+            </div>
+            <div class="streak-divider"></div>
+            <div class="streak-item books">
+                <span class="num" id="booksCount">0</span>
+                📚 книг
+            </div>
+            <div class="streak-divider"></div>
+            <div class="streak-item time">
+                <span class="num" id="totalMinutes">0</span>
+                ⏱️ мин
+            </div>
+        </div>
+
+        <!-- ACTION CARDS -->
+        <div class="section-title">Начать чтение</div>
+        <div class="action-grid">
+            <div class="action-card" onclick="showScreen('searchScreen')">
+                <div class="icon">🔍</div>
+                <div class="label">Найти книгу</div>
+                <div class="desc">Нейронка найдёт и подготовит</div>
+            </div>
+            <div class="action-card" onclick="showScreen('uploadScreen')">
+                <div class="icon">📂</div>
+                <div class="label">Загрузить свою</div>
+                <div class="desc">TXT, FB2, EPUB, PDF</div>
+            </div>
+            <div class="action-card" onclick="getRecommendations()">
+                <div class="icon">✨</div>
+                <div class="label">Рекомендации</div>
+                <div class="desc">Подборка под твои вкусы</div>
+            </div>
+        </div>
+
+        <!-- PREFERENCES -->
+        <div class="section-title">Твои интересы <span class="badge">нажми чтобы настроить</span></div>
+        <div class="pref-chips" id="prefChips">
+            <div class="pref-chip" data-pref="саморазвитие" onclick="togglePref(this)">💡 Саморазвитие</div>
+            <div class="pref-chip" data-pref="психология" onclick="togglePref(this)">🧠 Психология</div>
+            <div class="pref-chip" data-pref="бизнес" onclick="togglePref(this)">💼 Бизнес</div>
+            <div class="pref-chip" data-pref="философия" onclick="togglePref(this)">🏛️ Философия</div>
+            <div class="pref-chip" data-pref="наука" onclick="togglePref(this)">🔬 Наука</div>
+            <div class="pref-chip" data-pref="фантастика" onclick="togglePref(this)">🚀 Фантастика</div>
+            <div class="pref-chip" data-pref="история" onclick="togglePref(this)">📜 История</div>
+            <div class="pref-chip" data-pref="здоровье" onclick="togglePref(this)">🏃 Здоровье</div>
+            <div class="pref-chip" data-pref="финансы" onclick="togglePref(this)">💰 Финансы</div>
+            <div class="pref-chip" data-pref="продуктивность" onclick="togglePref(this)">⚡ Продуктивность</div>
+            <div class="pref-chip" data-pref="отношения" onclick="togglePref(this)">❤️ Отношения</div>
+            <div class="pref-chip" data-pref="классика" onclick="togglePref(this)">📕 Классика</div>
+        </div>
+
+        <!-- RECOMMENDATIONS -->
+        <div class="section-title">Рекомендации <span class="badge">AI</span></div>
+        <div class="recs-grid" id="recsGrid">
+            <div class="empty-state" id="recsEmpty">
+                <div class="icon">✨</div>
+                <div class="title">Выбери интересы выше</div>
+                <div class="desc">Нейронка подберёт книги под тебя</div>
+            </div>
+        </div>
+
+        <!-- LIBRARY -->
+        <div class="section-title">Моя библиотека</div>
+        <div class="library-grid" id="libraryGrid">
+            <div class="empty-state" id="libEmpty">
+                <div class="icon">📚</div>
+                <div class="title">Библиотека пуста</div>
+                <div class="desc">Загрузи книгу или найди через поиск</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- WIN -->
-<div class="end-scr" id="winScreen">
-  <div class="end-emoji">👩‍❤️‍👨</div>
-  <div class="end-title win-t">КСЮША ПОБЕДИЛА!</div>
-  <div class="end-sub" id="winSub">Все парни покорены!</div>
-  <div class="end-stats">
-    <div class="es-box"><div class="es-val" id="winScore">0</div><div class="es-lbl">Очков</div></div>
-    <div class="es-box"><div class="es-val" id="winSwipes">0</div><div class="es-lbl">Поглаживаний</div></div>
-    <div class="es-box"><div class="es-val" id="winTime">0</div><div class="es-lbl">Секунд</div></div>
-  </div>
-  <div class="end-ai" id="winAI">💭 AI думает...</div>
-  <div class="end-btns">
-    <button class="gbtn gbtn-play" onclick="startGame()">🔄 Ещё раз!</button>
-    <button class="gbtn gbtn-info" onclick="showMenu()">🏠 Меню</button>
-  </div>
+<!-- ==================== SEARCH SCREEN ==================== -->
+<div class="screen" id="searchScreen">
+    <div class="header">
+        <button class="icon-btn" onclick="showScreen('homeScreen')">←</button>
+        <div class="logo">
+            <span style="font-size:18px;">🔍</span>
+            Найти книгу
+        </div>
+        <div style="width:40px;"></div>
+    </div>
+    
+    <div class="main">
+        <div style="padding-top:20px;">
+            <div class="search-bar">
+                <input class="search-input" id="searchInput" placeholder="Название книги, автор или тема..." 
+                    onkeydown="if(event.key==='Enter') searchBook()">
+                <button class="btn btn-primary" onclick="searchBook()">✨ Найти</button>
+            </div>
+
+            <div class="section-title">Быстрый выбор</div>
+            <div class="pref-chips" style="margin-bottom:24px;">
+                <div class="pref-chip" onclick="quickSearch('Атомные привычки')">Атомные привычки</div>
+                <div class="pref-chip" onclick="quickSearch('Думай медленно решай быстро')">Думай медленно</div>
+                <div class="pref-chip" onclick="quickSearch('48 законов власти')">48 законов власти</div>
+                <div class="pref-chip" onclick="quickSearch('Тонкое искусство пофигизма')">Тонкое искусство</div>
+                <div class="pref-chip" onclick="quickSearch('Sapiens')">Sapiens</div>
+                <div class="pref-chip" onclick="quickSearch('Как завоевывать друзей')">Карнеги</div>
+            </div>
+
+            <div id="searchResults"></div>
+        </div>
+    </div>
 </div>
 
-<!-- LOSE -->
-<div class="end-scr" id="loseScreen">
-  <div class="end-emoji">😤</div>
-  <div class="end-title lose-t">КСЮША ПОПАЛАСЬ!</div>
-  <div class="end-sub" id="loseSub">Время вышло — парни сбежали!</div>
-  <div class="end-stats">
-    <div class="es-box"><div class="es-val" id="loseScore">0</div><div class="es-lbl">Очков</div></div>
-  </div>
-  <div class="end-ai" id="loseAI">💭 AI думает...</div>
-  <div class="end-btns">
-    <button class="gbtn gbtn-play" onclick="startGame()">🔄 Ещё раз!</button>
-    <button class="gbtn gbtn-info" onclick="showMenu()">🏠 Меню</button>
-  </div>
+<!-- ==================== UPLOAD SCREEN ==================== -->
+<div class="screen" id="uploadScreen">
+    <div class="header">
+        <button class="icon-btn" onclick="showScreen('homeScreen')">←</button>
+        <div class="logo">
+            <span style="font-size:18px;">📂</span>
+            Загрузить книгу
+        </div>
+        <div style="width:40px;"></div>
+    </div>
+    
+    <div class="main">
+        <div style="padding-top:20px;">
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="icon">📄</div>
+                <div class="title">Нажми или перетащи файл</div>
+                <div class="hint">Или вставь текст ниже</div>
+                <div class="format-tags">
+                    <span class="format-tag">.txt</span>
+                    <span class="format-tag">.fb2</span>
+                    <span class="format-tag">.epub</span>
+                    <span class="format-tag">.pdf</span>
+                    <span class="format-tag">.html</span>
+                </div>
+            </div>
+            <input type="file" id="fileInput" accept=".txt,.fb2,.epub,.pdf,.html,.htm,.md" style="display:none" onchange="handleFileUpload(event)">
+
+            <div class="section-title" style="margin-top:24px;">Или вставь текст</div>
+            <textarea class="paste-area" id="pasteArea" placeholder="Вставь сюда текст книги..."></textarea>
+            
+            <div style="margin-top:16px; display:flex; gap:10px;">
+                <input class="search-input" id="uploadBookTitle" placeholder="Название книги" style="flex:1;">
+                <button class="btn btn-primary" onclick="processUploadedText()">📖 Подготовить</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- ==================== READER SCREEN ==================== -->
+<div class="screen" id="readerScreen">
+    <div class="reader-header">
+        <button class="icon-btn" onclick="exitReader()">←</button>
+        <div class="reader-title" id="readerBookTitle">Книга</div>
+        <div class="reader-progress">
+            <div class="progress-bar-mini">
+                <div class="fill" id="readerProgressFill" style="width:0%"></div>
+            </div>
+            <span id="readerProgressText">0%</span>
+        </div>
+    </div>
+    
+    <div class="reader-content" id="readerContent" onclick="nextBlock()">
+        <div class="context-hint" id="contextHint" style="display:none;"></div>
+        <div class="text-block" id="textBlock">
+            Нажми чтобы начать чтение...
+        </div>
+    </div>
+    
+    <div class="reader-nav">
+        <button class="nav-btn" onclick="prevBlock()">← Назад</button>
+        <div class="nav-center">
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="readTimer">0:00</span>
+            </div>
+        </div>
+        <button class="nav-btn primary" onclick="nextBlock()">Далее →</button>
+    </div>
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+<div class="screen" id="quizScreen">
+    <div class="header">
+        <div class="logo">
+            <span style="font-size:18px;">🧠</span>
+            Проверка
+        </div>
+    </div>
+    <div class="main">
+        <div class="quiz-container" id="quizContainer">
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SETTINGS MODAL ==================== -->
+<div class="modal-overlay" id="settingsModal" onclick="if(event.target===this)closeSettings()">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>⚙️ Настройки</h2>
+            <button class="icon-btn" onclick="closeSettings()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="setting-group">
+                <label>API Токен</label>
+                <input type="password" id="apiToken" placeholder="Вставь свой API-ключ">
+                <div class="setting-hint">OpenRouter / Gemini API ключ</div>
+            </div>
+
+            <div class="setting-group">
+                <label>Модель</label>
+                <select id="modelSelect">
+                    <option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash (по умолчанию)</option>
+                    <option value="google/gemini-2.5-flash-preview">Gemini 2.5 Flash Preview</option>
+                    <option value="google/gemini-2.0-flash-thinking-exp:free">Gemini 2.0 Flash Thinking (Free)</option>
+                    <option value="deepseek/deepseek-chat">DeepSeek Chat</option>
+                    <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                    <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>Время чтения</label>
+                <div class="time-selector" id="timeSelector">
+                    <div class="time-option" data-min="2" onclick="setReadTime(2, this)">2<small>мин</small></div>
+                    <div class="time-option active" data-min="3" onclick="setReadTime(3, this)">3<small>мин</small></div>
+                    <div class="time-option" data-min="5" onclick="setReadTime(5, this)">5<small>мин</small></div>
+                    <div class="time-option" data-min="10" onclick="setReadTime(10, this)">10<small>мин</small></div>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Размер текста</label>
+                <select id="fontSizeSelect" onchange="setFontSize(this.value)">
+                    <option value="16">Маленький</option>
+                    <option value="18">Обычный</option>
+                    <option value="20" selected>Комфортный</option>
+                    <option value="24">Большой</option>
+                    <option value="28">Очень большой</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>API Endpoint</label>
+                <input type="text" id="apiEndpoint" value="https://openrouter.ai/api/v1/chat/completions">
+                <div class="setting-hint">Для OpenRouter используется по умолчанию</div>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="saveSettings()">
+                💾 Сохранить настройки
+            </button>
+
+            <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
+                <button class="btn btn-secondary" style="width:100%; justify-content:center; color:var(--red);" onclick="clearAllData()">
+                    🗑️ Очистить все данные
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
-// ===================== CONFIG =====================
-const API_KEY='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';
-const MODEL='google/gemini-2.0-flash-001';
+// ==================== STATE ====================
+const DEFAULT_TOKEN = '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';
 
-async function ai(sys,usr,max=120){
-  try{const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',
-    headers:{'Authorization':`Bearer ${API_KEY}`,'Content-Type':'application/json'},
-    body:JSON.stringify({model:MODEL,messages:[{role:'system',content:sys},{role:'user',content:usr}],max_tokens:max,temperature:1})});
-    const d=await r.json();return d.choices?.[0]?.message?.content?.trim()||null;}catch(e){return null;}}
-
-// ===================== AUDIO =====================
-let actx;
-function initAudio(){if(actx)return;actx=new(window.AudioContext||window.webkitAudioContext)()}
-function tone(f,tp='sine',d=.15,v=.3,dl=0){if(!actx)return;const o=actx.createOscillator(),g=actx.createGain();
-  o.connect(g);g.connect(actx.destination);o.type=tp;o.frequency.setValueAtTime(f,actx.currentTime+dl);
-  g.gain.setValueAtTime(v,actx.currentTime+dl);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+dl+d);
-  o.start(actx.currentTime+dl);o.stop(actx.currentTime+dl+d+.05)}
-function sfxSwipe(){tone(500,'sine',.08,.4);tone(700,'sine',.1,.3,.05);tone(900,'sine',.08,.25,.1)}
-function sfxCatch(){[0,.12,.24,.36].forEach((d,i)=>tone([440,660,880,1100][i],'sine',.12,.4,d))}
-function sfxFail(){tone(200,'sawtooth',.2,.4);tone(150,'sawtooth',.25,.3,.1)}
-function sfxFlirt(){tone(660,'sine',.1,.35);tone(880,'sine',.15,.3,.1)}
-function sfxWin(){[0,.15,.3,.45,.6,.75,.9].forEach((d,i)=>tone([523,587,659,698,784,880,1047][i],'sine',.2,.35,d))}
-function sfxLose(){[0,.2,.4].forEach((d,i)=>tone([300,250,180][i],'sawtooth',.3,.4,d))}
-function sfxTick(){tone(1000,'square',.03,.15)}
-function sfxSlap(){tone(100,'sawtooth',.15,.5);tone(80,'square',.2,.4,.05)}
-
-// BG music loop
-let bgNodes=[],bgT;
-function startBG(){if(!actx)return;stopBG();
-  const ns=[330,392,440,523,494,440,392,330];let t=actx.currentTime;
-  (function loop(){ns.forEach((n,i)=>{const o=actx.createOscillator(),g=actx.createGain();
-    o.connect(g);g.connect(actx.destination);o.type='triangle';o.frequency.value=n;
-    g.gain.setValueAtTime(0,t+i*.3);g.gain.linearRampToValueAtTime(.06,t+i*.3+.05);
-    g.gain.exponentialRampToValueAtTime(.001,t+i*.3+.25);
-    o.start(t+i*.3);o.stop(t+i*.3+.3);bgNodes.push(o)});t+=2.4;bgT=setTimeout(loop,2200)})()}
-function stopBG(){clearTimeout(bgT);bgNodes.forEach(n=>{try{n.stop()}catch(e){}});bgNodes=[]}
-
-// ===================== CANVAS STARS =====================
-const cv=document.getElementById('bgCanvas'),cx=cv.getContext('2d');
-let stars=[];
-function initStars(){cv.width=innerWidth;cv.height=innerHeight;
-  stars=Array.from({length:120},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height*.65,
-    r:Math.random()*1.8+.3,sp:Math.random()*.4+.1,ph:Math.random()*6.28,
-    col:`hsl(${300+Math.random()*60},100%,${70+Math.random()*20}%)`}))}
-function drawStars(){cx.clearRect(0,0,cv.width,cv.height);const t=Date.now()/1000;
-  stars.forEach(s=>{const b=.3+.7*Math.abs(Math.sin(t*s.sp+s.ph));cx.globalAlpha=b;
-    cx.fillStyle=s.col;cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.28);cx.fill();
-    if(s.r>1.3){cx.globalAlpha=b*.3;cx.strokeStyle=s.col;cx.lineWidth=.5;
-      cx.beginPath();cx.moveTo(s.x-s.r*3,s.y);cx.lineTo(s.x+s.r*3,s.y);
-      cx.moveTo(s.x,s.y-s.r*3);cx.lineTo(s.x,s.y+s.r*3);cx.stroke()}});cx.globalAlpha=1}
-initStars();
-
-// ===================== BOYS DATA =====================
-const BOYS=[
-  {id:'egor',emoji:'👦',name:'Егор',type:'Качок',
-    backEmoji:'🧑',
-    personality:'Ты Егор — качок-тупенький. Мускулы есть, мозгов нет. Реагируй по-пацански, простыми словами.',
-    flirts:['Ого, какие бицепсы! 💪','Ты в качалке живёшь?','Можно потрогать мышцы?','Ты такой большооой!'],
-    bolds:['А пресс покажешь?','Подними меня на руки!','Я бы на тебе повисла 😏','Ты один или качаешься?'],
-    turnDelay:[1500,3000], backDur:[2000,4000]},
-  {id:'ivan',emoji:'🧔',name:'Иван',type:'Задрот',
-    backEmoji:'👨',
-    personality:'Ты Иван — стеснительный задрот-программист. Краснеешь от любого внимания девушек. Заикаешься.',
-    flirts:['Ты программист? Это горячо 🔥','А ты взломаешь моё сердце?','Какой у тебя уровень в доте?','Мне нравятся умные 🤓'],
-    bolds:['Покажи мне свой код 😏','Давай поиграем... вдвоём','Я тоже люблю по ночам... кодить','Ты такой загадочный!'],
-    turnDelay:[1000,2500], backDur:[1500,3500]},
-  {id:'kirill',emoji:'😎',name:'Кирилл',type:'Мажор',
-    backEmoji:'🧑‍💼',
-    personality:'Ты Кирилл — самоуверенный мажор на папином бмв. Считаешь себя красавчиком. Дерзкий.',
-    flirts:['Это бмв папина или твоя?','Красивые часы! ⌚','Ты пахнешь дорого 💰','Куда вечером едем?'],
-    bolds:['А на заднее сиденье пустишь?','Папа богатый, а ты — горячий 🔥','Свози меня куда-нибудь','Я люблю плохих парней 😈'],
-    turnDelay:[800,2000], backDur:[1200,3000]}
-];
-
-// ===================== GAME STATE =====================
-const G={
-  running:false,paused:false,
-  score:0,timer:60,maxTimer:60,
-  catches:0,totalSwipes:0,goodSwipes:0,failSwipes:0,
-  boys:[],
-  inEncounter:false,
-  firstTime:true,
-  caughtBoys:{egor:false,ivan:false,kirill:false},
-  boyVibe:{egor:0,ivan:0,kirill:0},
-  vibeNeeded:100,
+let state = {
+    token: DEFAULT_TOKEN,
+    model: 'google/gemini-2.0-flash-001',
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    readTime: 3,
+    fontSize: 20,
+    preferences: [],
+    streak: 0,
+    lastReadDate: null,
+    totalMinutes: 0,
+    booksRead: 0,
+    library: [],    // {id, title, author, blocks[], currentBlock, totalBlocks, addedAt, readMinutes}
+    currentBookId: null,
+    readHistory: []  // for recommendations
 };
 
-// ===================== SCREEN MANAGEMENT =====================
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
-  if(id){const s=document.getElementById(id);if(s)s.style.display='flex'}}
-function showMenu(){stopBG();showScreen('menu');document.getElementById('game').style.display='none';
-  document.getElementById('winScreen').style.display='none';document.getElementById('loseScreen').style.display='none'}
-function showTutorial(){showScreen('tutorial')}
-
-// ===================== GAME INIT =====================
-function startGame(){
-  initAudio();startBG();
-  showScreen(null);
-  document.getElementById('game').style.display='block';
-  document.getElementById('winScreen').style.display='none';
-  document.getElementById('loseScreen').style.display='none';
-
-  Object.assign(G,{running:true,paused:false,score:0,timer:60,catches:0,
-    totalSwipes:0,goodSwipes:0,failSwipes:0,boys:[],inEncounter:false,
-    caughtBoys:{egor:false,ivan:false,kirill:false},
-    boyVibe:{egor:0,ivan:0,kirill:0}});
-
-  document.getElementById('encounter').classList.remove('show');
-  document.getElementById('boysArea').innerHTML='';
-  document.querySelectorAll('.target-port').forEach(p=>{p.classList.remove('caught','active')});
-
-  spawnBoys();
-  updateHUD();
-
-  if(G.firstTime){
-    document.getElementById('instrOverlay').style.display='flex';
-    document.getElementById('instrOverlay').onclick=()=>{
-      document.getElementById('instrOverlay').style.display='none';
-      G.firstTime=false;
-      startTimer();
-    }
-  } else startTimer();
-
-  cancelAnimationFrame(G.animId);
-  G.lastTime=performance.now();
-  loop(G.lastTime);
-}
-
-function startTimer(){
-  clearInterval(G.timerInt);
-  G.timerInt=setInterval(()=>{
-    if(!G.running||G.paused)return;
-    G.timer--;sfxTick();
-    document.getElementById('hudTimer').textContent=G.timer;
-    if(G.timer<=10)document.getElementById('hudTimer').style.color='#ff073a';
-    if(G.timer<=0){clearInterval(G.timerInt);endGame(false)}
-  },1000);
-}
-
-// ===================== SPAWN BOYS =====================
-function spawnBoys(){
-  const area=document.getElementById('boysArea');
-  const positions=[{x:15,y:0},{x:45,y:0},{x:75,y:0}];
-
-  BOYS.forEach((data,i)=>{
-    if(G.caughtBoys[data.id])return;
-    const boy=document.createElement('div');
-    boy.className='boy';
-    boy.id='boy-'+data.id;
-    boy.style.left=positions[i].x+'%';
-    boy.style.bottom='180px';
-    boy.innerHTML=`
-      <div class="boy-alert" id="alert-${data.id}">❗</div>
-      <div class="boy-name">${data.emoji} ${data.name}<br><span style="font-size:10px;color:rgba(255,255,255,.5)">${data.type}</span></div>
-      <span class="boy-body" id="body-${data.id}">${data.emoji}</span>
-      <div class="boy-bar-wrap"><div class="boy-bar" id="bar-${data.id}" style="width:${G.boyVibe[data.id]}%"></div></div>`;
-    area.appendChild(boy);
-
-    const state={
-      id:data.id, data, el:boy,
-      facing:'front', // front or back
-      turnTimer:0, backTimer:0,
-      suspicious:false,
-      alertLevel:0,
-      x:positions[i].x,
-    };
-
-    // Random initial turn timing
-    state.turnTimer=randRange(data.turnDelay[0],data.turnDelay[1]);
-    G.boys.push(state);
-  });
-}
-
-function randRange(a,b){return a+Math.random()*(b-a)}
-
-// ===================== BOY AI LOOP =====================
-function updateBoys(dt){
-  G.boys.forEach(boy=>{
-    if(G.caughtBoys[boy.id])return;
-
-    const body=document.getElementById('body-'+boy.id);
-    const alert=document.getElementById('alert-'+boy.id);
-    if(!body)return;
-
-    if(boy.facing==='front'){
-      boy.turnTimer-=dt*1000;
-      if(boy.turnTimer<=0){
-        // Turn around!
-        boy.facing='back';
-        body.textContent=boy.data.backEmoji;
-        body.style.transform='scaleX(-1)';
-        body.style.filter='drop-shadow(0 0 15px rgba(57,255,20,.5))';
-        boy.backTimer=randRange(boy.data.backDur[0],boy.data.backDur[1]);
-        alert.style.display='none';
-        boy.el.classList.remove('alert');
-      }
-      // Random movement
-      if(Math.random()<.005){
-        boy.x=Math.max(10,Math.min(85,boy.x+(Math.random()-.5)*15));
-        boy.el.style.left=boy.x+'%';
-      }
-    } else {
-      // Facing back — vulnerable!
-      boy.backTimer-=dt*1000;
-      if(boy.backTimer<=0){
-        // Turn back to front
-        boy.facing='front';
-        body.textContent=boy.data.emoji;
-        body.style.transform='scaleX(1)';
-        body.style.filter='';
-        boy.turnTimer=randRange(boy.data.turnDelay[0],boy.data.turnDelay[1]);
-      }
-    }
-
-    // Suspicion fading
-    if(boy.alertLevel>0) boy.alertLevel=Math.max(0,boy.alertLevel-dt*15);
-    if(boy.alertLevel>50){
-      alert.style.display='block';
-      alert.textContent='❗';
-      boy.el.classList.add('alert');
-    } else if(boy.alertLevel>20){
-      alert.style.display='block';
-      alert.textContent='❓';
-      boy.el.classList.remove('alert');
-    } else {
-      alert.style.display='none';
-      boy.el.classList.remove('alert');
-    }
-
-    // Update vibe bar
-    document.getElementById('bar-'+boy.id).style.width=G.boyVibe[boy.id]+'%';
-    if(G.boyVibe[boy.id]>=G.vibeNeeded && !G.caughtBoys[boy.id]) catchBoy(boy);
-  });
-}
-
-// ===================== SWIPE DETECTION =====================
-let swipeStart=null, swipeTarget=null, swipeTrail=[];
-
-document.addEventListener('touchstart',handleTouchStart,{passive:false});
-document.addEventListener('touchmove',handleTouchMove,{passive:false});
-document.addEventListener('touchend',handleTouchEnd,{passive:false});
-document.addEventListener('mousedown',e=>handleTouchStart({touches:[e],preventDefault:()=>{}}));
-document.addEventListener('mousemove',e=>{if(swipeStart)handleTouchMove({touches:[e],preventDefault:()=>{}})});
-document.addEventListener('mouseup',e=>handleTouchEnd({changedTouches:[e]}));
-
-function handleTouchStart(e){
-  if(!G.running||G.paused||G.inEncounter)return;
-  initAudio();
-  const t=e.touches[0];
-  swipeStart={x:t.clientX,y:t.clientY,time:Date.now()};
-  swipeTarget=findBoyAt(t.clientX,t.clientY);
-  swipeTrail=[];
-}
-
-function handleTouchMove(e){
-  if(!swipeStart)return;
-  e.preventDefault();
-  const t=e.touches[0];
-  spawnTrailDot(t.clientX,t.clientY);
-}
-
-function handleTouchEnd(e){
-  if(!swipeStart||!G.running)return;
-  const t=e.changedTouches?e.changedTouches[0]:e;
-  const dx=t.clientX-swipeStart.x;
-  const dy=t.clientY-swipeStart.y;
-  const dist=Math.sqrt(dx*dx+dy*dy);
-  const duration=Date.now()-swipeStart.time;
-
-  // Check if swipe was upward and on a boy
-  if(dist>50 && dy<-30 && duration<800){
-    const boy=swipeTarget||findBoyAt(swipeStart.x,swipeStart.y);
-    if(boy) processSwipe(boy);
-  }
-
-  swipeStart=null;
-  swipeTarget=null;
-}
-
-function findBoyAt(x,y){
-  for(const boy of G.boys){
-    if(G.caughtBoys[boy.id])continue;
-    const el=boy.el;
-    const rect=el.getBoundingClientRect();
-    if(x>=rect.left-30 && x<=rect.right+30 && y>=rect.top-30 && y<=rect.bottom+30) return boy;
-  }
-  return null;
-}
-
-function spawnTrailDot(x,y){
-  const d=document.createElement('div');
-  d.className='trail-dot';
-  d.style.cssText=`left:${x-6}px;top:${y-6}px;position:fixed;z-index:100;pointer-events:none`;
-  document.body.appendChild(d);
-  setTimeout(()=>d.remove(),800);
-}
-
-function processSwipe(boy){
-  G.totalSwipes++;
-  sfxSwipe();
-
-  if(boy.facing==='back'){
-    // SUCCESS!
-    G.goodSwipes++;
-    const vibeGain=15+Math.floor(Math.random()*15);
-    G.boyVibe[boy.id]=Math.min(G.vibeNeeded,G.boyVibe[boy.id]+vibeGain);
-    G.score+=vibeGain*5;
+// Load state
+function loadState() {
+    try {
+        const saved = localStorage.getItem('focusflow_state');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            state = { ...state, ...parsed };
+        }
+    } catch(e) { console.error('Load state error:', e); }
     
-    const rect=boy.el.getBoundingClientRect();
-    floatText('💅 +'+vibeGain+'!', rect.left+rect.width/2, rect.top-20, '#ff6b9d');
-    spawnParticles('💜', rect.left+rect.width/2, rect.top);
-    sfxFlirt();
-
-    // Move Ksyusha to boy
-    const ksyu=document.getElementById('ksyu');
-    ksyu.style.left=boy.x+'%';
-    ksyu.classList.add('hunting');
-    setTimeout(()=>ksyu.classList.remove('hunting'),500);
-
-    // Increase suspicion a bit
-    boy.alertLevel=Math.min(60,boy.alertLevel+20);
-
-    // Trigger encounter if vibe is at certain thresholds
-    if(G.boyVibe[boy.id]>=40 && G.boyVibe[boy.id]<60) triggerEncounter(boy);
-    else if(G.boyVibe[boy.id]>=75 && G.boyVibe[boy.id]<G.vibeNeeded) triggerEncounter(boy);
-
-    updateHUD();
-  } else {
-    // FAIL — boy saw it!
-    G.failSwipes++;
-    sfxSlap();
-    boy.alertLevel=100;
-
-    const rect=boy.el.getBoundingClientRect();
-    floatText('👋 ПОЩЁЧИНА!', rect.left+rect.width/2, rect.top-20, '#ff073a');
-    spawnParticles('💢', rect.left+rect.width/2, rect.top);
-
-    G.score=Math.max(0,G.score-30);
-    G.boyVibe[boy.id]=Math.max(0,G.boyVibe[boy.id]-10);
-
-    // Boy turns aggressively
-    const body=document.getElementById('body-'+boy.id);
-    body.textContent='😡';
-    setTimeout(()=>{body.textContent=boy.data.emoji;boy.alertLevel=40},1500);
-
-    // Shake screen
-    document.getElementById('game').style.animation='shake .4s ease';
-    setTimeout(()=>document.getElementById('game').style.animation='',400);
-
-    updateHUD();
-  }
+    // Update UI
+    document.getElementById('apiToken').value = state.token;
+    document.getElementById('modelSelect').value = state.model;
+    document.getElementById('apiEndpoint').value = state.endpoint;
+    document.getElementById('fontSizeSelect').value = state.fontSize;
+    
+    // Time selector
+    document.querySelectorAll('.time-option').forEach(el => {
+        el.classList.toggle('active', parseInt(el.dataset.min) === state.readTime);
+    });
+    
+    // Preferences
+    document.querySelectorAll('.pref-chip[data-pref]').forEach(el => {
+        el.classList.toggle('active', state.preferences.includes(el.dataset.pref));
+    });
+    
+    updateStats();
+    renderLibrary();
+    updateStreak();
 }
 
-// ===================== CATCH BOY =====================
-function catchBoy(boy){
-  G.caughtBoys[boy.id]=true;
-  G.catches++;
-  sfxCatch();
-
-  boy.el.classList.add('caught');
-  document.getElementById('tp-'+boy.id).classList.add('caught');
-
-  const rect=boy.el.getBoundingClientRect();
-  floatText('❤️ '+boy.data.name+' ПОКОРЁН!', rect.left+rect.width/2, rect.top-40, '#39ff14');
-  spawnParticlesMany(rect.left+rect.width/2, rect.top);
-
-  G.score+=500;
-
-  // Remove boy after animation
-  setTimeout(()=>{
-    boy.el.style.opacity='0';
-    boy.el.style.transform='scale(0)';
-    setTimeout(()=>boy.el.remove(),500);
-  },1500);
-
-  updateHUD();
-  if(G.catches>=3) setTimeout(()=>endGame(true),2000);
+function saveState() {
+    try {
+        localStorage.setItem('focusflow_state', JSON.stringify(state));
+    } catch(e) { console.error('Save state error:', e); }
 }
 
-// ===================== ENCOUNTER =====================
-let encBoy=null;
-
-async function triggerEncounter(boy){
-  if(G.inEncounter)return;
-  G.inEncounter=true;
-
-  encBoy=boy;
-  document.getElementById('encCh').textContent=boy.data.emoji;
-  document.getElementById('encNm').textContent=boy.data.name+' — '+boy.data.type;
-
-  // Get AI reaction
-  const aiReact=await ai(
-    boy.data.personality,
-    `Красивая девушка Ксюша незаметно погладила тебя сзади! Ты повернулся и увидел её. Скажи короткую реакцию (макс 15 слов). По-русски.`
-  );
-  document.getElementById('encDesc').textContent='"'+(aiReact||'Э-э-э... Привет?!')+'"';
-
-  // Build flirt choices
-  const choices=document.getElementById('encChoices');
-  choices.innerHTML='';
-  const flirts=boy.data.flirts.sort(()=>Math.random()-.5).slice(0,2);
-  const bolds=boy.data.bolds.sort(()=>Math.random()-.5).slice(0,2);
-
-  flirts.forEach(t=>{
-    const b=document.createElement('button');
-    b.className='enc-btn flirt';
-    b.textContent='💋 '+t;
-    b.onclick=()=>handleFlirt(boy,t,false);
-    choices.appendChild(b);
-  });
-  bolds.forEach(t=>{
-    const b=document.createElement('button');
-    b.className='enc-btn bold';
-    b.textContent='🔥 '+t;
-    b.onclick=()=>handleFlirt(boy,t,true);
-    choices.appendChild(b);
-  });
-
-  document.getElementById('encounter').classList.add('show');
+// ==================== NAVIGATION ====================
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
 }
 
-async function handleFlirt(boy,text,isBold){
-  document.getElementById('encounter').classList.remove('show');
-
-  const vibeGain=isBold ? 15+Math.floor(Math.random()*20) : 10+Math.floor(Math.random()*10);
-  G.boyVibe[boy.id]=Math.min(G.vibeNeeded,G.boyVibe[boy.id]+vibeGain);
-  G.score+=vibeGain*3;
-
-  sfxFlirt();
-
-  const aiReply=await ai(
-    boy.data.personality,
-    `Ксюша тебе сказала: "${text}". ${isBold?'Это было дерзко!':'Это был лёгкий флирт.'} 
-     Твоя симпатия к ней: ${G.boyVibe[boy.id]}%. Ответь коротко (макс 15 слов). По-русски. ${isBold?'Можешь смутиться или наоборот дерзко ответить':'Реагируй мило'}.`
-  );
-
-  const reply=aiReply||(isBold?'О-о-о, дерзкая... Мне нравится! 😏':'Хм... ты милая 😊');
-  floatText('💬 '+reply, innerWidth/2, innerHeight/2-100, '#ff6b9d');
-  floatText('💜 +'+vibeGain, innerWidth/2, innerHeight/2-50, '#39ff14');
-
-  updateHUD();
-  setTimeout(()=>{G.inEncounter=false},1500);
+// ==================== SETTINGS ====================
+function showSettings() {
+    document.getElementById('settingsModal').classList.add('active');
 }
 
-// ===================== HUD =====================
-function updateHUD(){
-  document.getElementById('hudScore').textContent=G.score;
-  document.getElementById('hudCatches').textContent=G.catches;
+function closeSettings() {
+    document.getElementById('settingsModal').classList.remove('active');
+}
 
-  const totalVibe=(G.boyVibe.egor+G.boyVibe.ivan+G.boyVibe.kirill)/(G.vibeNeeded*3)*100;
-  document.getElementById('progFill').style.width=totalVibe+'%';
-  document.getElementById('progPct').textContent=Math.floor(totalVibe)+'%';
+function saveSettings() {
+    state.token = document.getElementById('apiToken').value || DEFAULT_TOKEN;
+    state.model = document.getElementById('modelSelect').value;
+    state.endpoint = document.getElementById('apiEndpoint').value;
+    saveState();
+    closeSettings();
+    showToast('✅ Настройки сохранены');
+}
 
-  // Active target
-  BOYS.forEach(b=>{
-    const tp=document.getElementById('tp-'+b.id);
-    if(!G.caughtBoys[b.id]){
-      tp.classList.toggle('active',G.boyVibe[b.id]>0 && G.boyVibe[b.id]<G.vibeNeeded);
+function setReadTime(min, el) {
+    state.readTime = min;
+    document.querySelectorAll('.time-option').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    saveState();
+}
+
+function setFontSize(size) {
+    state.fontSize = parseInt(size);
+    saveState();
+}
+
+function clearAllData() {
+    if (confirm('Удалить все данные? Это необратимо.')) {
+        localStorage.removeItem('focusflow_state');
+        location.reload();
     }
-  });
 }
 
-// ===================== END GAME =====================
-async function endGame(won){
-  G.running=false;
-  clearInterval(G.timerInt);
-  stopBG();
-
-  if(won){
-    sfxWin();spawnParticlesMany(innerWidth/2,innerHeight/2);
-    document.getElementById('winScore').textContent=G.score;
-    document.getElementById('winSwipes').textContent=G.goodSwipes;
-    document.getElementById('winTime').textContent=(G.maxTimer-G.timer)+'с';
-    document.getElementById('winScreen').style.display='flex';
-    document.getElementById('winAI').textContent='💭 AI думает...';
-    const q=await ai('Ты весёлый нарратор комедийной игры про Ксюшу-охотницу на парней. По-русски.',
-      `Ксюша покорила всех 3 парней! Набрала ${G.score} очков за ${G.maxTimer-G.timer} секунд. Скажи что-то смешное и поздравительное (1-2 предложения).`);
-    document.getElementById('winAI').textContent=q||'Все парни у ног Ксюши! Это был мастер-класс! 💅';
-    document.getElementById('ksyu').classList.add('victory');
-  } else {
-    sfxLose();
-    document.getElementById('loseScore').textContent=G.score;
-    document.getElementById('loseScreen').style.display='flex';
-    document.getElementById('loseAI').textContent='💭 AI думает...';
-    const q=await ai('Ты весёлый нарратор. По-русски.',
-      `Ксюша не успела покорить парней. Набрала ${G.score} очков, поймала ${G.catches}/3. Утешь смешно (1-2 предложения).`);
-    document.getElementById('loseAI').textContent=q||'Не грусти, Ксюша! В следующий раз подкрадёшься тише! 😄';
-  }
+// ==================== STATS ====================
+function updateStats() {
+    document.getElementById('streakCount').textContent = state.streak;
+    document.getElementById('booksCount').textContent = state.booksRead || state.library.length;
+    document.getElementById('totalMinutes').textContent = state.totalMinutes;
 }
 
-// ===================== PARTICLES & FLOAT TEXT =====================
-function spawnParticles(emoji,x,y){
-  const es=[emoji,'✨','💜','💅'];
-  for(let i=0;i<8;i++){const p=document.createElement('div');p.className='particle';
-    p.textContent=es[Math.floor(Math.random()*es.length)];
-    const dx=(Math.random()-.5)*180,dy=-(Math.random()*120+40);
-    p.style.cssText=`left:${x}px;top:${y}px;--dx:${dx}px;--dy:${dy}px;--rot:${Math.random()*360}deg;--dur:${.8+Math.random()*.7}s;--sz:${14+Math.random()*14}px`;
-    document.body.appendChild(p);setTimeout(()=>p.remove(),2000)}}
-
-function spawnParticlesMany(cx,cy){
-  const es=['💜','❤️','✨','💎','💅','🔥','⭐'];
-  for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';
-    p.textContent=es[Math.floor(Math.random()*es.length)];
-    const dx=(Math.random()-.5)*350,dy=(Math.random()-.5)*350;
-    p.style.cssText=`left:${cx}px;top:${cy}px;--dx:${dx}px;--dy:${dy}px;--rot:${Math.random()*720}deg;--dur:${1+Math.random()}s;--sz:${18+Math.random()*20}px;animation-delay:${Math.random()*.4}s`;
-    document.body.appendChild(p);setTimeout(()=>p.remove(),2500)}}
-
-function floatText(text,x,y,color='white'){
-  const el=document.createElement('div');el.className='float-txt';el.textContent=text;
-  el.style.cssText=`left:${Math.max(10,Math.min(innerWidth-250,x-80))}px;top:${Math.max(10,y)}px;color:${color};text-shadow:0 0 12px ${color};font-size:${text.length>20?15:20}px`;
-  document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}
-
-// ===================== GAME LOOP =====================
-function loop(ts){
-  G.animId=requestAnimationFrame(loop);
-  const dt=Math.min((ts-(G.lastTime||ts))/1000,.05);
-  G.lastTime=ts;
-
-  drawStars();
-  if(!G.running||G.paused)return;
-  updateBoys(dt);
-
-  // Ksyusha idle animation
-  const ksyu=document.getElementById('ksyu');
-  if(!ksyu.classList.contains('hunting')&&!ksyu.classList.contains('victory')){
-    const t=Date.now()/1000;
-    ksyu.style.transform=`translateX(-50%) translateY(${Math.sin(t*2)*5}px)`;
-  }
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (state.lastReadDate === today) return;
+    
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    if (state.lastReadDate === yesterday.toDateString()) {
+        // streak continues
+    } else if (state.lastReadDate !== today) {
+        state.streak = 0; // reset
+    }
+    saveState();
+    updateStats();
 }
 
-// ===================== LOADING =====================
-const TIPS=['Красим губы...','Точим ноготочки...','Выбираем платье...','Ищем парней...','Включаем обаяние...','Наносим парфюм...'];
-let tipI=0;
-const tipInt=setInterval(()=>{document.getElementById('ltip').textContent=TIPS[tipI++%TIPS.length]},600);
+function recordReading() {
+    const today = new Date().toDateString();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    if (state.lastReadDate !== today) {
+        if (state.lastReadDate === yesterday.toDateString() || state.streak === 0) {
+            state.streak++;
+        } else {
+            state.streak = 1;
+        }
+        state.lastReadDate = today;
+    }
+    saveState();
+    updateStats();
+}
 
-const lb=document.getElementById('lbar');
-let lp=0;
-const lInt=setInterval(()=>{
-  lp+=Math.random()*10+3;lb.style.width=Math.min(100,lp)+'%';
-  if(lp>=100){clearInterval(lInt);clearInterval(tipInt);
-    setTimeout(()=>{document.getElementById('loading').style.opacity='0';
-      setTimeout(()=>{document.getElementById('loading').style.display='none';showScreen('menu')},600)},300)}
-},130);
+// ==================== PREFERENCES ====================
+function togglePref(el) {
+    const pref = el.dataset.pref;
+    el.classList.toggle('active');
+    
+    if (state.preferences.includes(pref)) {
+        state.preferences = state.preferences.filter(p => p !== pref);
+    } else {
+        state.preferences.push(pref);
+    }
+    saveState();
+}
 
-window.addEventListener('resize',initStars);
-document.addEventListener('click',()=>initAudio(),{once:true});
-document.addEventListener('touchstart',()=>initAudio(),{once:true});
+// ==================== AI API ====================
+async function callAI(messages, maxTokens = 4096) {
+    const token = state.token || DEFAULT_TOKEN;
+    
+    try {
+        const resp = await fetch(state.endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'HTTP-Referer': 'https://focusflow.app',
+                'X-Title': 'FocusFlow Reader'
+            },
+            body: JSON.stringify({
+                model: state.model,
+                messages: messages,
+                max_tokens: maxTokens,
+                temperature: 0.7
+            })
+        });
+        
+        if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `API Error ${resp.status}`);
+        }
+        
+        const data = await resp.json();
+        return data.choices[0].message.content;
+    } catch(e) {
+        console.error('AI API Error:', e);
+        throw e;
+    }
+}
 
-// Screen shake keyframe
-const shakeStyle=document.createElement('style');
-shakeStyle.textContent='@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}';
-document.head.appendChild(shakeStyle);
+// ==================== RECOMMENDATIONS ====================
+async function getRecommendations() {
+    const recsGrid = document.getElementById('recsGrid');
+    const prefs = state.preferences;
+    
+    if (prefs.length === 0) {
+        showToast('⚠️ Выбери хотя бы один интерес');
+        return;
+    }
+    
+    recsGrid.innerHTML = `
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    `;
+    
+    const readTitles = state.library.map(b => b.title).join(', ');
+    
+    try {
+        const prompt = `Ты — рекомендательная система книг. Пользователь интересуется: ${prefs.join(', ')}.
+${readTitles ? `Уже читал: ${readTitles}. Не повторяй эти книги.` : ''}
+
+Порекомендуй 5 книг. Для каждой дай:
+- Название (оригинальное)
+- Автор  
+- Жанр/тема (1-2 слова)
+- Почему стоит прочитать (1 предложение, цепляющее)
+- Эмодзи, подходящий к теме
+
+Ответь СТРОГО в формате JSON массива:
+[{"title":"...","author":"...","genre":"...","why":"...","emoji":"..."}]
+
+Только JSON, без markdown, без объяснений.`;
+
+        const result = await callAI([{ role: 'user', content: prompt }], 2000);
+        
+        // Parse JSON from response
+        let recs;
+        try {
+            const jsonMatch = result.match(/\[[\s\S]*\]/);
+            recs = JSON.parse(jsonMatch ? jsonMatch[0] : result);
+        } catch(e) {
+            throw new Error('Не удалось разобрать ответ нейронки');
+        }
+        
+        recsGrid.innerHTML = recs.map(rec => `
+            <div class="rec-card" onclick="loadBookFromAI('${escapeHtml(rec.title)}', '${escapeHtml(rec.author)}')">
+                <div class="rec-cover" style="background:linear-gradient(135deg, ${randomGradient()})">${rec.emoji || '📖'}</div>
+                <div class="rec-info">
+                    <div class="title">${escapeHtml(rec.title)}</div>
+                    <div class="author">${escapeHtml(rec.author)}</div>
+                    <div class="meta">${escapeHtml(rec.why || '')}</div>
+                </div>
+                <span class="rec-tag">${escapeHtml(rec.genre || '')}</span>
+            </div>
+        `).join('');
+        
+    } catch(e) {
+        recsGrid.innerHTML = `
+            <div class="empty-state">
+                <div class="icon">😔</div>
+                <div class="title">Ошибка</div>
+                <div class="desc">${escapeHtml(e.message)}</div>
+            </div>
+        `;
+    }
+}
+
+// ==================== SEARCH ====================
+function quickSearch(query) {
+    document.getElementById('searchInput').value = query;
+    searchBook();
+}
+
+async function searchBook() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) return;
+    
+    const results = document.getElementById('searchResults');
+    results.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div>`;
+    
+    try {
+        const prompt = `Пользователь ищет книгу: "${query}".
+
+Найди 3-5 подходящих книг. Для каждой:
+- Точное название
+- Автор
+- Краткое описание (1 предложение)
+- Жанр
+- Подходящий эмодзи
+
+Ответь СТРОГО в JSON:
+[{"title":"...","author":"...","desc":"...","genre":"...","emoji":"..."}]
+
+Только JSON.`;
+
+        const result = await callAI([{ role: 'user', content: prompt }], 2000);
+        
+        let books;
+        try {
+            const jsonMatch = result.match(/\[[\s\S]*\]/);
+            books = JSON.parse(jsonMatch ? jsonMatch[0] : result);
+        } catch(e) {
+            throw new Error('Не удалось разобрать ответ');
+        }
+        
+        results.innerHTML = `
+            <div class="section-title">Результаты</div>
+            <div class="recs-grid">
+                ${books.map(b => `
+                    <div class="rec-card" onclick="loadBookFromAI('${escapeHtml(b.title)}', '${escapeHtml(b.author)}')">
+                        <div class="rec-cover" style="background:linear-gradient(135deg, ${randomGradient()})">${b.emoji || '📖'}</div>
+                        <div class="rec-info">
+                            <div class="title">${escapeHtml(b.title)}</div>
+                            <div class="author">${escapeHtml(b.author)}</div>
+                            <div class="meta">${escapeHtml(b.desc || '')}</div>
+                        </div>
+                        <span class="rec-tag">${escapeHtml(b.genre || '')}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } catch(e) {
+        results.innerHTML = `
+            <div class="empty-state">
+                <div class="icon">😔</div>
+                <div class="title">Ошибка поиска</div>
+                <div class="desc">${escapeHtml(e.message)}</div>
+            </div>
+        `;
+    }
+}
+
+// ==================== LOAD BOOK FROM AI ====================
+async function loadBookFromAI(title, author) {
+    // Check if already in library
+    const existing = state.library.find(b => b.title === title);
+    if (existing) {
+        openBook(existing.id);
+        return;
+    }
+    
+    showGenOverlay(`Генерируем "${title}"...`);
+    
+    try {
+        // Calculate words per block based on reading time
+        const wordsPerMin = 200;
+        const wordsPerBlock = Math.floor(wordsPerMin * 0.7); // ~140 words per block
+        const blocksNeeded = Math.max(15, state.readTime * 3); // enough blocks for a session
+        
+        const prompt = `Ты — литературный ассистент. Задача: подготовить ключевые идеи и содержание книги "${title}" (автор: ${author}) для формата микро-чтения.
+
+Создай ${blocksNeeded} текстовых блоков. Каждый блок — это 100-180 слов, логически завершённый фрагмент.
+
+Структура:
+1. Первый блок — введение: о чём книга и почему она важна
+2. Далее — ключевые идеи, концепции, примеры из книги
+3. Последний блок — главный вывод
+
+Пиши ясно, увлекательно, на русском. Передавай суть книги так, чтобы читатель получил реальную пользу.
+
+Ответ в формате JSON массива строк:
+["блок 1 текст...", "блок 2 текст...", ...]
+
+Только JSON, без markdown.`;
+
+        const result = await callAI([{ role: 'user', content: prompt }], 8000);
+        
+        let blocks;
+        try {
+            const jsonMatch = result.match(/\[[\s\S]*\]/);
+            blocks = JSON.parse(jsonMatch ? jsonMatch[0] : result);
+        } catch(e) {
+            // Try to split by paragraphs if JSON failed
+            blocks = result.split(/\n\n+/).filter(b => b.trim().length > 50);
+            if (blocks.length < 3) throw new Error('Не удалось подготовить книгу');
+        }
+        
+        // Create book
+        const book = {
+            id: Date.now().toString(),
+            title: title,
+            author: author || 'Неизвестный автор',
+            blocks: blocks,
+            currentBlock: 0,
+            totalBlocks: blocks.length,
+            addedAt: new Date().toISOString(),
+            readMinutes: 0,
+            source: 'ai'
+        };
+        
+        state.library.unshift(book);
+        state.booksRead = state.library.length;
+        saveState();
+        renderLibrary();
+        updateStats();
+        
+        hideGenOverlay();
+        openBook(book.id);
+        showToast(`📖 "${title}" добавлена!`);
+        
+    } catch(e) {
+        hideGenOverlay();
+        showToast('❌ ' + e.message);
+    }
+}
+
+// ==================== FILE UPLOAD ====================
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    const ext = file.name.split('.').pop().toLowerCase();
+    
+    reader.onload = function(e) {
+        let text = e.target.result;
+        
+        // Parse different formats
+        if (ext === 'fb2') {
+            text = parseFB2(text);
+        } else if (ext === 'html' || ext === 'htm') {
+            text = parseHTML(text);
+        }
+        // For .txt and .md — raw text is fine
+        // .epub and .pdf need more complex parsing
+        
+        document.getElementById('pasteArea').value = text;
+        document.getElementById('uploadBookTitle').value = file.name.replace(/\.[^/.]+$/, '');
+        showToast('📄 Файл загружен');
+    };
+    
+    if (ext === 'pdf') {
+        showToast('⚠️ PDF: скопируй текст вручную');
+        return;
+    }
+    
+    reader.readAsText(file);
+}
+
+function parseFB2(xml) {
+    try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xml, 'text/xml');
+        const body = doc.querySelector('body');
+        if (!body) return xml;
+        
+        let text = '';
+        const sections = body.querySelectorAll('section');
+        
+        if (sections.length > 0) {
+            sections.forEach(section => {
+                const paras = section.querySelectorAll('p');
+                paras.forEach(p => {
+                    text += p.textContent.trim() + '\n\n';
+                });
+            });
+        } else {
+            const paras = body.querySelectorAll('p');
+            paras.forEach(p => {
+                text += p.textContent.trim() + '\n\n';
+            });
+        }
+        
+        return text.trim() || xml;
+    } catch(e) {
+        return xml;
+    }
+}
+
+function parseHTML(html) {
+    try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        return doc.body.textContent || doc.body.innerText || html;
+    } catch(e) {
+        return html;
+    }
+}
+
+async function processUploadedText() {
+    const text = document.getElementById('pasteArea').value.trim();
+    const title = document.getElementById('uploadBookTitle').value.trim() || 'Моя книга';
+    
+    if (!text) {
+        showToast('⚠️ Вставь текст или загрузи файл');
+        return;
+    }
+    
+    if (text.length < 100) {
+        showToast('⚠️ Слишком мало текста');
+        return;
+    }
+    
+    showGenOverlay('Нарезаем на блоки...');
+    
+    try {
+        // For short texts — split locally
+        if (text.length < 5000) {
+            const blocks = smartSplit(text);
+            createBookFromBlocks(title, '', blocks);
+        } else {
+            // For longer texts — use AI to create smart segments
+            updateGenStatus('Нейронка анализирует текст...');
+            
+            // Take first ~6000 chars for AI to process (token limit)
+            const sample = text.substring(0, 12000);
+            
+            const prompt = `Раздели этот текст на логические блоки для чтения по 100-180 слов каждый. 
+Каждый блок должен быть логически завершённым — не рви предложения.
+
+Текст:
+"""
+${sample}
+"""
+
+Ответь JSON массивом строк: ["блок1...", "блок2...", ...]
+Только JSON.`;
+
+            const result = await callAI([{ role: 'user', content: prompt }], 8000);
+            
+            let blocks;
+            try {
+                const jsonMatch = result.match(/\[[\s\S]*\]/);
+                blocks = JSON.parse(jsonMatch ? jsonMatch[0] : result);
+            } catch(e) {
+                // Fallback to local splitting
+                blocks = smartSplit(text);
+            }
+            
+            // If text is longer, add remaining blocks locally
+            if (text.length > 12000) {
+                const remaining = text.substring(12000);
+                const extraBlocks = smartSplit(remaining);
+                blocks = blocks.concat(extraBlocks);
+            }
+            
+            createBookFromBlocks(title, '', blocks);
+        }
+    } catch(e) {
+        // Fallback — always work even without API
+        const blocks = smartSplit(text);
+        createBookFromBlocks(title, '', blocks);
+    }
+}
+
+function smartSplit(text) {
+    // Split by double newlines first
+    let paragraphs = text.split(/\n\s*\n/).filter(p => p.trim());
+    
+    // Merge small paragraphs, split large ones
+    const blocks = [];
+    let current = '';
+    
+    for (const para of paragraphs) {
+        const trimmed = para.trim();
+        if (!trimmed) continue;
+        
+        if (current.length + trimmed.length < 800) {
+            current += (current ? '\n\n' : '') + trimmed;
+        } else {
+            if (current) blocks.push(current);
+            
+            // If paragraph itself is too long, split by sentences
+            if (trimmed.length > 800) {
+                const sentences = trimmed.match(/[^.!?]+[.!?]+/g) || [trimmed];
+                let chunk = '';
+                for (const sent of sentences) {
+                    if (chunk.length + sent.length < 800) {
+                        chunk += sent;
+                    } else {
+                        if (chunk) blocks.push(chunk.trim());
+                        chunk = sent;
+                    }
+                }
+                if (chunk) current = chunk.trim();
+            } else {
+                current = trimmed;
+            }
+        }
+    }
+    if (current) blocks.push(current);
+    
+    return blocks.length > 0 ? blocks : [text];
+}
+
+function createBookFromBlocks(title, author, blocks) {
+    const book = {
+        id: Date.now().toString(),
+        title: title,
+        author: author || '',
+        blocks: blocks,
+        currentBlock: 0,
+        totalBlocks: blocks.length,
+        addedAt: new Date().toISOString(),
+        readMinutes: 0,
+        source: 'upload'
+    };
+    
+    state.library.unshift(book);
+    state.booksRead = state.library.length;
+    saveState();
+    renderLibrary();
+    updateStats();
+    
+    hideGenOverlay();
+    openBook(book.id);
+    showToast(`📖 "${title}" готова! ${blocks.length} блоков`);
+    
+    // Clear upload
+    document.getElementById('pasteArea').value = '';
+    document.getElementById('uploadBookTitle').value = '';
+}
+
+// ==================== LIBRARY ====================
+function renderLibrary() {
+    const grid = document.getElementById('libraryGrid');
+    const empty = document.getElementById('libEmpty');
+    
+    if (state.library.length === 0) {
+        grid.innerHTML = '';
+        grid.appendChild(empty);
+        empty.style.display = '';
+        return;
+    }
+    
+    if (empty) empty.style.display = 'none';
+    
+    grid.innerHTML = state.library.map(book => {
+        const progress = book.totalBlocks > 0 ? Math.round((book.currentBlock / book.totalBlocks) * 100) : 0;
+        const emoji = book.source === 'ai' ? '✨' : '📄';
+        
+        return `
+            <div class="lib-card">
+                <div class="lib-cover">${emoji}</div>
+                <div class="lib-info">
+                    <div class="title">${escapeHtml(book.title)}</div>
+                    <div class="lib-progress-bar">
+                        <div class="lib-progress-fill" style="width:${progress}%"></div>
+                    </div>
+                    <div class="lib-meta">${progress}% · ${book.currentBlock}/${book.totalBlocks} блоков · ${book.readMinutes || 0} мин</div>
+                </div>
+                <div class="lib-actions">
+                    <button class="lib-btn play" onclick="event.stopPropagation(); openBook('${book.id}')" title="Читать">▶</button>
+                    <button class="lib-btn" onclick="event.stopPropagation(); deleteBook('${book.id}')" title="Удалить">🗑</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function deleteBook(id) {
+    if (!confirm('Удалить книгу?')) return;
+    state.library = state.library.filter(b => b.id !== id);
+    saveState();
+    renderLibrary();
+    updateStats();
+    showToast('🗑️ Книга удалена');
+}
+
+// ==================== READER ====================
+let readTimerInterval = null;
+let readSeconds = 0;
+
+function openBook(id) {
+    const book = state.library.find(b => b.id === id);
+    if (!book) return;
+    
+    state.currentBookId = id;
+    showScreen('readerScreen');
+    
+    document.getElementById('readerBookTitle').textContent = book.title;
+    
+    // Set font size
+    document.getElementById('textBlock').style.fontSize = state.fontSize + 'px';
+    
+    // Show current block
+    showBlock(book.currentBlock);
+    
+    // Start timer
+    readSeconds = 0;
+    clearInterval(readTimerInterval);
+    readTimerInterval = setInterval(() => {
+        readSeconds++;
+        const min = Math.floor(readSeconds / 60);
+        const sec = readSeconds % 60;
+        document.getElementById('readTimer').textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+        
+        // Check if session time reached
+        if (readSeconds > 0 && readSeconds % (state.readTime * 60) === 0) {
+            showSessionComplete();
+        }
+    }, 1000);
+    
+    // Generate context hint if returning
+    if (book.currentBlock > 0) {
+        generateContextHint(book);
+    }
+}
+
+async function generateContextHint(book) {
+    const hint = document.getElementById('contextHint');
+    
+    if (book.currentBlock <= 1) {
+        hint.style.display = 'none';
+        return;
+    }
+    
+    // Show previous block summary as context
+    const prevText = book.blocks[book.currentBlock - 1] || '';
+    if (prevText.length > 0) {
+        try {
+            const prompt = `Сделай ультра-краткое резюме этого текста (1 предложение, максимум 20 слов). Начни с "В прошлый раз:". Текст: "${prevText.substring(0, 500)}"`;
+            
+            hint.textContent = '⏳ Вспоминаем...';
+            hint.style.display = '';
+            
+            const summary = await callAI([{ role: 'user', content: prompt }], 100);
+            hint.textContent = '📌 ' + summary;
+        } catch(e) {
+            hint.style.display = 'none';
+        }
+    }
+}
+
+function showBlock(index) {
+    const book = state.library.find(b => b.id === state.currentBookId);
+    if (!book) return;
+    
+    // Clamp index
+    index = Math.max(0, Math.min(index, book.totalBlocks - 1));
+    book.currentBlock = index;
+    
+    const textBlock = document.getElementById('textBlock');
+    const progress = book.totalBlocks > 0 ? Math.round(((index + 1) / book.totalBlocks) * 100) : 0;
+    
+    // Animate
+    textBlock.style.opacity = '0';
+    textBlock.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        textBlock.textContent = book.blocks[index] || 'Конец книги!';
+        textBlock.style.fontSize = state.fontSize + 'px';
+        textBlock.style.opacity = '1';
+        textBlock.style.transform = 'translateY(0)';
+        textBlock.style.transition = 'all 0.4s ease';
+    }, 150);
+    
+    // Update progress
+    document.getElementById('readerProgressFill').style.width = progress + '%';
+    document.getElementById('readerProgressText').textContent = progress + '%';
+    
+    saveState();
+}
+
+function nextBlock() {
+    const book = state.library.find(b => b.id === state.currentBookId);
+    if (!book) return;
+    
+    if (book.currentBlock < book.totalBlocks - 1) {
+        showBlock(book.currentBlock + 1);
+    } else {
+        showToast('🎉 Вы дочитали книгу!');
+    }
+}
+
+function prevBlock() {
+    const book = state.library.find(b => b.id === state.currentBookId);
+    if (!book) return;
+    
+    if (book.currentBlock > 0) {
+        showBlock(book.currentBlock - 1);
+    }
+}
+
+function exitReader() {
+    clearInterval(readTimerInterval);
+    
+    // Save reading stats
+    const book = state.library.find(b => b.id === state.currentBookId);
+    if (book) {
+        const minutesRead = Math.ceil(readSeconds / 60);
+        book.readMinutes = (book.readMinutes || 0) + minutesRead;
+        state.totalMinutes += minutesRead;
+        
+        if (minutesRead > 0) {
+            recordReading();
+        }
+    }
+    
+    saveState();
+    showScreen('homeScreen');
+    renderLibrary();
+    updateStats();
+}
+
+function showSessionComplete() {
+    showToast(`⏱️ ${state.readTime} мин прочитано! Отличная работа 🎉`);
+    
+    // Optionally trigger quiz
+    const book = state.library.find(b => b.id === state.currentBookId);
+    if (book && book.currentBlock > 2) {
+        setTimeout(() => triggerQuiz(book), 2000);
+    }
+}
+
+// ==================== QUIZ ====================
+async function triggerQuiz(book) {
+    const recentText = book.blocks.slice(Math.max(0, book.currentBlock - 3), book.currentBlock + 1).join('\n');
+    
+    try {
+        const prompt = `На основе этого текста создай 1 вопрос для проверки понимания. Вопрос должен быть осмысленным, не тривиальным.
+
+Текст: "${recentText.substring(0, 1500)}"
+
+Ответь JSON:
+{"question":"вопрос?","options":["вариант1","вариант2","вариант3"],"correct":0}
+
+correct — индекс правильного варианта (0, 1 или 2).
+Только JSON.`;
+
+        const result = await callAI([{ role: 'user', content: prompt }], 500);
+        
+        let quiz;
+        try {
+            const jsonMatch = result.match(/\{[\s\S]*\}/);
+            quiz = JSON.parse(jsonMatch ? jsonMatch[0] : result);
+        } catch(e) { return; }
+        
+        // Show quiz inline
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = `
+            <h3>🧠 Быстрая проверка</h3>
+            <p class="quiz-question">${escapeHtml(quiz.question)}</p>
+            <div class="quiz-options">
+                ${quiz.options.map((opt, i) => `
+                    <div class="quiz-option" onclick="answerQuiz(this, ${i}, ${quiz.correct})">${escapeHtml(opt)}</div>
+                `).join('')}
+            </div>
+            <button class="btn btn-ghost" style="margin-top:16px;" onclick="showScreen('readerScreen')">Пропустить →</button>
+        `;
+        
+        showScreen('quizScreen');
+        
+    } catch(e) {
+        // Quiz generation failed — no biggie
+        console.log('Quiz generation skipped:', e);
+    }
+}
+
+function answerQuiz(el, selected, correct) {
+    const options = document.querySelectorAll('.quiz-option');
+    options.forEach((opt, i) => {
+        opt.onclick = null;
+        if (i === correct) opt.classList.add('correct');
+        if (i === selected && i !== correct) opt.classList.add('wrong');
+    });
+    
+    setTimeout(() => {
+        showScreen('readerScreen');
+        if (selected === correct) {
+            showToast('✅ Правильно!');
+        } else {
+            showToast('❌ Не совсем, но теперь запомнишь!');
+        }
+    }, 1500);
+}
+
+// ==================== UI HELPERS ====================
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function showGenOverlay(msg) {
+    document.getElementById('genOverlay').classList.add('active');
+    document.getElementById('genStatus').textContent = msg || 'Подготавливаем...';
+}
+
+function updateGenStatus(msg) {
+    document.getElementById('genStatus').textContent = msg;
+}
+
+function hideGenOverlay() {
+    document.getElementById('genOverlay').classList.remove('active');
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function randomGradient() {
+    const colors = [
+        ['#6366f1', '#8b5cf6'],
+        ['#ec4899', '#f43f5e'],
+        ['#14b8a6', '#06b6d4'],
+        ['#f59e0b', '#ef4444'],
+        ['#8b5cf6', '#ec4899'],
+        ['#06b6d4', '#3b82f6'],
+        ['#10b981', '#059669'],
+        ['#f97316', '#eab308']
+    ];
+    const pair = colors[Math.floor(Math.random() * colors.length)];
+    return `${pair[0]}, ${pair[1]}`;
+}
+
+// ==================== DRAG & DROP ====================
+const uploadArea = document.getElementById('uploadArea');
+
+if (uploadArea) {
+    ['dragenter', 'dragover'].forEach(evt => {
+        uploadArea.addEventListener(evt, (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+    });
+    
+    ['dragleave', 'drop'].forEach(evt => {
+        uploadArea.addEventListener(evt, (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            const input = document.getElementById('fileInput');
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            input.files = dt.files;
+            handleFileUpload({ target: input });
+        }
+    });
+}
+
+// ==================== KEYBOARD SHORTCUTS ====================
+document.addEventListener('keydown', (e) => {
+    if (document.getElementById('readerScreen').classList.contains('active')) {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            nextBlock();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevBlock();
+        } else if (e.key === 'Escape') {
+            exitReader();
+        }
+    }
+});
+
+// ==================== TOUCH SWIPE FOR READER ====================
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('readerContent').addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+document.getElementById('readerContent').addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+            nextBlock(); // swipe left = next
+        } else {
+            prevBlock(); // swipe right = prev
+        }
+    }
+}, { passive: true });
+
+// ==================== INIT ====================
+loadState();
 </script>
 </body>
 </html>
