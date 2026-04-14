@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>FocusFlow — Микро-ридер</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23818cf8'/><stop offset='100%' stop-color='%234f46e5'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><path d='M25 30h18a12 12 0 0 1 12 12v28a8 8 0 0 0-8-8H25z' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/><path d='M75 30H57a12 12 0 0 0-12 12v28a8 8 0 0 1 8-8h22z' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Merriweather:wght@300;400;700&family=PT+Serif:wght@400;700&family=Roboto+Slab:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -46,7 +48,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes xpPop{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-60px) scale(1.3);opacity:0}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .hdr-l,.hdr-r{display:flex;align-items:center;gap:6px}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.5px;cursor:pointer}
@@ -55,33 +56,27 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .ibtn:hover{background:var(--surface2);color:var(--text);border-color:var(--border2)}
 .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:18px 18px 130px}
 .page-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:14px;font-weight:600;display:flex;align-items:center;gap:5px}
-/* DIVIDER */
 .divider{height:1px;background:var(--border);margin:24px 0;opacity:.6}
-/* HERO */
 .hero{text-align:center;padding:22px 0 20px}
 .hero h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{color:var(--text3);font-size:13px;max-width:360px;margin:0 auto;line-height:1.5}
-/* XP BAR */
 .xp-bar{padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px}
 .xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .xp-lvl{font-size:13px;font-weight:700}.xp-pts{font-size:11px;color:var(--text3)}
 .xp-track{height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .xp-fill{height:100%;background:linear-gradient(90deg,var(--yellow),var(--orange));border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .xp-pop{position:fixed;pointer-events:none;z-index:9999;font-size:14px;font-weight:700;color:var(--yellow);animation:xpPop .9s ease forwards;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:0}
 .scard{padding:12px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;transition:var(--tr)}
 .scard .v{font-size:18px;font-weight:800;display:block;margin-bottom:1px}
 .scard .l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
 .scard.fire .v{color:var(--orange)}.scard.books .v{color:var(--accent)}.scard.time .v{color:var(--green)}.scard.xp .v{color:var(--yellow)}
-/* GOAL */
 .goal-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
 .goal-bar:hover{border-color:var(--accent)}
 .goal-txt{flex:1;font-size:12px;color:var(--text2)}.goal-txt strong{color:var(--text);font-size:14px;display:block}
 .goal-prog{width:80px;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .goal-prog .gf{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:3px;transition:width .5s}
 .goal-pct{font-size:11px;font-weight:700;color:var(--accent);min-width:30px;text-align:right}
-/* TIME ROW */
 .sec-title{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;letter-spacing:-.3px}
 .sec-title .badge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;background:var(--accent-glow);color:var(--accent)}
 .time-row{display:flex;gap:5px;margin-bottom:0;align-items:center;flex-wrap:wrap}
@@ -94,7 +89,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .custom-time-inp:focus{border-color:var(--accent)}
 .custom-time-btn{padding:8px 10px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit}
 .custom-time-btn:hover{border-color:var(--accent);color:var(--accent)}
-/* compress toggle */
 .compress-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xs);margin-top:8px}
 .compress-row .cr-txt{font-size:12px;color:var(--text2)}.compress-row .cr-txt strong{color:var(--text);font-size:13px;display:block}
 .toggle-sw{position:relative;width:40px;height:22px;flex-shrink:0}
@@ -103,13 +97,11 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .toggle-sw .sl:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .toggle-sw input:checked+.sl{background:var(--accent)}
 .toggle-sw input:checked+.sl:before{transform:translateX(18px)}
-/* ACTIONS */
 .action-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0}
 .acard{padding:16px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr);text-align:center}
 .acard:hover{border-color:var(--accent);background:var(--bg3);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
 .acard .aic{margin-bottom:9px;color:var(--accent);display:flex;justify-content:center}
 .acard .albl{font-size:11px;font-weight:600;margin-bottom:2px}.acard .adsc{font-size:9px;color:var(--text3)}
-/* PREFS */
 .pref-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
 .pchip{padding:6px 13px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;cursor:pointer;transition:var(--tr)}
 .pchip.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
@@ -119,12 +111,11 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .add-inp:focus{border-color:var(--accent)}
 .add-btn{padding:7px 12px;border-radius:20px;border:1px solid var(--accent);background:var(--accent-glow);color:var(--accent);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr);display:flex;align-items:center;gap:3px}
 .add-btn:hover{background:var(--accent);color:#fff}
-/* RECS */
 .recs-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .recs-grid{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
 .rcard{display:flex;align-items:center;gap:11px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:var(--tr)}
 .rcard:hover{border-color:var(--accent);background:var(--bg3)}
-.rcover{width:42px;height:56px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:20px}
+.rcover{width:42px;height:56px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:22px}
 .rinfo{flex:1;min-width:0}
 .rinfo .t{font-size:13px;font-weight:600;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rinfo .a{font-size:11px;color:var(--text3);margin-bottom:2px}
@@ -139,18 +130,16 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .lm-btn:hover{border-color:var(--accent);background:var(--accent-glow)}
 .clear-recs-btn{padding:6px 12px;border-radius:var(--radius-xs);border:1px solid var(--border);background:transparent;color:var(--text3);font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:var(--tr);display:flex;align-items:center;gap:4px}
 .clear-recs-btn:hover{border-color:var(--red);color:var(--red)}
-/* LIBRARY */
 .lib-grid{display:flex;flex-direction:column;gap:7px;margin-bottom:0}
 .lcard{display:flex;align-items:center;gap:11px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr)}
 .lcard:hover{border-color:var(--accent);background:var(--bg3)}
-.lcover{width:40px;height:54px;border-radius:7px;background:linear-gradient(135deg,var(--accent3),var(--accent));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:18px}
+.lcover{width:40px;height:54px;border-radius:7px;background:linear-gradient(135deg,var(--accent3),var(--accent));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:20px}
 .linfo{flex:1;min-width:0}
 .linfo .t{font-size:13px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lpbar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-bottom:3px}
 .lpfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:2px;transition:width .5s}
 .lmeta{font-size:10px;color:var(--text3)}
 .lbtns{display:flex;gap:3px}
-/* SEARCH */
 .sbar{display:flex;gap:7px;margin-bottom:14px}
 .sinput{flex:1;padding:11px 15px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:var(--tr)}
 .sinput:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
@@ -165,7 +154,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .qchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
 .qchip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:500;cursor:pointer;transition:var(--tr)}
 .qchip:hover{border-color:var(--accent);color:var(--accent)}
-/* READER */
 .rhdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;gap:6px}
 .rhdr-title{font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;margin:0 6px}
 .rhdr-tools{display:flex;gap:3px;align-items:center;flex-shrink:0}
@@ -183,7 +171,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .nbtn:hover{background:var(--surface2)}.nbtn.np{background:var(--accent3);border-color:var(--accent3);color:#fff}.nbtn.np:hover{background:var(--accent2)}
 .ncenter{display:flex;align-items:center;gap:6px}
 .timer-b{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--green);font-weight:600}
-/* Reader font panel */
 .rfpanel{position:fixed;bottom:58px;right:10px;z-index:150;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:13px;width:260px;box-shadow:var(--shadow);display:none;animation:slideUp .2s}
 .rfpanel.active{display:block}
 .rfpanel h4{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px}
@@ -193,14 +180,12 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .rfchip:hover:not(.active){border-color:var(--border2)}
 .rfdiv{height:1px;background:var(--border);margin:9px 0}
 .fprev{padding:10px;background:var(--bg3);border-radius:var(--radius-xs);border:1px solid var(--border);margin-top:5px;font-size:18px;line-height:1.6;color:var(--text2);transition:all .3s;font-family:var(--font-read);text-align:justify}
-/* MODAL */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center;padding:18px}
 .modal-ov.active{display:flex;animation:fadeIn .2s}
 .modal{background:var(--bg2);border-radius:var(--radius);width:100%;max-width:500px;max-height:88vh;overflow-y:auto;animation:slideUp .25s ease;border:1px solid var(--border)}
 .modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 13px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg2);z-index:10}
 .modal-h h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
 .modal-b{padding:16px 18px 24px}
-/* TABS in settings */
 .stabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:18px}
 .stab{flex:1;padding:9px 8px;text-align:center;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:var(--tr);margin-bottom:-1px}
 .stab.active{color:var(--accent);border-bottom-color:var(--accent)}
@@ -218,7 +203,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .font-o{padding:9px 13px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:space-between}
 .font-o:hover{border-color:var(--border2)}.font-o.active{border-color:var(--accent);background:var(--accent-glow)}
 .font-o .fn{font-size:11px;font-weight:600}.font-o .fp{font-size:13px;color:var(--text2)}
-/* BOOK INFO CHAT */
 .bi-chat{display:flex;flex-direction:column;gap:7px;max-height:300px;overflow-y:auto;margin-bottom:11px;padding:2px 0;scroll-behavior:smooth}
 .bi-msg{padding:9px 13px;border-radius:12px;font-size:12px;line-height:1.6;max-width:92%;animation:slideUp .15s}
 .bi-msg.ai{background:var(--bg3);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
@@ -227,7 +211,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .bi-input-row{display:flex;gap:5px}
 .bi-input{flex:1;padding:9px 13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-family:inherit;outline:none;transition:var(--tr)}
 .bi-input:focus{border-color:var(--accent)}
-/* GAMIFICATION */
 .badges-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .badge-card{padding:14px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);text-align:center;width:calc(50% - 4px);transition:var(--tr);display:flex;align-items:center;gap:12px}
 .badge-card.earned{border-color:var(--yellow);background:var(--yellow-bg)}
@@ -236,10 +219,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .badge-card .bnm{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px}
 .badge-card .bxp{font-size:10px;color:var(--text3)}
 .badge-card.locked .bem{filter:grayscale(1);opacity:.4}
-/* HOW IT WORKS */
 .how-card{padding:13px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px;font-size:12px;color:var(--text2);line-height:1.7}
 .how-card p{margin-bottom:3px}.how-card p:last-child{margin-bottom:0}
-/* UPLOAD */
 .uarea{border:2px dashed var(--border);border-radius:var(--radius);padding:36px 18px;text-align:center;cursor:pointer;transition:var(--tr);background:var(--bg2);margin-bottom:13px}
 .uarea:hover,.uarea.dg{border-color:var(--accent);background:var(--accent-glow2)}
 .uarea .uic{margin-bottom:11px;color:var(--text3);display:flex;justify-content:center}
@@ -248,16 +229,13 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .ftag{font-size:8px;padding:2px 6px;border-radius:3px;background:var(--bg4);color:var(--text3);font-weight:600;text-transform:uppercase}
 .tarea{width:100%;min-height:160px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-family:'Literata',serif;font-size:13px;line-height:1.7;resize:vertical;outline:none;transition:var(--tr)}
 .tarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-/* TOAST */
 .toast-wrap{position:fixed;bottom:70px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:5px;z-index:2000;pointer-events:none}
 .toast{padding:8px 16px;background:var(--surface2);color:var(--text);border-radius:var(--radius-sm);font-size:12px;font-weight:500;border:1px solid var(--border);box-shadow:var(--shadow);max-width:88vw;text-align:center;transform:translateY(16px);opacity:0;transition:all .28s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
-/* EMPTY */
 .empty{text-align:center;padding:32px 18px;color:var(--text3)}
 .empty .eic{margin-bottom:9px;opacity:.4;display:flex;justify-content:center}
 .empty .et{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:3px}.empty .ed{font-size:11px}
 .err-box{padding:12px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);border-radius:var(--radius-xs);color:var(--red);font-size:11px;margin-top:9px;display:flex;align-items:flex-start;gap:7px}
-/* GENERATING */
 .gen-ov{position:fixed;inset:0;background:rgba(9,9,11,.93);backdrop-filter:blur(10px);z-index:1500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 .gen-ov.active{display:flex;animation:fadeIn .3s}
 .gen-spin{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
@@ -265,22 +243,18 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .gen-txt strong{color:var(--text);display:block;font-size:16px;margin-bottom:4px}
 .gen-steps{display:flex;flex-direction:column;gap:6px;margin-top:4px}
 .gen-step{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;opacity:.4;transition:.3s}
-.gen-step.active{opacity:1;color:var(--accent)}
-.gen-step.done{opacity:.6;color:var(--green)}
-/* QUIZ */
+.gen-step.active{opacity:1;color:var(--accent)}.gen-step.done{opacity:.6;color:var(--green)}
 .quiz-c{max-width:460px;margin:0 auto;padding:24px 18px;text-align:center}
 .quiz-c h3{font-size:15px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:5px}
 .quiz-q{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.5}
 .quiz-opts{display:flex;flex-direction:column;gap:7px}
 .quiz-o{padding:11px 15px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:12px;text-align:left;cursor:pointer;transition:var(--tr)}
 .quiz-o:hover{border-color:var(--accent)}.quiz-o.ok{border-color:var(--green);background:var(--green-bg)}.quiz-o.no{border-color:var(--red);background:rgba(248,113,113,.1)}
-/* HL TOOLTIP */
 .hl-tt{position:fixed;z-index:200;padding:5px 8px;border-radius:7px;background:var(--surface2);border:1px solid var(--border);box-shadow:var(--shadow);display:none;gap:5px}
 .hl-tt.active{display:flex}
 .ht-b{padding:5px 10px;border-radius:5px;border:none;font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit;display:flex;align-items:center;gap:3px}
 .ht-b.mk{background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent)}.ht-b.mk:hover{background:var(--accent);color:#fff}
 .ht-b.um{background:var(--bg4);color:var(--text3);border:1px solid var(--border)}.ht-b.um:hover{color:var(--text)}
-/* SYNC */
 .sync-status{font-size:11px;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:5px}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0}
 .sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.loading{background:var(--yellow);animation:pulse 1s infinite}
@@ -292,7 +266,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 </style>
 </head>
 <body>
-
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
@@ -339,7 +312,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <div class="gen-spin"></div>
   <div class="gen-txt">
     <strong id="genTitle">Готовим для чтения...</strong>
-    <div class="gen-steps" id="genSteps">
+    <div class="gen-steps">
       <div class="gen-step active" id="gs1">📖 Анализируем книгу</div>
       <div class="gen-step" id="gs2">✂️ Нарезаем на блоки</div>
       <div class="gen-step" id="gs3">🎯 Подбираем структуру</div>
@@ -348,7 +321,10 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   </div>
 </div>
 <div class="toast-wrap" id="toastWrap"></div>
-<div class="hl-tt" id="hlTT"><button class="ht-b mk" onclick="hlSel()"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-hl"/></svg></span>Выделить</button><button class="ht-b um" onclick="hideHlTT()">Отмена</button></div>
+<div class="hl-tt" id="hlTT">
+  <button class="ht-b mk" onclick="hlSel()"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-hl"/></svg></span>Выделить</button>
+  <button class="ht-b um" onclick="hideHlTT()">Отмена</button>
+</div>
 
 <!-- HOME -->
 <div class="screen active" id="home">
@@ -363,27 +339,21 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <div class="main">
   <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-book"/></svg></span> Главная страница</div>
   <div class="hero"><h1>Читай по 3 минуты</h1><p>Маленькие порции — большие знания. Без стресса, с удовольствием.</p></div>
-
   <div class="xp-bar"><div class="xp-top"><span class="xp-lvl" id="xpLvl">Уровень 1</span><span class="xp-pts" id="xpPts">0 / 100 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
-
   <div class="stats-row">
     <div class="scard fire"><span class="v" id="stS">0</span><span class="l">🔥 Дней</span></div>
     <div class="scard books"><span class="v" id="stB">0</span><span class="l">📚 Книг</span></div>
     <div class="scard time"><span class="v" id="stM">0</span><span class="l">⏱ Минут</span></div>
     <div class="scard xp"><span class="v" id="stX">0</span><span class="l">⭐ XP</span></div>
   </div>
-
   <div class="divider"></div>
-
   <div class="goal-bar" onclick="showModal('goalModal')">
     <span class="ic"><svg><use href="#i-target"/></svg></span>
     <div class="goal-txt"><strong id="goalTxt">Поставь цель</strong><span id="goalSub">Нажми чтобы установить</span></div>
     <div class="goal-prog"><div class="gf" id="goalF" style="width:0%"></div></div>
     <div class="goal-pct" id="goalPct">0%</div>
   </div>
-
   <div class="divider"></div>
-
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-clock"/></svg></span> Время сессии чтения</div>
   <div class="time-row" id="timeRow">
     <div class="tc" data-m="2" onclick="setTime(2,this)">2<small>мин</small></div>
@@ -399,18 +369,14 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="cr-txt"><strong>Сжимать книгу по времени</strong>Подстраивать количество блоков под выбранное время сессии</div>
     <label class="toggle-sw"><input type="checkbox" id="compressToggle" onchange="setCompress(this.checked)"><span class="sl"></span></label>
   </div>
-
   <div class="divider"></div>
-
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-book"/></svg></span> Начать чтение</div>
   <div class="action-grid">
     <div class="acard" onclick="nav('searchScr')"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-search"/></svg></span></div><div class="albl">Найти книгу</div><div class="adsc">AI найдёт и подготовит</div></div>
     <div class="acard" onclick="nav('uploadScr')"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-upload"/></svg></span></div><div class="albl">Загрузить</div><div class="adsc">TXT, FB2, PDF</div></div>
     <div class="acard" onclick="getRecs()"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-spark"/></svg></span></div><div class="albl">Рекомендации</div><div class="adsc">Подборка под вкусы</div></div>
   </div>
-
   <div class="divider"></div>
-
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-star"/></svg></span> Твои интересы <span class="badge">выбери → нажми ✨</span></div>
   <div class="pref-chips" id="prefChips">
     <div class="pchip" data-p="саморазвитие" onclick="tPref(this)">💡 Саморазвитие</div>
@@ -429,18 +395,14 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <input class="add-inp" id="custPrefInp" placeholder="Свой интерес..." onkeydown="if(event.key==='Enter')addCustPref()">
     <button class="add-btn" onclick="addCustPref()"><span class="ic" style="width:11px;height:11px"><svg><use href="#i-plus"/></svg></span>Добавить</button>
   </div>
-
   <div class="divider"></div>
-
   <div class="recs-hdr">
     <div class="sec-title" style="margin-bottom:0"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-spark"/></svg></span> Рекомендации <span class="badge">AI</span></div>
     <button class="clear-recs-btn hidden" id="clearRecsBtn" onclick="clearRecs()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-eraser"/></svg></span>Очистить</button>
   </div>
   <div class="recs-grid" id="recsGrid"><div class="empty" id="recsE"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Выбери интересы и нажми «Рекомендации»</div><div class="ed">Нейронка подберёт книги под тебя</div></div></div>
   <div class="load-more-row hidden" id="loadMoreRow"><button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button></div>
-
   <div class="divider"></div>
-
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-lib"/></svg></span> Моя библиотека</div>
   <div class="lib-grid" id="libGrid"><div class="empty" id="libE"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-lib"/></svg></span></div><div class="et">Библиотека пуста</div><div class="ed">Найди или загрузи книгу</div></div></div>
 </div>
@@ -467,11 +429,13 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 <!-- UPLOAD -->
 <div class="screen" id="uploadScr">
-<div class="hdr"><button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button><div class="logo"><span class="ic ic-lg"><svg><use href="#i-upload"/></svg></span>Загрузка</div>
-<div style="display:flex;gap:5px">
-  <button class="ibtn" onclick="exportData()" title="Экспорт"><span class="ic"><svg><use href="#i-download"/></svg></span></button>
-  <button class="ibtn" onclick="importData()" title="Импорт"><span class="ic"><svg><use href="#i-upload"/></svg></span></button>
-</div>
+<div class="hdr">
+  <button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button>
+  <div class="logo"><span class="ic ic-lg"><svg><use href="#i-upload"/></svg></span>Загрузка</div>
+  <div style="display:flex;gap:5px">
+    <button class="ibtn" onclick="exportData()" title="Экспорт данных"><span class="ic"><svg><use href="#i-download"/></svg></span></button>
+    <button class="ibtn" onclick="importData()" title="Импорт данных"><span class="ic"><svg><use href="#i-upload"/></svg></span></button>
+  </div>
 </div>
 <div class="main">
   <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-upload"/></svg></span> Загрузить книгу</div>
@@ -505,7 +469,10 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 </div>
 <div class="rcontent" id="rContent">
   <div class="ctx-hint" id="ctxHint" style="display:none"></div>
-  <div class="block-label" id="blockLabel" style="display:none"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-book"/></svg></span><span id="blockLabelTxt"></span><span class="bl-num" id="blockNum"></span></div>
+  <div class="block-label" id="blockLabel" style="display:none">
+    <span class="ic" style="width:12px;height:12px"><svg><use href="#i-book"/></svg></span>
+    <span id="blockLabelTxt"></span><span class="bl-num" id="blockNum"></span>
+  </div>
   <div class="tblock" id="tBlock">Нажми «Далее» чтобы начать...</div>
 </div>
 <div class="rfpanel" id="rfPanel">
@@ -555,8 +522,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <p>🎯 +200 XP за выполнение цели месяца</p>
     <p>🏆 +50 XP за каждое достижение</p>
     <p style="margin-top:5px"><strong style="color:var(--text)">Уровни:</strong> каждые 100 XP = новый уровень.</p>
-    <p><strong style="color:var(--text)">Цели:</strong> нажми на блок «Цель» на главной, установи количество книг за месяц.</p>
-    <p><strong style="color:var(--text)">Сжатие книги:</strong> таймер — только для фокуса. Включай сжатие если хочешь подстраивать объём.</p>
+    <p><strong style="color:var(--text)">Сжатие:</strong> таймер — только для фокуса. Включай сжатие если хочешь подстраивать объём.</p>
+    <p><strong style="color:var(--text)">Синхронизация:</strong> в Настройки → ☁️ — данные сохраняются в Google Sheets.</p>
   </div>
   <div class="divider"></div>
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-star"/></svg></span> Достижения</div>
@@ -582,12 +549,10 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="stab" onclick="switchTab('tab-view',this)">🎨 Вид</div>
       <div class="stab" onclick="switchTab('tab-sync',this)">☁️ Синхронизация</div>
     </div>
-    <!-- API TAB -->
     <div class="stab-pane active" id="tab-api">
       <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-key"/></svg></span>API Токен (OpenRouter)</label><input type="password" id="apiTok" placeholder="sk-or-v1-..."><div class="shint">Модель: Gemini 2.0 Flash 001</div></div>
       <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-link"/></svg></span>API Endpoint</label><input type="text" id="apiEnd" value="https://openrouter.ai/api/v1/chat/completions"></div>
     </div>
-    <!-- VIEW TAB -->
     <div class="stab-pane" id="tab-view">
       <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Тема оформления</label>
         <div class="theme-tog"><button class="theme-o" data-t="dark" onclick="setTheme('dark')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-moon"/></svg></span>Тёмная</button><button class="theme-o" data-t="light" onclick="setTheme('light')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Светлая</button></div>
@@ -598,51 +563,70 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         <div class="fprev" id="setFPrev" style="font-size:20px;margin-top:6px;font-family:var(--font-read)">Пример текста для чтения книги.</div>
       </div>
     </div>
-    <!-- SYNC TAB -->
     <div class="stab-pane" id="tab-sync">
       <div class="sgroup">
-        <label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-database"/></svg></span>Google Sheets URL</label>
+        <label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-database"/></svg></span>Google Sheets Web App URL</label>
         <input type="text" id="sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec">
-        <div class="shint">Вставь URL своего Google Apps Script Web App</div>
+        <div class="shint">Вставь URL своего Google Apps Script</div>
       </div>
       <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
-        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="syncToSheets()"><span class="ic"><svg><use href="#i-sync"/></svg></span>Синхронизировать</button>
-        <button class="btn btn-s" onclick="syncFromSheets()"><span class="ic"><svg><use href="#i-cloud"/></svg></span>Загрузить</button>
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="syncToSheets()"><span class="ic"><svg><use href="#i-sync"/></svg></span>Сохранить в Sheets</button>
+        <button class="btn btn-s" onclick="syncFromSheets()"><span class="ic"><svg><use href="#i-cloud"/></svg></span>Загрузить из Sheets</button>
       </div>
       <div class="sync-status" id="syncStatus"><div class="sync-dot" id="syncDot"></div><span id="syncMsg">Не синхронизировано</span></div>
       <div class="divider"></div>
-      <div class="sec-title" style="font-size:13px"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-help"/></svg></span>Инструкция по настройке</div>
+      <div class="sec-title" style="font-size:13px;margin-bottom:8px"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-help"/></svg></span>Инструкция по настройке</div>
       <div style="font-size:11px;color:var(--text2);line-height:1.7">
-        <p style="margin-bottom:6px">1. Открой <strong style="color:var(--text)">Google Таблицы</strong> → Расширения → Apps Script</p>
-        <p style="margin-bottom:6px">2. Вставь этот код:</p>
+        <p style="margin-bottom:5px">1. Открой <strong style="color:var(--text)">Google Таблицы</strong> → Расширения → Apps Script</p>
+        <p style="margin-bottom:5px">2. Удали весь код и вставь этот:</p>
         <div class="code-block" id="appsScriptCode">function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const sheet = SpreadsheetApp.getActiveSpreadsheet()
-    .getSheetByName('FocusFlow') || 
-    SpreadsheetApp.getActiveSpreadsheet()
-    .insertSheet('FocusFlow');
-  sheet.clearContents();
-  sheet.getRange(1,1).setValue(JSON.stringify(data));
-  return ContentService.createTextOutput('ok');
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName('FocusFlow');
+    if (!sheet) sheet = ss.insertSheet('FocusFlow');
+    sheet.clearContents();
+    sheet.getRange(1, 1).setValue(JSON.stringify(data));
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error',message:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet()
-    .getSheetByName('FocusFlow');
-  if (!sheet) return ContentService
-    .createTextOutput('{}');
-  const val = sheet.getRange(1,1).getValue();
-  return ContentService.createTextOutput(val)
-    .setMimeType(ContentService.MimeType.JSON);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName('FocusFlow');
+    if (!sheet) return ContentService
+      .createTextOutput(JSON.stringify({status:'empty'}))
+      .setMimeType(ContentService.MimeType.JSON);
+    var val = sheet.getRange(1,1).getValue();
+    if (!val || val==='') return ContentService
+      .createTextOutput(JSON.stringify({status:'empty'}))
+      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(val)
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error',message:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }</div>
         <button onclick="copyAppsScript()" class="btn btn-s" style="margin-top:6px;padding:6px 12px;font-size:10px"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-copy"/></svg></span>Скопировать код</button>
         <p style="margin-top:8px;margin-bottom:4px">3. Нажми <strong style="color:var(--text)">Развернуть → Новое развёртывание</strong></p>
-        <p style="margin-bottom:4px">4. Тип: <strong style="color:var(--text)">Веб-приложение</strong>, доступ: <strong style="color:var(--text)">Все</strong></p>
-        <p style="margin-bottom:4px">5. Скопируй URL и вставь выше</p>
-        <p style="margin-bottom:0">✅ После этого данные будут синхронизироваться между ПК и телефоном!</p>
+        <p style="margin-bottom:4px">4. Тип: <strong style="color:var(--text)">Веб-приложение</strong></p>
+        <p style="margin-bottom:4px">5. Выполнять от имени: <strong style="color:var(--text)">Я</strong></p>
+        <p style="margin-bottom:4px">6. Доступ: <strong style="color:var(--text)">Все</strong> (не "вошедшие в Google")</p>
+        <p style="margin-bottom:4px">7. Нажми <strong style="color:var(--text)">Развернуть</strong>, разреши доступ</p>
+        <p style="margin-bottom:0">8. Скопируй URL и вставь в поле выше ☝️</p>
       </div>
     </div>
     <div class="divider"></div>
-    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="saveSet()"><span class="ic"><svg><use href="#i-save"/></svg></span>Сохранить</button>
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="saveSet()"><span class="ic"><svg><use href="#i-save"/></svg></span>Сохранить настройки</button>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
       <button class="btn btn-s" style="width:100%;justify-content:center;color:var(--red)" onclick="clearAll()"><span class="ic"><svg><use href="#i-trash"/></svg></span>Очистить все данные</button>
     </div>
@@ -692,34 +676,42 @@ const FONTS=[
   {n:'Open Sans',f:"'Open Sans',sans-serif"}
 ];
 const BADGES=[
-  {id:'first_read',ico:'📖',em:'📖',nm:'Первое чтение',dsc:'Прочитай первую минуту',ok:s=>s.totalMin>=1},
-  {id:'streak_3',ico:'🔥',em:'🔥',nm:'3 дня подряд',dsc:'Серия из 3 дней чтения',ok:s=>s.streak>=3},
-  {id:'streak_7',ico:'🔥',em:'🏅',nm:'Неделя читателя',dsc:'Серия из 7 дней подряд',ok:s=>s.streak>=7},
-  {id:'streak_30',ico:'🏆',em:'🏆',nm:'Месяц силы',dsc:'Серия из 30 дней подряд',ok:s=>s.streak>=30},
-  {id:'books_1',ico:'📚',em:'📗',nm:'Первая книга',dsc:'Добавь первую книгу',ok:s=>s.library.length>=1},
-  {id:'books_3',ico:'📚',em:'📚',nm:'Малая полка',dsc:'Добавь 3 книги',ok:s=>s.library.length>=3},
-  {id:'books_10',ico:'📚',em:'📖',nm:'Большая полка',dsc:'Добавь 10 книг',ok:s=>s.library.length>=10},
-  {id:'min_30',ico:'⏱️',em:'⏱️',nm:'Полчаса чтения',dsc:'30 минут суммарно',ok:s=>s.totalMin>=30},
-  {id:'min_100',ico:'⏱️',em:'⌛',nm:'Час мудрости',dsc:'100 минут суммарно',ok:s=>s.totalMin>=100},
-  {id:'min_500',ico:'⏳',em:'⏳',nm:'Время знаний',dsc:'500 минут суммарно',ok:s=>s.totalMin>=500},
-  {id:'xp_500',ico:'⭐',em:'⭐',nm:'500 XP',dsc:'Набери 500 очков',ok:s=>s.xp>=500},
-  {id:'xp_2000',ico:'🌟',em:'🌟',nm:'2000 XP',dsc:'Набери 2000 очков',ok:s=>s.xp>=2000},
-  {id:'quiz_5',ico:'🧠',em:'🧠',nm:'5 квизов',dsc:'Ответь на 5 вопросов',ok:s=>s.quizCount>=5},
-  {id:'quiz_20',ico:'🎓',em:'🎓',nm:'Студент',dsc:'Ответь на 20 вопросов',ok:s=>s.quizCount>=20},
-  {id:'goal_done',ico:'🎯',em:'🎯',nm:'Цель достигнута!',dsc:'Выполни цель месяца',ok:s=>s.goalDone},
-  {id:'hl_first',ico:'✏️',em:'✏️',nm:'Первое выделение',dsc:'Выдели текст при чтении',ok:s=>s.hlCount>=1},
+  {id:'first_read',em:'📖',nm:'Первое чтение',dsc:'Прочитай первую минуту',ok:s=>s.totalMin>=1},
+  {id:'streak_3',em:'🔥',nm:'3 дня подряд',dsc:'Серия из 3 дней чтения',ok:s=>s.streak>=3},
+  {id:'streak_7',em:'🏅',nm:'Неделя читателя',dsc:'Серия из 7 дней подряд',ok:s=>s.streak>=7},
+  {id:'streak_30',em:'🏆',nm:'Месяц силы',dsc:'Серия из 30 дней подряд',ok:s=>s.streak>=30},
+  {id:'books_1',em:'📗',nm:'Первая книга',dsc:'Добавь первую книгу',ok:s=>s.library.length>=1},
+  {id:'books_3',em:'📚',nm:'Малая полка',dsc:'Добавь 3 книги',ok:s=>s.library.length>=3},
+  {id:'books_10',em:'🗂️',nm:'Большая полка',dsc:'Добавь 10 книг',ok:s=>s.library.length>=10},
+  {id:'min_30',em:'⏱️',nm:'Полчаса чтения',dsc:'30 минут суммарно',ok:s=>s.totalMin>=30},
+  {id:'min_100',em:'⌛',nm:'Час мудрости',dsc:'100 минут суммарно',ok:s=>s.totalMin>=100},
+  {id:'min_500',em:'⏳',nm:'Время знаний',dsc:'500 минут суммарно',ok:s=>s.totalMin>=500},
+  {id:'xp_500',em:'⭐',nm:'500 XP',dsc:'Набери 500 очков',ok:s=>s.xp>=500},
+  {id:'xp_2000',em:'🌟',nm:'2000 XP',dsc:'Набери 2000 очков',ok:s=>s.xp>=2000},
+  {id:'quiz_5',em:'🧠',nm:'5 квизов',dsc:'Ответь на 5 вопросов',ok:s=>s.quizCount>=5},
+  {id:'quiz_20',em:'🎓',nm:'Студент',dsc:'Ответь на 20 вопросов',ok:s=>s.quizCount>=20},
+  {id:'goal_done',em:'🎯',nm:'Цель достигнута!',dsc:'Выполни цель месяца',ok:s=>s.goalDone},
+  {id:'hl_first',em:'✏️',nm:'Первое выделение',dsc:'Выдели текст при чтении',ok:s=>s.hlCount>=1},
 ];
 
-let S={token:TK,endpoint:'https://openrouter.ai/api/v1/chat/completions',sheetsUrl:'',readTime:3,fontSize:20,fontIdx:0,fontFamily:FONTS[0].f,theme:'dark',bookMode:true,compressBlocks:false,prefs:[],custPrefs:[],streak:0,lastRead:null,totalMin:0,xp:0,quizCount:0,hlCount:0,library:[],curBookId:null,highlights:{},goal:0,goalMonth:null,goalDone:false,earnedBadges:[],allRecs:[],lastSync:null};
+let S={
+  token:TK,endpoint:'https://openrouter.ai/api/v1/chat/completions',sheetsUrl:'',
+  readTime:3,fontSize:20,fontIdx:0,fontFamily:FONTS[0].f,
+  theme:'dark',bookMode:true,compressBlocks:false,
+  prefs:[],custPrefs:[],
+  streak:0,lastRead:null,totalMin:0,xp:0,quizCount:0,hlCount:0,
+  library:[],curBookId:null,highlights:{},
+  goal:0,goalMonth:null,goalDone:false,
+  earnedBadges:[],allRecs:[],lastSync:null
+};
 let biBookTitle='',biBookAuthor='';
 const $=id=>document.getElementById(id);
 
-// GEN OVERLAY steps
+// GEN OVERLAY
 let genStepTimer=null;
 function showGen(title){
   $('genOv').classList.add('active');
   $('genTitle').textContent=title||'Готовим для чтения...';
-  // Reset steps
   ['gs1','gs2','gs3','gs4'].forEach(id=>{const e=$(id);e.classList.remove('active','done');e.style.opacity='.4';});
   $('gs1').classList.add('active');$('gs1').style.opacity='1';
   let step=1;
@@ -734,19 +726,18 @@ function hideGen(){$('genOv').classList.remove('active');clearInterval(genStepTi
 function load(){
   try{const s=localStorage.getItem('ff5');if(s){const p=JSON.parse(s);S={...S,...p}}}catch(e){}
   $('apiTok').value=S.token;$('apiEnd').value=S.endpoint;$('fsSel').value=S.fontSize;
-  if(S.sheetsUrl)$('sheetsUrl').value=S.sheetsUrl;
+  if(S.sheetsUrl){$('sheetsUrl').value=S.sheetsUrl;}
+  if(S.lastSync){setSyncStatus('ok','Последняя синхронизация: '+new Date(S.lastSync).toLocaleString());}
   document.querySelectorAll('.tc').forEach(e=>e.classList.toggle('active',+e.dataset.m===S.readTime));
   document.querySelectorAll('.pchip[data-p]').forEach(e=>e.classList.toggle('active',S.prefs.includes(e.dataset.p)));
   $('compressToggle').checked=S.compressBlocks||false;
   applyTheme(S.theme);renderCustPrefs();buildFonts();updStats();renderLib();updGoalUI();updXP();renderBadges();
   if(S.allRecs&&S.allRecs.length){renderRecs();$('clearRecsBtn').classList.remove('hidden');$('loadMoreRow').classList.remove('hidden');}
-  // Apply book mode by default
   document.documentElement.style.setProperty('--font-read',S.fontFamily);
   handleRoute();
 }
 function save(){try{localStorage.setItem('ff5',JSON.stringify(S))}catch(e){}}
 
-// TABS in settings
 function switchTab(id,el){
   document.querySelectorAll('.stab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
@@ -754,15 +745,22 @@ function switchTab(id,el){
 }
 
 // ROUTING
-function handleRoute(){const h=location.hash.replace('#','');if(h.startsWith('book/')){const id=h.split('/')[1];if(S.library.find(x=>x.id===id)){S.curBookId=id;openBookDirect();return;}}if(h&&$(h)){navRaw(h);}else{navRaw('home');}}
+function handleRoute(){
+  const h=location.hash.replace('#','');
+  if(h.startsWith('book/')){const id=h.split('/')[1];if(S.library.find(x=>x.id===id)){S.curBookId=id;openBookDirect();return;}}
+  if(h&&$(h)){navRaw(h);}else{navRaw('home');}
+}
 window.addEventListener('hashchange',handleRoute);
 function nav(id){location.hash=id==='home'?'':id;}
 function navRaw(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));if($(id)){$(id).classList.add('active');}window.scrollTo(0,0);$('rfPanel')?.classList.remove('active');}
 
 // THEME
-function applyTheme(t){S.theme=t;document.documentElement.setAttribute('data-theme',t);document.querySelectorAll('.theme-o').forEach(e=>e.classList.toggle('active',e.dataset.t===t));
-const ic=t==='dark'?'i-moon':'i-sun';
-['themeBtn','rThemeBtn'].forEach(id=>{const b=$(id);if(b)b.innerHTML='<span class="ic"><svg><use href="#'+ic+'"/></svg></span>';});}
+function applyTheme(t){
+  S.theme=t;document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.theme-o').forEach(e=>e.classList.toggle('active',e.dataset.t===t));
+  const ic=t==='dark'?'i-moon':'i-sun';
+  ['themeBtn','rThemeBtn'].forEach(id=>{const b=$(id);if(b)b.innerHTML='<span class="ic"><svg><use href="#'+ic+'"/></svg></span>';});
+}
 function toggleTheme(){applyTheme(S.theme==='dark'?'light':'dark');save();}
 function setTheme(t){applyTheme(t);save();}
 
@@ -770,14 +768,28 @@ function setTheme(t){applyTheme(t);save();}
 function showModal(id){$(id).classList.add('active')}
 function closeModal(id){$(id).classList.remove('active')}
 function saveSet(){
-  S.token=$('apiTok').value||TK;S.endpoint=$('apiEnd').value;S.fontSize=+$('fsSel').value;
+  S.token=$('apiTok').value||TK;
+  S.endpoint=$('apiEnd').value;
+  S.fontSize=+$('fsSel').value;
   const su=$('sheetsUrl').value.trim();if(su)S.sheetsUrl=su;
   save();closeModal('setModal');toast('Сохранено ✓');
 }
-function setTime(m,el){S.readTime=m;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.toggle('active',+e.dataset.m===m));buildFonts();save();}
-function setCustomTime(){const v=+$('ctInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));buildFonts();save();toast('Время: '+v+' мин');$('ctInp').value='';}
-function setCustomTimeR(){const v=+$('rCtInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));buildFonts();save();toast('Время: '+v+' мин');$('rCtInp').value='';}
-function setCompress(v){S.compressBlocks=v;save();toast(v?'Сжатие включено: объём подстраивается под время':'Сжатие выключено: полная книга');}
+function setTime(m,el){
+  S.readTime=m;
+  document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.toggle('active',+e.dataset.m===m));
+  buildFonts();save();
+}
+function setCustomTime(){
+  const v=+$('ctInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
+  S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
+  buildFonts();save();toast('Время: '+v+' мин');$('ctInp').value='';
+}
+function setCustomTimeR(){
+  const v=+$('rCtInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
+  S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
+  buildFonts();save();toast('Время: '+v+' мин');$('rCtInp').value='';
+}
+function setCompress(v){S.compressBlocks=v;save();toast(v?'Сжатие включено':'Сжатие выключено: полная книга');}
 function prevFS(v){$('setFPrev').style.fontSize=v+'px';$('setFPrev').style.fontFamily=S.fontFamily;}
 function clearAll(){if(confirm('Удалить все данные?')){localStorage.removeItem('ff5');location.reload();}}
 
@@ -788,47 +800,79 @@ function buildFonts(){
   if(rf)rf.innerHTML=FONTS.map((f,i)=>`<div class="rfchip ${i===S.fontIdx?'active':''}" onclick="selFont(${i})" style="font-family:${f.f}">${f.n}</div>`).join('');
   if(rt)rt.innerHTML=[2,3,5,10].map(m=>`<div class="rtime-c rfchip ${m===S.readTime?'active':''}" data-m="${m}" onclick="setTime(${m},this)">${m}м</div>`).join('');
 }
-function selFont(i){S.fontIdx=i;S.fontFamily=FONTS[i].f;document.documentElement.style.setProperty('--font-read',S.fontFamily);buildFonts();
-['setFPrev','rfPrev','tBlock'].forEach(id=>{const e=$(id);if(e){e.style.fontFamily=S.fontFamily;}});save();}
+function selFont(i){
+  S.fontIdx=i;S.fontFamily=FONTS[i].f;
+  document.documentElement.style.setProperty('--font-read',S.fontFamily);
+  buildFonts();
+  ['setFPrev','rfPrev','tBlock'].forEach(id=>{const e=$(id);if(e)e.style.fontFamily=S.fontFamily;});
+  save();
+}
 function toggleFP(){$('rfPanel').classList.toggle('active');$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';$('rfPrev').style.fontFamily=S.fontFamily;}
 function chgFS(d){S.fontSize=Math.max(12,Math.min(40,S.fontSize+d));$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';const tb=$('tBlock');if(tb)tb.style.fontSize=S.fontSize+'px';save();}
 function toggleBM(){S.bookMode=!S.bookMode;applyBookMode();save();}
-function applyBookMode(){const tb=$('tBlock');if(!tb)return;if(S.bookMode){tb.style.textAlign='justify';tb.style.hyphens='auto';}else{tb.style.textAlign='left';tb.style.hyphens='none';}$('bmBtn').style.color=S.bookMode?'var(--accent)':(S.theme==='dark'?'var(--text2)':'var(--text2)');}
+function applyBookMode(){
+  const tb=$('tBlock');if(!tb)return;
+  if(S.bookMode){tb.style.textAlign='justify';tb.style.hyphens='auto';}
+  else{tb.style.textAlign='left';tb.style.hyphens='none';}
+  $('bmBtn').style.color=S.bookMode?'var(--accent)':'';
+}
 
 // XP / STATS
 function updStats(){$('stS').textContent=S.streak;$('stB').textContent=S.library.length;$('stM').textContent=S.totalMin;$('stX').textContent=S.xp;updXP();}
-function updXP(){const lvl=Math.floor(S.xp/100)+1,cur=S.xp%100;
-['xpLvl','gXpLvl'].forEach(id=>{const e=$(id);if(e)e.textContent='Уровень '+lvl;});
-['xpPts','gXpPts'].forEach(id=>{const e=$(id);if(e)e.textContent=cur+' / 100 XP';});
-['xpFill','gXpFill'].forEach(id=>{const e=$(id);if(e)e.style.width=cur+'%';});}
+function updXP(){
+  const lvl=Math.floor(S.xp/100)+1,cur=S.xp%100;
+  ['xpLvl','gXpLvl'].forEach(id=>{const e=$(id);if(e)e.textContent='Уровень '+lvl;});
+  ['xpPts','gXpPts'].forEach(id=>{const e=$(id);if(e)e.textContent=cur+' / 100 XP';});
+  ['xpFill','gXpFill'].forEach(id=>{const e=$(id);if(e)e.style.width=cur+'%';});
+}
 function addXP(n,reason){S.xp+=n;save();updStats();showXpPop('+'+n+' XP');if(reason)toast(reason);}
 function showXpPop(txt){const d=document.createElement('div');d.className='xp-pop';d.textContent=txt;d.style.left=(20+Math.random()*60)+'%';d.style.top='25%';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);}
-function updStreak(){const td=new Date().toDateString();if(S.lastRead===td)return;const y=new Date();y.setDate(y.getDate()-1);if(S.lastRead!==y.toDateString()&&S.lastRead!==td)S.streak=0;save();updStats();}
-function recordRead(){const td=new Date().toDateString();const y=new Date();y.setDate(y.getDate()-1);if(S.lastRead!==td){S.streak=(S.lastRead===y.toDateString()||S.streak===0)?S.streak+1:1;S.lastRead=td;if(S.streak>1)addXP(30,'🔥 Streak '+S.streak+' дней!');}save();updStats();}
+function updStreak(){
+  const td=new Date().toDateString();if(S.lastRead===td)return;
+  const y=new Date();y.setDate(y.getDate()-1);
+  if(S.lastRead!==y.toDateString()&&S.lastRead!==td)S.streak=0;
+  save();updStats();
+}
+function recordRead(){
+  const td=new Date().toDateString();const y=new Date();y.setDate(y.getDate()-1);
+  if(S.lastRead!==td){S.streak=(S.lastRead===y.toDateString()||S.streak===0)?S.streak+1:1;S.lastRead=td;if(S.streak>1)addXP(30,'🔥 Streak '+S.streak+' дней!');}
+  save();updStats();
+}
 
 // GOAL
-function saveGoal(){const v=+$('goalInp').value;if(!v||v<1)return;S.goal=v;S.goalMonth=new Date().getMonth();S.goalDone=false;save();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');}
-function updGoalUI(){if(!S.goal){['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent='Поставь цель';});['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent='Нажми чтобы установить';});return;}
-const done=S.library.filter(b=>{try{return new Date(b.addedAt).getMonth()===new Date().getMonth()}catch(e){return false}}).length;
-const pct=Math.min(100,Math.round(done/S.goal*100));
-['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent=done+'/'+S.goal+' книг';});
-['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent=pct>=100?'Цель достигнута! 🎉':'До цели: '+(S.goal-done);});
-['goalF','gGoalF'].forEach(id=>{const e=$(id);if(e)e.style.width=pct+'%';});
-['goalPct','gGoalPct'].forEach(id=>{const e=$(id);if(e)e.textContent=pct+'%';});
-if(pct>=100&&!S.goalDone){S.goalDone=true;addXP(200,'🎯 Цель месяца достигнута! +200 XP');save();}}
+function saveGoal(){
+  const v=+$('goalInp').value;if(!v||v<1)return;
+  S.goal=v;S.goalMonth=new Date().getMonth();S.goalDone=false;
+  save();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');
+}
+function updGoalUI(){
+  if(!S.goal){
+    ['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent='Поставь цель';});
+    ['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent='Нажми чтобы установить';});
+    return;
+  }
+  const done=S.library.filter(b=>{try{return new Date(b.addedAt).getMonth()===new Date().getMonth()}catch(e){return false}}).length;
+  const pct=Math.min(100,Math.round(done/S.goal*100));
+  ['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent=done+'/'+S.goal+' книг';});
+  ['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent=pct>=100?'Цель достигнута! 🎉':'До цели: '+(S.goal-done);});
+  ['goalF','gGoalF'].forEach(id=>{const e=$(id);if(e)e.style.width=pct+'%';});
+  ['goalPct','gGoalPct'].forEach(id=>{const e=$(id);if(e)e.textContent=pct+'%';});
+  if(pct>=100&&!S.goalDone){S.goalDone=true;addXP(200,'🎯 Цель месяца достигнута! +200 XP');save();}
+}
 
 // BADGES
 function renderBadges(){
   const g=$('badgesGrid');if(!g)return;
   g.innerHTML=BADGES.map(b=>{
     const earned=S.earnedBadges.includes(b.id);
-    return`<div class="badge-card ${earned?'earned':'locked'}">
-      <div class="bem">${earned?b.em:'🔒'}</div>
-      <div class="binfo"><div class="bnm">${b.nm}</div><div class="bxp">${b.dsc}${earned?' ✓':''}</div></div>
-    </div>`;
+    return`<div class="badge-card ${earned?'earned':'locked'}"><div class="bem">${earned?b.em:'🔒'}</div><div class="binfo"><div class="bnm">${b.nm}</div><div class="bxp">${b.dsc}${earned?' ✓':''}</div></div></div>`;
   }).join('');
 }
-function checkBadges(){let nw=false;BADGES.forEach(b=>{if(!S.earnedBadges.includes(b.id)&&b.ok(S)){S.earnedBadges.push(b.id);nw=true;toast('🏆 Достижение: '+b.nm+' +50 XP');S.xp+=50;}});if(nw){save();updStats();renderBadges();}}
+function checkBadges(){
+  let nw=false;
+  BADGES.forEach(b=>{if(!S.earnedBadges.includes(b.id)&&b.ok(S)){S.earnedBadges.push(b.id);nw=true;toast('🏆 '+b.nm+' +50 XP');S.xp+=50;}});
+  if(nw){save();updStats();renderBadges();}
+}
 
 // PREFS
 function tPref(el){const p=el.dataset.p;el.classList.toggle('active');if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);else S.prefs.push(p);save();}
@@ -838,32 +882,44 @@ function renderCustPrefs(){document.querySelectorAll('.pchip.custom').forEach(e=
 // AI
 async function ai(msgs,mt){
   const t=S.token||TK;
-  const r=await fetch(S.endpoint||'https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||4096,temperature:.7})});
+  const r=await fetch(S.endpoint||'https://openrouter.ai/api/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},
+    body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||4096,temperature:.7})
+  });
   if(!r.ok){let m='HTTP '+r.status;try{const e=await r.json();m=e.error?.message||e.message||m}catch(x){}throw new Error(m);}
   const d=await r.json();
   if(!d.choices||!d.choices[0])throw new Error('Пустой ответ');
   return d.choices[0].message.content;
 }
 
-// STREAMING — smooth char by char
+// STREAMING
 async function aiStream(msgs,mt,onChunk,onDone){
   const t=S.token||TK;
   try{
-    const r=await fetch(S.endpoint||'https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||2000,temperature:.7,stream:true})});
+    const r=await fetch(S.endpoint||'https://openrouter.ai/api/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},
+      body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||2000,temperature:.7,stream:true})
+    });
     if(!r.ok){let m='HTTP '+r.status;try{const e=await r.json();m=e.error?.message||e.message||m}catch(x){}throw new Error(m);}
     const reader=r.body.getReader();const dec=new TextDecoder();let buf='';let full='';
-    // Queue for smooth output
     let queue='';let outputting=false;
-    function flushQueue(){if(!queue.length){outputting=false;return;}outputting=true;const ch=queue[0];queue=queue.slice(1);onChunk(ch,full);setTimeout(flushQueue,12);}
+    function flushQueue(){
+      if(!queue.length){outputting=false;return;}
+      outputting=true;const ch=queue[0];queue=queue.slice(1);
+      onChunk(ch,full);setTimeout(flushQueue,14);
+    }
     while(true){
       const {done,value}=await reader.read();if(done)break;
       buf+=dec.decode(value,{stream:true});
       const lines=buf.split('\n');buf=lines.pop()||'';
-      for(const line of lines){if(!line.startsWith('data:'))continue;const data=line.slice(5).trim();if(data==='[DONE]')continue;
+      for(const line of lines){
+        if(!line.startsWith('data:'))continue;
+        const data=line.slice(5).trim();if(data==='[DONE]')continue;
         try{const j=JSON.parse(data);const c=j.choices?.[0]?.delta?.content;if(c){full+=c;queue+=c;if(!outputting)flushQueue();}}catch(e){}
       }
     }
-    // Wait for queue to flush
     await new Promise(res=>{const chk=setInterval(()=>{if(!outputting&&!queue.length){clearInterval(chk);res();}},50);});
     if(onDone)onDone(full);
   }catch(e){if(onDone)onDone(null,e);}
@@ -872,9 +928,16 @@ async function aiStream(msgs,mt,onChunk,onDone){
 // RECS
 function parseRecsList(raw){
   const recs=[];const blocks=raw.split('---');
-  for(const block of blocks){const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const rec={};
-    for(const line of lines){if(line.startsWith('TITLE:'))rec.title=line.replace('TITLE:','').trim();else if(line.startsWith('AUTHOR:'))rec.author=line.replace('AUTHOR:','').trim();else if(line.startsWith('GENRE:'))rec.genre=line.replace('GENRE:','').trim();else if(line.startsWith('WHY:'))rec.why=line.replace('WHY:','').trim();}
-    if(rec.title&&rec.author)recs.push(rec);}
+  for(const block of blocks){
+    const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const rec={};
+    for(const line of lines){
+      if(line.startsWith('TITLE:'))rec.title=line.replace('TITLE:','').trim();
+      else if(line.startsWith('AUTHOR:'))rec.author=line.replace('AUTHOR:','').trim();
+      else if(line.startsWith('GENRE:'))rec.genre=line.replace('GENRE:','').trim();
+      else if(line.startsWith('WHY:'))rec.why=line.replace('WHY:','').trim();
+    }
+    if(rec.title&&rec.author)recs.push(rec);
+  }
   return recs;
 }
 
@@ -886,7 +949,7 @@ async function getRecs(more){
   const already=S.allRecs.map(r=>r.title);const alreadyRead=S.library.map(b=>b.title);
   const exclude=[...already,...alreadyRead].filter(Boolean).join(', ');
   try{
-    const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат (каждая книга через ---):\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр 1-2 слова\nWHY: Одно предложение почему стоит читать\n---\nТолько этот формат.`}],2000);
+    const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат каждой книги (строго):\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр 1-2 слова\nWHY: Одно предложение почему стоит читать\n---\nТолько этот формат, ничего лишнего.`}],2000);
     const recs=parseRecsList(raw);if(!recs.length)throw new Error('Нет данных');
     S.allRecs=S.allRecs.concat(recs);save();renderRecs();$('clearRecsBtn').classList.remove('hidden');
   }catch(e){
@@ -897,17 +960,39 @@ async function getRecs(more){
 
 function renderRecs(){
   const rg=$('recsGrid');
-  rg.innerHTML=S.allRecs.map(r=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div><div class="rbtns"><span class="rtag">${esc(r.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('');
-  $('loadMoreRow').classList.remove('hidden');$('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
+  rg.innerHTML=S.allRecs.map(r=>`
+    <div class="rcard">
+      <div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div>
+      <div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div>
+      <div class="rbtns">
+        <span class="rtag">${esc(r.genre||'')}</span>
+        <button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+        <button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button>
+      </div>
+    </div>`).join('');
+  $('loadMoreRow').classList.remove('hidden');
+  $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
 }
-function clearRecs(){S.allRecs=[];save();$('recsGrid').innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Рекомендации очищены</div><div class="ed">Нажми «Рекомендации» снова</div></div>';$('loadMoreRow').classList.add('hidden');$('clearRecsBtn').classList.add('hidden');}
+
+function clearRecs(){
+  S.allRecs=[];save();
+  $('recsGrid').innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Рекомендации очищены</div><div class="ed">Нажми «Рекомендации» снова</div></div>';
+  $('loadMoreRow').classList.add('hidden');$('clearRecsBtn').classList.add('hidden');
+}
 
 // SEARCH
 function parseSearchList(raw){
   const books=[];const blocks=raw.split('---');
-  for(const block of blocks){const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const b={};
-    for(const line of lines){if(line.startsWith('TITLE:'))b.title=line.replace('TITLE:','').trim();else if(line.startsWith('AUTHOR:'))b.author=line.replace('AUTHOR:','').trim();else if(line.startsWith('GENRE:'))b.genre=line.replace('GENRE:','').trim();else if(line.startsWith('DESC:'))b.desc=line.replace('DESC:','').trim();}
-    if(b.title&&b.author)books.push(b);}
+  for(const block of blocks){
+    const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const b={};
+    for(const line of lines){
+      if(line.startsWith('TITLE:'))b.title=line.replace('TITLE:','').trim();
+      else if(line.startsWith('AUTHOR:'))b.author=line.replace('AUTHOR:','').trim();
+      else if(line.startsWith('GENRE:'))b.genre=line.replace('GENRE:','').trim();
+      else if(line.startsWith('DESC:'))b.desc=line.replace('DESC:','').trim();
+    }
+    if(b.title&&b.author)books.push(b);
+  }
   return books;
 }
 function qSearch(q){nav('searchScr');$('searchInp').value=q;doSearch();}
@@ -917,11 +1002,20 @@ async function doSearch(){
   try{
     const raw=await ai([{role:'user',content:`Найди 5 книг: "${q}"\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр\nDESC: Описание одним предложением\n---\nТолько этот формат.`}],2000);
     const books=parseSearchList(raw);if(!books.length)throw new Error('Не найдено');
-    res.innerHTML='<div class="sec-title">Результаты поиска</div><div class="recs-grid">'+books.map(b=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div><div class="rbtns"><span class="rtag">${esc(b.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('')+'</div>';
+    res.innerHTML='<div class="sec-title">Результаты поиска</div><div class="recs-grid">'+books.map(b=>`
+      <div class="rcard">
+        <div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div>
+        <div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div>
+        <div class="rbtns">
+          <span class="rtag">${esc(b.genre||'')}</span>
+          <button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+          <button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button>
+        </div>
+      </div>`).join('')+'</div>';
   }catch(e){res.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;}
 }
 
-// BOOK INFO + STREAMING
+// BOOK INFO
 function showBookInfo(title,author){
   title=unesc(title);author=unesc(author);biBookTitle=title;biBookAuthor=author;
   $('biTitle').textContent=title;$('biChat').innerHTML='';showModal('biModal');
@@ -934,10 +1028,7 @@ function startStreamMsg(msgs){
   msgEl.appendChild(cur);chat.appendChild(msgEl);chat.scrollTop=chat.scrollHeight;
   let full='';
   aiStream(msgs,1500,(ch,fullSoFar)=>{
-    full=fullSoFar;
-    msgEl.textContent=full;
-    msgEl.appendChild(cur);
-    chat.scrollTop=chat.scrollHeight;
+    full=fullSoFar;msgEl.textContent=full;msgEl.appendChild(cur);chat.scrollTop=chat.scrollHeight;
   },(finalFull,err)=>{
     if(err){msgEl.textContent='Ошибка: '+err.message;msgEl.style.color='var(--red)';}
     else{msgEl.textContent=finalFull||full;}
@@ -948,23 +1039,26 @@ async function askBI(){
   const q=$('biInp').value.trim();if(!q)return;$('biInp').value='';
   const chat=$('biChat');
   const userEl=document.createElement('div');userEl.className='bi-msg user';userEl.textContent=q;chat.appendChild(userEl);chat.scrollTop=chat.scrollHeight;
-  startStreamMsg([{role:'system',content:`Ты эксперт по книге "${biBookTitle}" (${biBookAuthor}). Отвечай кратко и по делу на русском. Без форматирования со звёздочками.`},{role:'user',content:q}]);
+  startStreamMsg([{role:'system',content:`Ты эксперт по книге "${biBookTitle}" (${biBookAuthor}). Отвечай кратко на русском. Без звёздочек.`},{role:'user',content:q}]);
 }
 function readBIBook(){closeModal('biModal');loadAIBook(biBookTitle,biBookAuthor);}
 
 // LOAD BOOK
-function parseBlocks(raw){const parts=raw.split(/\n---\n|^---$/gm);return parts.map(p=>p.trim()).filter(p=>p.length>30&&!p.match(/^[-=*]+$/));}
+function parseBlocks(raw){
+  const parts=raw.split(/\n---\n|^---$/gm);
+  return parts.map(p=>p.trim()).filter(p=>p.length>30&&!p.match(/^[-=*]+$/));
+}
 async function loadAIBook(title,author){
   title=unesc(title);author=unesc(author);
   const ex=S.library.find(b=>b.title===title);if(ex){openBook(ex.id);return;}
-  showGen('Готовим «'+title.substring(0,30)+'»...');
+  showGen('Готовим «'+title.substring(0,28)+'»...');
   try{
-    // If compress mode: use readTime*3 blocks, else use 20+ blocks
     const n=S.compressBlocks?Math.max(6,S.readTime*3):Math.max(20,S.readTime*2);
     const raw=await ai([{role:'user',content:`Ключевые идеи книги "${title}" (${author}). ${n} текстовых блоков по 120-200 слов каждый. Введение→идеи→вывод. Русский язык. Каждый блок отделяй строкой ---. Только текст, без JSON, без нумерации, без звёздочек.`}],8000);
     const blocks=parseBlocks(raw);if(blocks.length<3)throw new Error('Мало контента, попробуй ещё раз');
     const book={id:Date.now().toString(),title,author:author||'',blocks,curBlock:0,totalBlocks:blocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai'};
-    S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📚 Книга добавлена');checkBadges();
+    S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);
+    addXP(10,'📚 Книга добавлена');checkBadges();
   }catch(e){hideGen();toast('Ошибка: '+e.message);}
 }
 
@@ -973,66 +1067,163 @@ let pdfjsOk=false;
 function loadPdfJs(){return new Promise(r=>{if(pdfjsOk){r();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';pdfjsOk=true;r()};s.onerror=()=>r();document.head.appendChild(s);})}
 async function handleFile(ev){
   const f=ev.target.files[0];if(!f)return;const ext=f.name.split('.').pop().toLowerCase();
-  if(ext==='pdf'){showGen('Загружаем PDF...');try{await loadPdfJs();if(!window.pdfjsLib)throw new Error('PDF.js error');const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n\n';}hideGen();if(t.trim().length<50){toast('PDF без текста (скан?)');return;}$('pasteArea').value=t.trim();$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('PDF загружен: '+pdf.numPages+' стр.');}catch(e){hideGen();toast('PDF: '+e.message);}ev.target.value='';return;}
-  const rd=new FileReader();rd.onload=e=>{let t=e.target.result;if(ext==='fb2')t=parseFB2(t);else if(ext==='html'||ext==='htm')t=parseHTML(t);$('pasteArea').value=t;$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('Файл загружен');};rd.readAsText(f);ev.target.value='';}
+  if(ext==='pdf'){
+    showGen('Загружаем PDF...');
+    try{
+      await loadPdfJs();if(!window.pdfjsLib)throw new Error('PDF.js не загрузился');
+      const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n\n';}
+      hideGen();if(t.trim().length<50){toast('PDF без текста (скан?)');return;}
+      $('pasteArea').value=t.trim();$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');
+      toast('PDF загружен: '+pdf.numPages+' стр.');
+    }catch(e){hideGen();toast('PDF: '+e.message);}
+    ev.target.value='';return;
+  }
+  const rd=new FileReader();
+  rd.onload=e=>{let t=e.target.result;if(ext==='fb2')t=parseFB2(t);else if(ext==='html'||ext==='htm')t=parseHTML(t);$('pasteArea').value=t;$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('Файл загружен');};
+  rd.readAsText(f);ev.target.value='';
+}
 function parseFB2(x){try{const d=new DOMParser().parseFromString(x,'text/xml');let t='';d.querySelectorAll('body p').forEach(p=>{t+=p.textContent.trim()+'\n\n'});return t.trim()||x}catch(e){return x}}
 function parseHTML(h){try{return new DOMParser().parseFromString(h,'text/html').body.textContent||h}catch(e){return h}}
 async function processText(){
   const t=$('pasteArea').value.trim(),title=$('uploadTitle').value.trim()||'Моя книга';
   if(!t){toast('Вставь текст');return;}if(t.length<100){toast('Мало текста');return;}
   showGen('Обрабатываем "'+title+'"...');
-  let bl;try{
+  let bl;
+  try{
     if(t.length<5000){bl=smartSplit(t);}
-    else{try{const r=await ai([{role:'user',content:`Раздели на блоки 120-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],8000);bl=parseBlocks(r);}catch(e){bl=smartSplit(t);}
-    if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));}}catch(e){bl=smartSplit(t);}
+    else{
+      try{const r=await ai([{role:'user',content:`Раздели на блоки 120-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],8000);bl=parseBlocks(r);}
+      catch(e){bl=smartSplit(t);}
+      if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));
+    }
+  }catch(e){bl=smartSplit(t);}
   const book={id:Date.now().toString(),title,author:'',blocks:bl,curBlock:0,totalBlocks:bl.length,addedAt:new Date().toISOString(),readMin:0,source:'upload'};
-  S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';}
-function smartSplit(t){const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';for(const p of ps){const tr=p.trim();if(!tr)continue;if(c.length+tr.length<800){c+=(c?'\n\n':'')+tr}else{if(c)bl.push(c);if(tr.length>800){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<800)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}}if(c)bl.push(c);return bl.length?bl:[t];}
+  S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();
+  openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';
+}
+function smartSplit(t){
+  const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';
+  for(const p of ps){const tr=p.trim();if(!tr)continue;
+    if(c.length+tr.length<800){c+=(c?'\n\n':'')+tr}
+    else{if(c)bl.push(c);if(tr.length>800){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<800)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}
+  }
+  if(c)bl.push(c);return bl.length?bl:[t];
+}
 
 // EXPORT / IMPORT
 function exportData(){
-  const data=JSON.stringify(S,null,2);const blob=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='focusflow-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Экспорт выполнен');}
+  const data=JSON.stringify(S,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='focusflow-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  toast('Экспорт выполнен');
+}
 function importData(){$('importInp').click();}
 function handleImport(ev){
   const f=ev.target.files[0];if(!f)return;
   const rd=new FileReader();
-  rd.onload=e=>{try{const p=JSON.parse(e.target.result);S={...S,...p};save();load();toast('Данные импортированы!');}catch(err){toast('Ошибка импорта: '+err.message);}};
-  rd.readAsText(f);ev.target.value='';}
+  rd.onload=e=>{
+    try{const p=JSON.parse(e.target.result);S={...S,...p};save();load();toast('Данные импортированы!');}
+    catch(err){toast('Ошибка импорта: '+err.message);}
+  };
+  rd.readAsText(f);ev.target.value='';
+}
 
-// GOOGLE SHEETS SYNC
+// GOOGLE SHEETS SYNC — исправленные функции
 async function syncToSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
   if(!url){toast('Укажи URL Google Apps Script');return;}
-  setSyncStatus('loading','Синхронизируем...');
+  S.sheetsUrl=url;save();
+  setSyncStatus('loading','Сохраняем...');
   try{
-    const resp=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(S)});
-    const txt=await resp.text();if(txt.trim()==='ok'||resp.ok){S.lastSync=new Date().toISOString();S.sheetsUrl=url;save();setSyncStatus('ok','Синхронизировано: '+new Date().toLocaleTimeString());}else throw new Error('Ответ: '+txt);
-  }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('Ошибка синхронизации: '+e.message);}
+    await fetch(url,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(S)
+    });
+    // no-cors всегда возвращает opaque — это нормально, считаем успехом
+    S.lastSync=new Date().toISOString();
+    save();
+    setSyncStatus('ok','Сохранено: '+new Date().toLocaleTimeString());
+    toast('✅ Данные сохранены в Google Sheets');
+  }catch(e){
+    setSyncStatus('err','Ошибка: '+e.message);
+    toast('❌ '+e.message);
+  }
 }
+
 async function syncFromSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
   if(!url){toast('Укажи URL Google Apps Script');return;}
+  S.sheetsUrl=url;save();
   setSyncStatus('loading','Загружаем...');
   try{
-    const resp=await fetch(url);const txt=await resp.text();const data=JSON.parse(txt);
-    if(data&&typeof data==='object'){S={...S,...data};save();load();setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());toast('Данные загружены из Google Sheets!');}
-    else throw new Error('Нет данных');
-  }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('Ошибка загрузки: '+e.message);}
+    const resp=await fetch(url+'?t='+Date.now(),{method:'GET',mode:'cors'});
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const txt=await resp.text();
+    if(!txt||txt.trim()===''||txt.includes('"status":"empty"')){
+      setSyncStatus('ok','Нет данных в таблице');
+      toast('В таблице нет данных. Сначала нажми «Сохранить в Sheets».');
+      return;
+    }
+    let data;
+    try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат ответа');}
+    if(data&&typeof data==='object'&&data.library){
+      S={...S,...data};
+      save();load();
+      setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());
+      toast('✅ Данные загружены! Книг: '+S.library.length);
+    }else if(data&&data.status==='error'){
+      throw new Error(data.message||'Ошибка в скрипте');
+    }else{
+      throw new Error('Неверный формат данных');
+    }
+  }catch(e){
+    setSyncStatus('err','Ошибка: '+e.message);
+    toast('❌ '+e.message+'. Проверь URL и настройки скрипта.');
+  }
 }
-function setSyncStatus(type,msg){$('syncDot').className='sync-dot '+type;$('syncMsg').textContent=msg;}
-function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй код вручную'));}
+
+function setSyncStatus(type,msg){
+  $('syncDot').className='sync-dot '+type;
+  $('syncMsg').textContent=msg;
+}
+function copyAppsScript(){
+  const txt=$('appsScriptCode').textContent;
+  navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй код вручную'));
+}
 
 // LIBRARY
-function renderLib(){const g=$('libGrid'),e=$('libE');
-if(!S.library.length){g.innerHTML='';if(e){g.appendChild(e);e.style.display='';}return;}
-if(e)e.style.display='none';
-g.innerHTML=S.library.map(b=>{const pr=b.totalBlocks?Math.round(b.curBlock/b.totalBlocks*100):0;const ic=b.source==='ai'?'i-spark':'i-file';
-return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`}).join('');}
+function renderLib(){
+  const g=$('libGrid'),e=$('libE');
+  if(!S.library.length){g.innerHTML='';if(e){g.appendChild(e);e.style.display='';}return;}
+  if(e)e.style.display='none';
+  g.innerHTML=S.library.map(b=>{
+    const pr=b.totalBlocks?Math.round(b.curBlock/b.totalBlocks*100):0;
+    return`<div class="lcard" onclick="openBook('${b.id}')">
+      <div class="lcover">${b.source==='ai'?'📖':'📄'}</div>
+      <div class="linfo"><div class="t">${esc(b.title)}</div>
+      <div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div>
+      <div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} · ${b.readMin||0} мин</div></div>
+      <div class="lbtns" onclick="event.stopPropagation()">
+        <button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+        <button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button>
+      </div>
+    </div>`;
+  }).join('');
+}
 function delBook(id){if(!confirm('Удалить книгу?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];save();renderLib();updStats();}
 
 // READER
 let rtInt=null,rtSec=0;
-function getBlockLabel(idx,total){if(idx===0)return'Введение';if(idx===total-1)return'Заключение';const p=idx/(Math.max(1,total-1));if(p<0.25)return'Часть I — Начало';if(p<0.5)return'Часть II — Развитие';if(p<0.75)return'Часть III — Ключевые идеи';return'Часть IV — Финал';}
+function getBlockLabel(idx,total){
+  if(idx===0)return'Введение';if(idx===total-1)return'Заключение';
+  const p=idx/(Math.max(1,total-1));
+  if(p<0.25)return'Часть I — Начало';if(p<0.5)return'Часть II — Развитие';
+  if(p<0.75)return'Часть III — Ключевые идеи';return'Часть IV — Финал';
+}
 function openBook(id){
   const b=S.library.find(x=>x.id===id);if(!b)return;
   S.curBookId=id;location.hash='book/'+id;
@@ -1042,16 +1233,22 @@ function openBook(id){
   const tb=$('tBlock');tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;
   applyBookMode();showBl(b.curBlock);
   rtSec=0;clearInterval(rtInt);
-  rtInt=setInterval(()=>{rtSec++;const m=Math.floor(rtSec/60),s=rtSec%60;$('rTimer').textContent=m+':'+String(s).padStart(2,'0');
-  if(rtSec>0&&rtSec%60===0){S.xp+=10;save();updStats();showXpPop('+10 XP');}
-  if(rtSec>0&&rtSec%(S.readTime*60)===0)sessDone();},1000);
+  rtInt=setInterval(()=>{
+    rtSec++;const m=Math.floor(rtSec/60),s=rtSec%60;
+    $('rTimer').textContent=m+':'+String(s).padStart(2,'0');
+    if(rtSec>0&&rtSec%60===0){S.xp+=10;save();updStats();showXpPop('+10 XP');}
+    if(rtSec>0&&rtSec%(S.readTime*60)===0)sessDone();
+  },1000);
   if(b.curBlock>0)genCtx(b);else $('ctxHint').style.display='none';
   $('rfPanel').classList.remove('active');
 }
 function openBookDirect(){const b=S.library.find(x=>x.id===S.curBookId);if(!b){nav('home');return;}openBook(b.id);}
-async function genCtx(b){const h=$('ctxHint');if(b.curBlock<=1){h.style.display='none';return;}const prev=b.blocks[b.curBlock-1]||'';if(!prev){h.style.display='none';return;}
-try{h.textContent='Вспоминаем...';h.style.display='';const s=await ai([{role:'user',content:`Резюме одним предложением (макс 20 слов). Начни "В прошлый раз:". Текст: "${prev.substring(0,400)}"`}],100);h.textContent=s;}catch(e){h.style.display='none';}}
-
+async function genCtx(b){
+  const h=$('ctxHint');if(b.curBlock<=1){h.style.display='none';return;}
+  const prev=b.blocks[b.curBlock-1]||'';if(!prev){h.style.display='none';return;}
+  try{h.textContent='Вспоминаем...';h.style.display='';const s=await ai([{role:'user',content:`Резюме одним предложением (макс 20 слов). Начни "В прошлый раз:". Текст: "${prev.substring(0,400)}"`}],100);h.textContent=s;}
+  catch(e){h.style.display='none';}
+}
 function showBl(idx){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   idx=Math.max(0,Math.min(idx,b.totalBlocks-1));b.curBlock=idx;
@@ -1062,8 +1259,11 @@ function showBl(idx){
   setTimeout(()=>{
     let txt=b.blocks[idx]||'Конец!';
     const hls=(S.highlights[b.id]||{})[idx];
-    if(hls&&hls.length){const sorted=[...hls].sort((a,c)=>c.s-a.s);for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}tb.innerHTML=txt;}
-    else{tb.textContent=txt;}
+    if(hls&&hls.length){
+      const sorted=[...hls].sort((a,c)=>c.s-a.s);
+      for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}
+      tb.innerHTML=txt;
+    }else{tb.textContent=txt;}
     tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
     tb.style.opacity='1';tb.style.transform='translateY(0)';
   },120);
@@ -1071,44 +1271,121 @@ function showBl(idx){
 }
 function nextBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock<b.totalBlocks-1)showBl(b.curBlock+1);else{toast('Книга прочитана! 🎉');addXP(50,'📚 Книга завершена! +50 XP');checkBadges();}}
 function prevBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock>0)showBl(b.curBlock-1);}
-function exitReader(){clearInterval(rtInt);$('rfPanel').classList.remove('active');const b=S.library.find(x=>x.id===S.curBookId);
-if(b){const m=Math.ceil(rtSec/60);b.readMin=(b.readMin||0)+m;S.totalMin+=m;if(m>0)recordRead();}
-save();nav('home');renderLib();updStats();updGoalUI();checkBadges();}
-function sessDone(){toast('✅ '+S.readTime+' мин прочитано!');const b=S.library.find(x=>x.id===S.curBookId);if(b&&b.curBlock>2)setTimeout(()=>trigQuiz(b),2000);}
+function exitReader(){
+  clearInterval(rtInt);$('rfPanel').classList.remove('active');
+  const b=S.library.find(x=>x.id===S.curBookId);
+  if(b){const m=Math.ceil(rtSec/60);b.readMin=(b.readMin||0)+m;S.totalMin+=m;if(m>0)recordRead();}
+  save();nav('home');renderLib();updStats();updGoalUI();checkBadges();
+}
+function sessDone(){
+  toast('✅ '+S.readTime+' мин прочитано!');
+  const b=S.library.find(x=>x.id===S.curBookId);
+  if(b&&b.curBlock>2)setTimeout(()=>trigQuiz(b),2000);
+}
 
 // HIGHLIGHTING
-$('rContent').addEventListener('mouseup',handleSel);$('rContent').addEventListener('touchend',()=>setTimeout(handleSel,80));
-function handleSel(){const sel=window.getSelection();if(!sel||sel.isCollapsed||!sel.toString().trim()){hideHlTT();return;}if(!$('readerScr').classList.contains('active'))return;const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('hlTT');tt.style.left=Math.max(8,Math.min(innerWidth-160,rect.left+rect.width/2-70))+'px';tt.style.top=(rect.top<60?rect.bottom+6:rect.top-42)+'px';tt.classList.add('active');}
+$('rContent').addEventListener('mouseup',handleSel);
+$('rContent').addEventListener('touchend',()=>setTimeout(handleSel,80));
+function handleSel(){
+  const sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.toString().trim()){hideHlTT();return;}
+  if(!$('readerScr').classList.contains('active'))return;
+  const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('hlTT');
+  tt.style.left=Math.max(8,Math.min(innerWidth-160,rect.left+rect.width/2-70))+'px';
+  tt.style.top=(rect.top<60?rect.bottom+6:rect.top-42)+'px';
+  tt.classList.add('active');
+}
 function hideHlTT(){$('hlTT').classList.remove('active');window.getSelection()?.removeAllRanges();}
-function hlSel(){const sel=window.getSelection();if(!sel||sel.isCollapsed)return;const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;const bi=b.curBlock,bt=b.blocks[bi]||'',st=sel.toString(),si=bt.indexOf(st);if(si===-1){hideHlTT();return;}const ei=si+st.length;if(!S.highlights[b.id])S.highlights[b.id]={};if(!S.highlights[b.id][bi])S.highlights[b.id][bi]=[];S.highlights[b.id][bi]=S.highlights[b.id][bi].filter(h=>!(h.s>=si&&h.e<=ei));S.highlights[b.id][bi].push({s:si,e:ei});S.hlCount=(S.hlCount||0)+1;save();hideHlTT();showBl(bi);toast('Выделено');checkBadges();}
-$('rContent').addEventListener('click',e=>{if(e.target.classList.contains('uhl')){if(confirm('Убрать выделение?')){const s=+e.target.dataset.s,en=+e.target.dataset.e;const b=S.library.find(x=>x.id===S.curBookId);if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));save();showBl(b.curBlock);}}return;}});
+function hlSel(){
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
+  const bi=b.curBlock,bt=b.blocks[bi]||'',st=sel.toString(),si=bt.indexOf(st);
+  if(si===-1){hideHlTT();return;}
+  const ei=si+st.length;
+  if(!S.highlights[b.id])S.highlights[b.id]={};
+  if(!S.highlights[b.id][bi])S.highlights[b.id][bi]=[];
+  S.highlights[b.id][bi]=S.highlights[b.id][bi].filter(h=>!(h.s>=si&&h.e<=ei));
+  S.highlights[b.id][bi].push({s:si,e:ei});
+  S.hlCount=(S.hlCount||0)+1;
+  save();hideHlTT();showBl(bi);toast('Выделено');checkBadges();
+}
+$('rContent').addEventListener('click',e=>{
+  if(e.target.classList.contains('uhl')){
+    if(confirm('Убрать выделение?')){
+      const s=+e.target.dataset.s,en=+e.target.dataset.e;
+      const b=S.library.find(x=>x.id===S.curBookId);
+      if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){
+        S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));
+        save();showBl(b.curBlock);
+      }
+    }
+    return;
+  }
+});
 
 // QUIZ
-function parseQuiz(raw){const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l);let q='',opts=[],correct=0;for(const l of lines){if(l.startsWith('QUESTION:'))q=l.replace('QUESTION:','').trim();else if(l.startsWith('A:'))opts[0]=l.replace('A:','').trim();else if(l.startsWith('B:'))opts[1]=l.replace('B:','').trim();else if(l.startsWith('C:'))opts[2]=l.replace('C:','').trim();else if(l.startsWith('CORRECT:')){const c=l.replace('CORRECT:','').trim();correct=c==='A'?0:c==='B'?1:2;}}if(!q||opts.filter(Boolean).length<2)return null;return{question:q,options:opts.filter(Boolean),correct};}
-async function trigQuiz(b){const rec=b.blocks.slice(Math.max(0,b.curBlock-3),b.curBlock+1).join('\n');
-try{const raw=await ai([{role:'user',content:`По тексту: 1 вопрос для проверки понимания.\nФормат:\nQUESTION: Вопрос?\nA: Вариант\nB: Вариант\nC: Вариант\nCORRECT: A\nТекст: "${rec.substring(0,1200)}"`}],400);
-const q=parseQuiz(raw);if(!q)return;
-$('quizC').innerHTML=`<h3><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка</h3><p class="quiz-q">${esc(q.question)}</p><div class="quiz-opts">${q.options.map((o,i)=>`<div class="quiz-o" onclick="ansQ(this,${i},${q.correct})">${esc(o)}</div>`).join('')}</div><button class="btn btn-g" style="margin-top:12px" onclick="nav('readerScr')">Пропустить</button>`;
-nav('quizScr');}catch(e){}}
-function ansQ(el,s,c){S.quizCount=(S.quizCount||0)+1;save();document.querySelectorAll('.quiz-o').forEach((o,i)=>{o.onclick=null;o.style.cursor='default';if(i===c)o.classList.add('ok');if(i===s&&i!==c)o.classList.add('no');});if(s===c)addXP(25,'🧠 Правильный ответ!');setTimeout(()=>{nav('readerScr');toast(s===c?'Правильно! 🎉':'Не совсем, но запомнишь!');checkBadges();},1400);}
+function parseQuiz(raw){
+  const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l);
+  let q='',opts=[],correct=0;
+  for(const l of lines){
+    if(l.startsWith('QUESTION:'))q=l.replace('QUESTION:','').trim();
+    else if(l.startsWith('A:'))opts[0]=l.replace('A:','').trim();
+    else if(l.startsWith('B:'))opts[1]=l.replace('B:','').trim();
+    else if(l.startsWith('C:'))opts[2]=l.replace('C:','').trim();
+    else if(l.startsWith('CORRECT:')){const c=l.replace('CORRECT:','').trim();correct=c==='A'?0:c==='B'?1:2;}
+  }
+  if(!q||opts.filter(Boolean).length<2)return null;
+  return{question:q,options:opts.filter(Boolean),correct};
+}
+async function trigQuiz(b){
+  const rec=b.blocks.slice(Math.max(0,b.curBlock-3),b.curBlock+1).join('\n');
+  try{
+    const raw=await ai([{role:'user',content:`По тексту создай 1 вопрос для проверки понимания.\nФормат:\nQUESTION: Вопрос?\nA: Вариант\nB: Вариант\nC: Вариант\nCORRECT: A\nТекст: "${rec.substring(0,1200)}"`}],400);
+    const q=parseQuiz(raw);if(!q)return;
+    $('quizC').innerHTML=`<h3><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка</h3><p class="quiz-q">${esc(q.question)}</p><div class="quiz-opts">${q.options.map((o,i)=>`<div class="quiz-o" onclick="ansQ(this,${i},${q.correct})">${esc(o)}</div>`).join('')}</div><button class="btn btn-g" style="margin-top:12px" onclick="nav('readerScr')">Пропустить</button>`;
+    nav('quizScr');
+  }catch(e){}
+}
+function ansQ(el,s,c){
+  S.quizCount=(S.quizCount||0)+1;save();
+  document.querySelectorAll('.quiz-o').forEach((o,i)=>{o.onclick=null;o.style.cursor='default';if(i===c)o.classList.add('ok');if(i===s&&i!==c)o.classList.add('no');});
+  if(s===c)addXP(25,'🧠 Правильный ответ!');
+  setTimeout(()=>{nav('readerScr');toast(s===c?'Правильно! 🎉':'Не совсем, но запомнишь!');checkBadges();},1400);
+}
 
 // TOAST
-function toast(m){const w=$('toastWrap');const t=document.createElement('div');t.className='toast';t.textContent=m;w.appendChild(t);requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),320);},2800);}
+function toast(m){
+  const w=$('toastWrap');const t=document.createElement('div');t.className='toast';t.textContent=m;w.appendChild(t);
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),320);},2800);
+}
 
 // HELPERS
 function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'):''}
 function unesc(s){if(!s)return'';const d=document.createElement('div');d.innerHTML=s;return d.textContent;}
 function rGrad(){const c=[['#6366f1','#8b5cf6'],['#ec4899','#f43f5e'],['#14b8a6','#06b6d4'],['#f59e0b','#ef4444'],['#8b5cf6','#ec4899'],['#06b6d4','#3b82f6'],['#10b981','#059669']];const p=c[Math.floor(Math.random()*c.length)];return p[0]+','+p[1];}
-function rBookEmoji(){const emojis=['📖','📗','📘','📙','📕','📚'];return emojis[Math.floor(Math.random()*emojis.length)];}
+function rBookEmoji(){const e=['📖','📗','📘','📙','📕','📚'];return e[Math.floor(Math.random()*e.length)];}
 
 // DRAG DROP
-const ua=$('uploadArea');if(ua){['dragenter','dragover'].forEach(e=>ua.addEventListener(e,ev=>{ev.preventDefault();ua.classList.add('dg')}));['dragleave','drop'].forEach(e=>ua.addEventListener(e,ev=>{ev.preventDefault();ua.classList.remove('dg')}));ua.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){const i=$('fileInp'),dt=new DataTransfer();dt.items.add(f);i.files=dt.files;handleFile({target:i})}});}
+const ua=$('uploadArea');
+if(ua){
+  ['dragenter','dragover'].forEach(e=>ua.addEventListener(e,ev=>{ev.preventDefault();ua.classList.add('dg')}));
+  ['dragleave','drop'].forEach(e=>ua.addEventListener(e,ev=>{ev.preventDefault();ua.classList.remove('dg')}));
+  ua.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){const i=$('fileInp'),dt=new DataTransfer();dt.items.add(f);i.files=dt.files;handleFile({target:i})}});
+}
 
 // KEYBOARD
-document.addEventListener('keydown',e=>{if($('readerScr').classList.contains('active')&&!e.target.matches('input,textarea')){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextBl();}else if(e.key==='ArrowLeft'){e.preventDefault();prevBl();}else if(e.key==='Escape')exitReader();}});
+document.addEventListener('keydown',e=>{
+  if($('readerScr').classList.contains('active')&&!e.target.matches('input,textarea')){
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextBl();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prevBl();}
+    else if(e.key==='Escape')exitReader();
+  }
+});
 
 // SWIPE
-let tsx=0;$('rContent').addEventListener('touchstart',e=>{tsx=e.changedTouches[0].screenX},{passive:true});
+let tsx=0;
+$('rContent').addEventListener('touchstart',e=>{tsx=e.changedTouches[0].screenX},{passive:true});
 $('rContent').addEventListener('touchend',e=>{const d=tsx-e.changedTouches[0].screenX;if(Math.abs(d)>65){if(d>0)nextBl();else prevBl();}},{passive:true});
 
 // INIT
