@@ -1473,38 +1473,129 @@ async function autoSyncToSheets(){
   if(!S.sheetsUrl)return;
   try{await fetch(S.sheetsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(S)});S.lastSync=new Date().toISOString();try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}setSyncStatus('ok','Авто: '+new Date().toLocaleTimeString());}catch(e){}
 }
-async function autoSyncFromSheets(){
-  if(!S.sheetsUrl)return;
-  try{
-    const resp=await fetch(S.sheetsUrl+'?t='+Date.now(),{method:'GET',mode:'cors'});
-    if(!resp.ok)return;
-    const txt=await resp.text();if(!txt||txt.includes('"status":"empty"'))return;
-    const data=JSON.parse(txt);if(!data||!data.library)return;
-    const remoteMod=data.lastModified||0;
-    const localMod=S.lastModified||0;
-    if(remoteMod>localMod){
-      // ВАЖНО: сохраняем старые настройки API
+async function autoSyncFromSheets() {
+  if (!S.sheetsUrl) return;
+  
+  try {
+    console.log('🔄 Загружаем данные из облака...');
+    const resp = await fetch(S.sheetsUrl + '?t=' + Date.now(), {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache'
+    });
+    
+    if (!resp.ok) {
+      throw new Error('HTTP ' + resp.status);
+    }
+    
+    const txt = await resp.text();
+    console.log('📥 Получен ответ, длина:', txt.length);
+    
+    if (!txt || txt.includes('"status":"empty"')) {
+      console.log('📭 Облако пустое');
+      setSyncStatus('ok', 'Нет данных в облаке. Сначала сохрани.');
+      return;
+    }
+    
+    let data;
+    try {
+      data = JSON.parse(txt);
+    } catch(e) {
+      // Пробуем очистить если двойные кавычки
+      const cleaned = txt.replace(/^"|"$/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+      data = JSON.parse(cleaned);
+    }
+    
+    if (!data || !data.library) {
+      console.log('❌ Нет данных library в ответе');
+      return;
+    }
+    
+    const remoteMod = data.lastModified || 0;
+    const localMod = S.lastModified || 0;
+    
+    console.log('📊 Сравнение времени:', 'Облако=' + remoteMod, 'Локально=' + localMod);
+    
+    if (remoteMod > localMod) {
+      console.log('✅ Облако новее, загружаем!');
+      
+      // Сохраняем важные настройки
       const oldToken = S.token;
       const oldEndpoint = S.endpoint;
       const oldSheetsUrl = S.sheetsUrl;
+      const oldTheme = S.theme;
+      const oldReadTime = S.readTime;
+      const oldFontSize = S.fontSize;
+      const oldFontFamily = S.fontFamily;
       
-      S = {...S, ...data};
+      // Обновляем данные из облака
+      const newLibrary = data.library || [];
+      const newXp = data.xp || 0;
+      const newTotalMin = data.totalMin || 0;
+      const newStreak = data.streak || 0;
+      const newLastRead = data.lastRead || null;
+      const newHighlights = data.highlights || {};
+      const newEarnedBadges = data.earnedBadges || [];
+      const newAllRecs = data.allRecs || [];
+      const newGoal = data.goal || 0;
+      const newQuizCount = data.quizCount || 0;
+      const newDiscussCount = data.discussCount || 0;
+      const newHlCount = data.hlCount || 0;
       
-      // Восстанавливаем настройки API (они не должны перезаписываться)
+      // Применяем данные
+      S.library = newLibrary;
+      S.xp = newXp;
+      S.totalMin = newTotalMin;
+      S.streak = newStreak;
+      S.lastRead = newLastRead;
+      S.highlights = newHighlights;
+      S.earnedBadges = newEarnedBadges;
+      S.allRecs = newAllRecs;
+      S.goal = newGoal;
+      S.quizCount = newQuizCount;
+      S.discussCount = newDiscussCount;
+      S.hlCount = newHlCount;
+      
+      // Восстанавливаем настройки
       S.token = oldToken;
       S.endpoint = oldEndpoint;
       S.sheetsUrl = oldSheetsUrl;
+      S.theme = oldTheme;
+      S.readTime = oldReadTime;
+      S.fontSize = oldFontSize;
+      S.fontFamily = oldFontFamily;
       S.lastModified = Date.now();
       
-      try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
-      renderLib();updStats();updGoalUI();updXP();renderBadges();
-      if(S.allRecs&&S.allRecs.length)renderRecs();
-      setSyncStatus('ok','Загружено из облака');
-      toast('🔄 Данные обновлены!');
-    }else{
-      setSyncStatus('ok','Данные актуальны');
+      // Сохраняем в localStorage
+      save();
+      
+      // Обновляем интерфейс
+      renderLib();
+      updStats();
+      updGoalUI();
+      updXP();
+      renderBadges();
+      applyTheme(S.theme);
+      
+      if (S.allRecs && S.allRecs.length) {
+        renderRecs();
+        $('clearRecsBtn')?.classList.remove('hidden');
+        $('loadMoreRow')?.classList.remove('hidden');
+      }
+      
+      setSyncStatus('ok', '✅ Загружено! Книг: ' + S.library.length);
+      toast('🔄 Данные обновлены из облака! Книг: ' + S.library.length);
+      console.log('✅ Синхронизация завершена!');
+      
+    } else {
+      console.log('ℹ️ Локальные данные новее или одинаковые');
+      setSyncStatus('ok', 'Данные актуальны');
     }
-  }catch(e){console.log('Auto sync error:',e);}
+    
+  } catch(e) {
+    console.error('❌ Ошибка загрузки из облака:', e);
+    setSyncStatus('err', 'Ошибка: ' + e.message);
+  }
 }
 function setSyncStatus(type,msg){const d=$('syncDot'),m=$('syncMsg');if(d)d.className='sync-dot '+type;if(m)m.textContent=msg;}
 function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй вручную'));}
