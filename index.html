@@ -1398,11 +1398,13 @@ function showBl(idx){
   $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';
   markModified();
   discussSelectedText='';
+  window.scrollTo(0,0);
 }
 function nextBl(){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   if(b.curBlock<b.totalBlocks-1){
     showBl(b.curBlock+1);
+    window.scrollTo(0,0);
   }else{
     b.curBlock=b.totalBlocks;
     markModified();renderLib();
@@ -1411,12 +1413,14 @@ function nextBl(){
     toast('Книга прочитана! 🎉');
     addXP(50,'📚 Книга завершена! +50 XP');
     checkBadges();
+    window.scrollTo(0,0);
   }
 }
 function prevBl(){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   if(b.curBlock>0){
     showBl(b.curBlock-1);
+    window.scrollTo(0,0);
   }
 }
 function exitReader(){
