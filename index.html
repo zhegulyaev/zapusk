@@ -1395,19 +1395,22 @@ async function autoSyncFromSheets(){
   try{
     const resp=await fetch(S.sheetsUrl+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)return;
-    const txt=await resp.text();if(!txt||txt.includes('"status":"empty"'))return;
-    const data=JSON.parse(txt);if(!data||!data.library)return;
+    const txt=await resp.text();
+    if(!txt||txt.includes('"status":"empty"'))return; // ← если пусто, ничего не делаем
+    
+    const data=JSON.parse(txt);
+    if(!data||!data.library||!data.library.length)return; // ← если нет книг, не загружаем
+    
     const remoteMod=data.lastModified||0;
     const localMod=S.lastModified||0;
+    
     if(remoteMod>localMod){
-      // ВАЖНО: сохраняем старые настройки API
       const oldToken = S.token;
       const oldEndpoint = S.endpoint;
       const oldSheetsUrl = S.sheetsUrl;
       
       S = {...S, ...data};
       
-      // Восстанавливаем настройки API (они не должны перезаписываться)
       S.token = oldToken;
       S.endpoint = oldEndpoint;
       S.sheetsUrl = oldSheetsUrl;
@@ -1418,8 +1421,6 @@ async function autoSyncFromSheets(){
       if(S.allRecs&&S.allRecs.length)renderRecs();
       setSyncStatus('ok','Загружено из облака');
       toast('🔄 Данные обновлены!');
-    }else{
-      setSyncStatus('ok','Данные актуальны');
     }
   }catch(e){console.log('Auto sync error:',e);}
 }
