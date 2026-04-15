@@ -1350,34 +1350,41 @@ async function syncToSheets(){
 async function syncFromSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
   if(!url){toast('Укажи URL Google Apps Script');return;}
-  S.sheetsUrl=url;markModified();setSyncStatus('loading','Загружаем...');
+  S.sheetsUrl=url;markModified();
+  if($('syncDot')){$('syncDot').className='sync-dot loading';}
+  if($('syncMsg')){$('syncMsg').textContent='Загружаем...';}
   try{
     const resp=await fetch(url+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     const txt=await resp.text();
-    if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных в облаке');toast('В облаке нет данных. Сначала сохрани с телефона.');return;}
+    if(!txt||txt.includes('"status":"empty"')){
+      if($('syncDot'))$('syncDot').className='sync-dot ok';
+      if($('syncMsg'))$('syncMsg').textContent='Нет данных в облаке';
+      toast('В облаке нет данных. Сначала сохрани с телефона.');
+      return;
+    }
     let data;try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат');}
     if(data&&data.library){
-      // Сохраняем настройки API
-      const oldToken = S.token;
-      const oldEndpoint = S.endpoint;
-      const oldSheetsUrl = S.sheetsUrl;
-      
-      S = {...S, ...data};
-      
-      // Восстанавливаем настройки
-      S.token = oldToken;
-      S.endpoint = oldEndpoint;
-      S.sheetsUrl = oldSheetsUrl;
-      S.lastModified = Date.now();
-      
+      const oldToken=S.token;
+      const oldEndpoint=S.endpoint;
+      const oldSheetsUrl=S.sheetsUrl;
+      S={...S,...data};
+      S.token=oldToken;
+      S.endpoint=oldEndpoint;
+      S.sheetsUrl=oldSheetsUrl;
+      S.lastModified=Date.now();
       markModified();load();
-      setSyncStatus('ok','Загружено! Книг: '+S.library.length);
+      if($('syncDot'))$('syncDot').className='sync-dot ok';
+      if($('syncMsg'))$('syncMsg').textContent='Загружено! Книг: '+S.library.length;
       toast('✅ Загружено из облака!');
     }else{
       throw new Error('Нет данных');
     }
-  }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
+  }catch(e){
+    if($('syncDot'))$('syncDot').className='sync-dot err';
+    if($('syncMsg'))$('syncMsg').textContent='Ошибка: '+e.message;
+    toast('❌ '+e.message);
+  }
 }
 async function autoSyncToSheets(){
   if(!S.sheetsUrl)return;
@@ -1416,7 +1423,12 @@ async function autoSyncFromSheets(){
     }
   }catch(e){console.log('Auto sync error:',e);}
 }
-function setSyncStatus(type,msg){const d=$('syncDot'),m=$('syncMsg');if(d)d.className='sync-dot '+type;if(m)m.textContent=msg;}
+function setSyncStatus(type,msg){
+  const d=$('syncDot');
+  const m=$('syncMsg');
+  if(d) d.className='sync-dot '+type;
+  if(m) m.textContent=msg;
+}
 function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй вручную'));}
 
 // LIBRARY
