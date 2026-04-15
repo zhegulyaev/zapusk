@@ -193,7 +193,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .recs-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
 .rcard{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:var(--tr)}
 .rcard:hover{border-color:var(--accent);background:var(--bg3)}
-.rcover{width:40px;height:54px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.rcover{width:40px;height:54px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;background-size:cover;background-position:center}
 .rinfo{flex:1;min-width:0}
 .rinfo .t{font-size:13px;font-weight:600;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rinfo .a{font-size:11px;color:var(--text3);margin-bottom:2px}
@@ -213,7 +213,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .lib-grid{display:flex;flex-direction:column;gap:6px}
 .lcard{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr)}
 .lcard:hover{border-color:var(--accent);background:var(--bg3)}
-.lcover{width:38px;height:52px;border-radius:7px;background:linear-gradient(135deg,var(--accent3),var(--accent));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.lcard.completed{opacity:.6}
+.lcover{width:38px;height:52px;border-radius:7px;background:linear-gradient(135deg,var(--accent3),var(--accent));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;background-size:cover;background-position:center}
 .linfo{flex:1;min-width:0}
 .linfo .t{font-size:13px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lpbar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-bottom:3px}
@@ -358,7 +359,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .fav-grid{display:flex;flex-direction:column;gap:6px}
 .fav-card{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr)}
 .fav-card:hover{border-color:rgba(251,191,36,.4);background:var(--bg3)}
-.fav-cover{width:36px;height:50px;border-radius:6px;background:linear-gradient(135deg,var(--orange),var(--yellow));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.fav-cover{width:36px;height:50px;border-radius:6px;background:linear-gradient(135deg,var(--orange),var(--yellow));display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;background-size:cover;background-position:center}
 .fav-info{flex:1;min-width:0}
 .fav-title{font-size:13px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fav-author{font-size:11px;color:var(--text3)}
@@ -561,7 +562,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       </div>
       <div class="hero-badge">
         <span class="hb-num" id="heroStreak">0</span>
-        <span class="hb-lbl">🔥 дней</span>
+        <span class="hb-lbl" id="heroStreakText">🔥 дней</span>
       </div>
     </div>
   </div>
@@ -571,7 +572,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="stats-top">
       <div class="stats-top-l">
         <div class="stats-lvl-badge" id="statsLvlBadge">Уровень 1</div>
-        <div class="stats-streak" id="statsStreakTxt"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trophy"/></svg></span><span id="statsStreakN">0</span> дней</div>
+        <div class="stats-streak" id="statsStreakTxt"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trophy"/></svg></span><span id="statsStreakN">0</span> <span id="statsStreakWord">дней</span></div>
       </div>
       <span style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:3px"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-info"/></svg></span>Подробнее</span>
     </div>
@@ -617,7 +618,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="aic"><span class="ic ic-xl"><svg><use href="#i-upload"/></svg></span></div>
       <div class="albl">Загрузить</div><div class="adsc">TXT, FB2, PDF</div>
     </div>
-    <div class="acard" onclick="getRecs()">
+    <div class="acard" onclick="showRecsOrGet()">
       <div class="aic"><span class="ic ic-xl"><svg><use href="#i-spark"/></svg></span></div>
       <div class="albl">Рекомендации</div><div class="adsc">Подборка под вкусы</div>
     </div>
@@ -741,6 +742,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="qchip" onclick="qSearch('7 навыков высокоэффективных людей')">7 навыков</div>
   </div>
   <div id="searchRes"></div>
+  <div class="load-more-row hidden" id="loadMoreSearchBtn">
+    <button class="lm-btn" onclick="doSearch(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>
+  </div>
 </div>
 </div>
 
@@ -1146,6 +1150,7 @@ let discussSelectedText='';
 let discussBookCtx='';
 let savedScrollPos=0;
 let hdrSearchTimer=null;
+let searchOffset=0,searchTotal=0,currentSearchQuery='';
 const $=id=>document.getElementById(id);
 
 // ===== TIME AGO =====
@@ -1175,7 +1180,7 @@ function renderLastRead(){
   const pr=b.totalBlocks?Math.min(100,Math.round((b.curBlock+1)/b.totalBlocks*100)):0;
   const lastT=b.lastReadAt||b.addedAt;
   wrap.innerHTML=`<div class="last-read-card" onclick="openBook('${b.id}')">
-    <div class="lr-cover"><span class="ic" style="width:18px;height:18px;color:#fff"><svg><use href="#i-book"/></svg></span></div>
+    <div class="lr-cover" style="background-image:url('${b.coverUrl||''}');background-size:cover;background-position:center;">${!b.coverUrl?'<span class="ic" style="width:18px;height:18px;color:#fff"><svg><use href="#i-book"/></svg></span>':''}</div>
     <div class="lr-info">
       <div class="lr-title">${esc(b.title)}</div>
       <div class="lr-meta">
@@ -1225,38 +1230,44 @@ function renderHistory(){
 }
 
 // ===== FAVORITES =====
+function toggleFavorite(id,title,author,coverUrl){
+  if(!S.favorites)S.favorites=[];
+  const exists=S.favorites.find(f=>f.id===id);
+  if(exists){S.favorites=S.favorites.filter(f=>f.id!==id);toast('Убрано из избранного');}
+  else{S.favorites.push({id,title:unesc(title),author:unesc(author),coverUrl});toast('Добавлено в избранное ❤️');}
+  markModified();renderFavorites();
+}
 function toggleFavBook(){
   if(!S.curBookId)return;
-  if(!S.favorites)S.favorites=[];
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  const idx=S.favorites.indexOf(S.curBookId);
-  if(idx>-1){S.favorites.splice(idx,1);toast('Убрано из избранного');}
-  else{S.favorites.push(S.curBookId);toast('Добавлено в избранное ❤️');}
-  markModified();updateFavBtn();renderFavorites();
+  toggleFavorite(b.id,b.title,b.author,b.coverUrl);
+  updateFavBtn();
 }
 function updateFavBtn(){
   const btn=$('favBtn');if(!btn)return;
-  const isFav=S.favorites&&S.favorites.includes(S.curBookId);
+  const isFav=S.favorites&&S.favorites.some(f=>f.id===S.curBookId);
   btn.style.color=isFav?'var(--red)':'';
   btn.style.borderColor=isFav?'var(--red)':'';
 }
 function renderFavorites(){
   const g=$('favGrid');if(!g)return;
   if(!S.favorites||!S.favorites.length){g.innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-heart"/></svg></span></div><div class="et">Нет избранных</div><div class="ed">Нажми ❤️ в ридере чтобы добавить</div></div>';return;}
-  const favBooks=S.favorites.map(id=>S.library.find(b=>b.id===id)).filter(Boolean);
-  if(!favBooks.length){g.innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-heart"/></svg></span></div><div class="et">Нет избранных</div><div class="ed">Добавь книги из ридера</div></div>';return;}
-  g.innerHTML=favBooks.map(b=>`<div class="fav-card" onclick="openBook('${b.id}')">
-    <div class="fav-cover"><span class="ic" style="width:16px;height:16px;color:#fff"><svg><use href="#i-heart"/></svg></span></div>
-    <div class="fav-info">
-      <div class="fav-title">${esc(b.title)}</div>
-      <div class="fav-author">${esc(b.author||'')}</div>
-    </div>
-    <div class="fav-actions" onclick="event.stopPropagation()">
-      <button class="rbtn" onclick="removeFav('${b.id}')" title="Убрать"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-x"/></svg></span></button>
-    </div>
-  </div>`).join('');
+  g.innerHTML=S.favorites.map(f=>{
+    const b=S.library.find(x=>x.id===f.id);
+    const coverUrl=f.coverUrl||(b?b.coverUrl:'');
+    return`<div class="fav-card" onclick="${b?`openBook('${f.id}')`:`loadAIBook('${esc(f.title)}','${esc(f.author)}')`}">
+      <div class="fav-cover" style="${coverUrl?`background-image:url('${coverUrl}');background-size:cover;`:`background:linear-gradient(135deg,var(--orange),var(--yellow));`}">${!coverUrl?'📖':''}</div>
+      <div class="fav-info">
+        <div class="fav-title">${esc(f.title)}</div>
+        <div class="fav-author">${esc(f.author)}</div>
+      </div>
+      <div class="fav-actions" onclick="event.stopPropagation()">
+        <button class="rbtn" onclick="removeFav('${f.id}')" title="Убрать"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-x"/></svg></span></button>
+      </div>
+    </div>`;
+  }).join('');
 }
-function removeFav(id){S.favorites=S.favorites.filter(x=>x!==id);markModified();renderFavorites();toast('Убрано из избранного');}
+function removeFav(id){S.favorites=S.favorites.filter(x=>x.id!==id);markModified();renderFavorites();toast('Убрано из избранного');}
 
 // ===== HEADER INLINE SEARCH =====
 function hdrSearchKey(e){if(e.key==='Enter')hdrSearchGo();}
@@ -1341,6 +1352,7 @@ function load(){
   renderLastRead();renderHistory();renderFavorites();
   handleRoute();
   if(S.sheetsUrl){setTimeout(()=>autoSyncFromSheets(),2000);}
+  updateStreakDisplay();
 }
 
 // ===== AUTO SYNC =====
@@ -1423,13 +1435,11 @@ function getLvlData(xp){
 }
 function updXP(){
   const d=getLvlData(S.xp||0);
-  // Home stats block
   if($('statsLvlBadge'))$('statsLvlBadge').textContent='Уровень '+d.level;
   if($('statsStreakN'))$('statsStreakN').textContent=S.streak||0;
   if($('statsXpFill'))$('statsXpFill').style.width=d.progress+'%';
   if($('statsXpTxt'))$('statsXpTxt').textContent=d.curXp+' / '+d.nextXp+' XP';
   if($('heroStreak'))$('heroStreak').textContent=S.streak||0;
-  // Gamification hero
   if($('gamiLvlBig'))$('gamiLvlBig').textContent=d.level;
   if($('gamiLvlLbl'))$('gamiLvlLbl').textContent=d.name+' · Уровень '+d.level;
   if($('gamiXpFill'))$('gamiXpFill').style.width=d.progress+'%';
@@ -1439,6 +1449,7 @@ function updXP(){
   if($('gStB'))$('gStB').textContent=S.library.length||0;
   if($('gStM'))$('gStM').textContent=S.totalMin||0;
   if($('gStX'))$('gStX').textContent=S.xp||0;
+  updateStreakDisplay();
 }
 function addXP(n,reason){
   S.xp=(S.xp||0)+n;markModified();updXP();updStats();showXpPop('+'+n+' XP');
@@ -1460,7 +1471,14 @@ function updStats(){
   if($('smB'))$('smB').textContent=books;
   if($('smM'))$('smM').textContent=mins;
   if($('smX'))$('smX').textContent=xp;
-  updXP();updGoalUI();
+  updXP();updGoalUI();updateStreakDisplay();
+}
+function updateStreakDisplay(){
+  const streak=S.streak||0;
+  const text=pluralDays(streak);
+  if($('heroStreakText'))$('heroStreakText').textContent='🔥 '+text;
+  if($('statsStreakWord'))$('statsStreakWord').textContent=text;
+  if($('statsStreakN'))$('statsStreakN').textContent=streak;
 }
 
 // ===== STREAK =====
@@ -1523,6 +1541,9 @@ function tPref(el){
   else S.prefs.push(p);
   el.classList.toggle('active',S.prefs.includes(p));
   markModified();
+  if(S.prefs.length>0 && !S.allRecs.length){
+    $('recsE').innerHTML='<div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Готово! Нажми «Рекомендации»</div><div class="ed">AI подберёт книги под твои интересы</div>';
+  }
 }
 function addCustPref(){
   const v=$('custPrefInp').value.trim();if(!v)return;
@@ -1545,6 +1566,11 @@ function renderCustPrefs(){
 function delCustPref(p,el){
   S.custPrefs=S.custPrefs.filter(x=>x!==p);S.prefs=S.prefs.filter(x=>x!==p);
   el&&el.remove();markModified();
+}
+function showRecsOrGet(){
+  if(!S.prefs.length){toast('Выбери хотя бы один интерес');return;}
+  if(S.allRecs.length){$('recsGrid').scrollIntoView({behavior:'smooth'});}
+  else getRecs();
 }
 
 // ===== SETTINGS =====
@@ -1642,6 +1668,7 @@ async function getRecs(more){
   try{
     const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр 1-2 слова\nWHY: Одно предложение почему читать\n---\nТолько этот формат.`}],2000);
     const recs=parseRecsList(raw);if(!recs.length)throw new Error('Нет данных');
+    for(let r of recs){if(!r.coverUrl)r.coverUrl=await fetchCoverForBook(r.title,r.author);}
     S.allRecs=S.allRecs.concat(recs);markModified();renderRecs();$('clearRecsBtn').classList.remove('hidden');
   }catch(e){
     if(!more)rg.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;
@@ -1650,7 +1677,18 @@ async function getRecs(more){
 }
 function renderRecs(){
   const rg=$('recsGrid');
-  rg.innerHTML=S.allRecs.map(r=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div><div class="rbtns"><span class="rtag">${esc(r.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('');
+  rg.innerHTML=S.allRecs.map(r=>{
+    const coverStyle=r.coverUrl?`background-image:url('${r.coverUrl}');background-size:cover;`:`background:linear-gradient(135deg,${rGrad()});`;
+    return`<div class="rcard">
+      <div class="rcover" style="${coverStyle}">${!r.coverUrl?rBookEmoji():''}</div>
+      <div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div>
+      <div class="rbtns"><span class="rtag">${esc(r.genre||'')}</span>
+      <button class="rbtn" onclick="toggleFavorite('${r.title}_${r.author}','${esc(r.title)}','${esc(r.author)}','${r.coverUrl||''}')" title="Избранное">❤️</button>
+      <button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+      <button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button>
+      </div>
+    </div>`;
+  }).join('');
   $('loadMoreRow').classList.remove('hidden');
   $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
 }
@@ -1672,14 +1710,37 @@ function parseSearchList(raw){
   return books;
 }
 function qSearch(q){nav('searchScr');$('searchInp').value=q;doSearch();}
-async function doSearch(){
+async function doSearch(loadMore=false){
   const q=$('searchInp').value.trim();if(!q)return;
-  const res=$('searchRes');res.innerHTML='<div class="ldots"><span></span><span></span><span></span></div>';
+  if(!loadMore){searchOffset=0;currentSearchQuery=q;$('searchRes').innerHTML='<div class="ldots"><span></span><span></span><span></span></div>';$('loadMoreSearchBtn').classList.add('hidden');}
+  else{$('loadMoreSearchBtn').innerHTML='<div class="ldots"><span></span><span></span><span></span></div>';}
   try{
-    const raw=await ai([{role:'user',content:`Найди 5 книг: "${q}"\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр\nDESC: Описание одним предложением\n---\nТолько этот формат.`}],2000);
-    const books=parseSearchList(raw);if(!books.length)throw new Error('Не найдено');
-    res.innerHTML='<div class="sec-title">Результаты</div><div class="recs-grid">'+books.map(b=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div><div class="rbtns"><span class="rtag">${esc(b.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('')+'</div>';
-  }catch(e){res.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;}
+    const raw=await ai([{role:'user',content:`Найди ${loadMore?'ещё 5':'5'} книг по запросу: "${q}". Не повторяй уже показанные: ${currentSearchQuery}\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр\nDESC: Описание одним предложением\n---\nТолько этот формат.`}],2000);
+    const books=parseSearchList(raw);
+    if(!books.length){if(!loadMore)$('searchRes').innerHTML='<div class="empty">Ничего не найдено</div>';$('loadMoreSearchBtn').classList.add('hidden');return;}
+    for(let b of books){if(!b.coverUrl)b.coverUrl=await fetchCoverForBook(b.title,b.author);}
+    renderSearchResults(books,loadMore);
+    searchTotal+=books.length;
+    if(books.length===5)$('loadMoreSearchBtn').classList.remove('hidden');
+    else $('loadMoreSearchBtn').classList.add('hidden');
+    $('loadMoreSearchBtn').innerHTML='<button class="lm-btn" onclick="doSearch(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
+  }catch(e){$('searchRes').innerHTML=`<div class="err-box">${esc(e.message)}</div>`;$('loadMoreSearchBtn').classList.add('hidden');}
+}
+function renderSearchResults(books,append){
+  const html=books.map(b=>{
+    const coverStyle=b.coverUrl?`background-image:url('${b.coverUrl}');background-size:cover;`:`background:linear-gradient(135deg,${rGrad()});`;
+    return`<div class="rcard">
+      <div class="rcover" style="${coverStyle}">${!b.coverUrl?rBookEmoji():''}</div>
+      <div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div>
+      <div class="rbtns"><span class="rtag">${esc(b.genre||'')}</span>
+      <button class="rbtn" onclick="toggleFavorite('${b.title}_${b.author}','${esc(b.title)}','${esc(b.author)}','${b.coverUrl||''}')" title="Избранное">❤️</button>
+      <button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+      <button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button>
+      </div>
+    </div>`;
+  }).join('');
+  if(append){$('searchRes').insertAdjacentHTML('beforeend',html);}
+  else{$('searchRes').innerHTML='<div class="sec-title">Результаты</div><div class="recs-grid">'+html+'</div>';}
 }
 
 // BOOK INFO MODAL — no streaming, instant response
@@ -1758,6 +1819,13 @@ function parseBlocks(raw){
   const parts=raw.split(/\n---\n|^---$/gm);
   return parts.map(p=>p.trim()).filter(p=>p.length>30&&!p.match(/^[-=*\s]+$/));
 }
+async function fetchCoverForBook(title,author){
+  try{
+    const resp=await fetch(`${S.sheetsUrl}?action=cover&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author||'')}`);
+    const data=await resp.json();
+    return data.coverUrl||null;
+  }catch(e){return null;}
+}
 async function loadAIBook(title,author){
   title=unesc(title);author=unesc(author);
   const ex=S.library.find(b=>b.title===title);if(ex){openBook(ex.id);return;}
@@ -1779,7 +1847,8 @@ async function loadAIBook(title,author){
       allBlocks=parseBlocks(raw);
     }
     if(allBlocks.length<3)throw new Error('Мало контента, попробуй ещё раз');
-    const book={id:Date.now().toString(),title,author:author||'',blocks:allBlocks,curBlock:0,totalBlocks:allBlocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai',targetBlocks:n};
+    const coverUrl=await fetchCoverForBook(title,author);
+    const book={id:Date.now().toString(),title,author:author||'',blocks:allBlocks,curBlock:0,totalBlocks:allBlocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai',targetBlocks:n,coverUrl};
     S.library.unshift(book);markModified();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);
     addXP(10,'📚 Книга добавлена ('+allBlocks.length+' блоков)');checkBadges();
   }catch(e){hideGen();toast('Ошибка: '+e.message);}
@@ -1813,7 +1882,8 @@ async function processText(){
     if(t.length<5000){bl=smartSplit(t);}
     else{try{const r=await ai([{role:'user',content:`Раздели на блоки 120-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],8000);bl=parseBlocks(r);}catch(e){bl=smartSplit(t);}if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));}
   }catch(e){bl=smartSplit(t);}
-  const book={id:Date.now().toString(),title,author:'',blocks:bl,curBlock:0,totalBlocks:bl.length,addedAt:new Date().toISOString(),readMin:0,source:'upload'};
+  const coverUrl=await fetchCoverForBook(title,'');
+  const book={id:Date.now().toString(),title,author:'',blocks:bl,curBlock:0,totalBlocks:bl.length,addedAt:new Date().toISOString(),readMin:0,source:'upload',coverUrl};
   S.library.unshift(book);markModified();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';
 }
 function smartSplit(t){const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';for(const p of ps){const tr=p.trim();if(!tr)continue;if(c.length+tr.length<800){c+=(c?'\n\n':'')+tr}else{if(c)bl.push(c);if(tr.length>800){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<800)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}}if(c)bl.push(c);return bl.length?bl:[t];}
@@ -1845,25 +1915,18 @@ async function syncFromSheets(){
     if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных в облаке');toast('В облаке нет данных. Сначала сохрани с телефона.');return;}
     let data;try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат');}
     if(data&&data.library){
-      // Сохраняем настройки API
       const oldToken = S.token;
       const oldEndpoint = S.endpoint;
       const oldSheetsUrl = S.sheetsUrl;
-      
       S = {...S, ...data};
-      
-      // Восстанавливаем настройки
       S.token = oldToken;
       S.endpoint = oldEndpoint;
       S.sheetsUrl = oldSheetsUrl;
       S.lastModified = Date.now();
-      
       markModified();load();
       setSyncStatus('ok','Загружено! Книг: '+S.library.length);
       toast('✅ Загружено из облака!');
-    }else{
-      throw new Error('Нет данных');
-    }
+    }else throw new Error('Нет данных');
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
 }
 async function autoSyncToSheets(){
@@ -1872,127 +1935,31 @@ async function autoSyncToSheets(){
 }
 async function autoSyncFromSheets() {
   if (!S.sheetsUrl) return;
-  
   try {
-    console.log('🔄 Загружаем данные из облака...');
-    const resp = await fetch(S.sheetsUrl + '?t=' + Date.now(), {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache'
-    });
-    
-    if (!resp.ok) {
-      throw new Error('HTTP ' + resp.status);
-    }
-    
+    const resp = await fetch(S.sheetsUrl + '?t=' + Date.now(), {method: 'GET',mode: 'cors',cache: 'no-cache'});
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const txt = await resp.text();
-    console.log('📥 Получен ответ, длина:', txt.length);
-    
-    if (!txt || txt.includes('"status":"empty"')) {
-      console.log('📭 Облако пустое');
-      setSyncStatus('ok', 'Нет данных в облаке. Сначала сохрани.');
-      return;
-    }
-    
+    if (!txt || txt.includes('"status":"empty"')) {setSyncStatus('ok','Нет данных в облаке. Сначала сохрани.');return;}
     let data;
-    try {
-      data = JSON.parse(txt);
-    } catch(e) {
-      // Пробуем очистить если двойные кавычки
-      const cleaned = txt.replace(/^"|"$/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-      data = JSON.parse(cleaned);
-    }
-    
-    if (!data || !data.library) {
-      console.log('❌ Нет данных library в ответе');
-      return;
-    }
-    
+    try {data = JSON.parse(txt);} catch(e) {const cleaned = txt.replace(/^"|"$/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');data = JSON.parse(cleaned);}
+    if (!data || !data.library) return;
     const remoteMod = data.lastModified || 0;
     const localMod = S.lastModified || 0;
-    
-    console.log('📊 Сравнение времени:', 'Облако=' + remoteMod, 'Локально=' + localMod);
-    
     if (remoteMod > localMod) {
-      console.log('✅ Облако новее, загружаем!');
-      
-      // Сохраняем важные настройки
-      const oldToken = S.token;
-      const oldEndpoint = S.endpoint;
-      const oldSheetsUrl = S.sheetsUrl;
-      const oldTheme = S.theme;
-      const oldReadTime = S.readTime;
-      const oldFontSize = S.fontSize;
-      const oldFontFamily = S.fontFamily;
-      
-      // Обновляем данные из облака
-      const newLibrary = data.library || [];
-      const newXp = data.xp || 0;
-      const newTotalMin = data.totalMin || 0;
-      const newStreak = data.streak || 0;
-      const newLastRead = data.lastRead || null;
-      const newHighlights = data.highlights || {};
-      const newEarnedBadges = data.earnedBadges || [];
-      const newAllRecs = data.allRecs || [];
-      const newGoal = data.goal || 0;
-      const newQuizCount = data.quizCount || 0;
-      const newDiscussCount = data.discussCount || 0;
-      const newHlCount = data.hlCount || 0;
-      
-      // Применяем данные
-      S.library = newLibrary;
-      S.xp = newXp;
-      S.totalMin = newTotalMin;
-      S.streak = newStreak;
-      S.lastRead = newLastRead;
-      S.highlights = newHighlights;
-      S.earnedBadges = newEarnedBadges;
-      S.allRecs = newAllRecs;
-      S.goal = newGoal;
-      S.quizCount = newQuizCount;
-      S.discussCount = newDiscussCount;
-      S.hlCount = newHlCount;
-      
-      // Восстанавливаем настройки
-      S.token = oldToken;
-      S.endpoint = oldEndpoint;
-      S.sheetsUrl = oldSheetsUrl;
-      S.theme = oldTheme;
-      S.readTime = oldReadTime;
-      S.fontSize = oldFontSize;
-      S.fontFamily = oldFontFamily;
-      S.lastModified = Date.now();
-      
-      // Сохраняем в localStorage
-      save();
-      
-      // Обновляем интерфейс
-      renderLib();
-      updStats();
-      updGoalUI();
-      updXP();
-      renderBadges();
-      applyTheme(S.theme);
-      
-      if (S.allRecs && S.allRecs.length) {
-        renderRecs();
-        $('clearRecsBtn')?.classList.remove('hidden');
-        $('loadMoreRow')?.classList.remove('hidden');
-      }
-      
-      setSyncStatus('ok', '✅ Загружено! Книг: ' + S.library.length);
-      toast('🔄 Данные обновлены из облака! Книг: ' + S.library.length);
-      console.log('✅ Синхронизация завершена!');
-      
-    } else {
-      console.log('ℹ️ Локальные данные новее или одинаковые');
-      setSyncStatus('ok', 'Данные актуальны');
-    }
-    
-  } catch(e) {
-    console.error('❌ Ошибка загрузки из облака:', e);
-    setSyncStatus('err', 'Ошибка: ' + e.message);
-  }
+      const oldToken = S.token, oldEndpoint = S.endpoint, oldSheetsUrl = S.sheetsUrl, oldTheme = S.theme, oldReadTime = S.readTime, oldFontSize = S.fontSize, oldFontFamily = S.fontFamily;
+      const newLibrary = data.library || [], newXp = data.xp || 0, newTotalMin = data.totalMin || 0, newStreak = data.streak || 0, newLastRead = data.lastRead || null;
+      const newHighlights = data.highlights || {}, newEarnedBadges = data.earnedBadges || [], newAllRecs = data.allRecs || [], newGoal = data.goal || 0;
+      const newQuizCount = data.quizCount || 0, newDiscussCount = data.discussCount || 0, newHlCount = data.hlCount || 0;
+      S.library = newLibrary; S.xp = newXp; S.totalMin = newTotalMin; S.streak = newStreak; S.lastRead = newLastRead;
+      S.highlights = newHighlights; S.earnedBadges = newEarnedBadges; S.allRecs = newAllRecs; S.goal = newGoal;
+      S.quizCount = newQuizCount; S.discussCount = newDiscussCount; S.hlCount = newHlCount;
+      S.token = oldToken; S.endpoint = oldEndpoint; S.sheetsUrl = oldSheetsUrl; S.theme = oldTheme;
+      S.readTime = oldReadTime; S.fontSize = oldFontSize; S.fontFamily = oldFontFamily;
+      S.lastModified = Date.now(); save(); renderLib(); updStats(); updGoalUI(); updXP(); renderBadges();
+      applyTheme(S.theme); if (S.allRecs && S.allRecs.length) {renderRecs();$('clearRecsBtn')?.classList.remove('hidden');$('loadMoreRow')?.classList.remove('hidden');}
+      setSyncStatus('ok', '✅ Загружено! Книг: ' + S.library.length); toast('🔄 Данные обновлены из облака! Книг: ' + S.library.length);
+    } else setSyncStatus('ok', 'Данные актуальны');
+  } catch(e) {setSyncStatus('err','Ошибка: '+e.message);}
 }
 function setSyncStatus(type,msg){const d=$('syncDot'),m=$('syncMsg');if(d)d.className='sync-dot '+type;if(m)m.textContent=msg;}
 function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй вручную'));}
@@ -2004,7 +1971,15 @@ function renderLib(){
   if(e)e.style.display='none';
   g.innerHTML=S.library.map(b=>{
     const pr=b.totalBlocks?Math.min(100,Math.round((b.curBlock+1)/b.totalBlocks*100)):0;
-    return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`;
+    const isCompleted=b.curBlock>=b.totalBlocks;
+    const coverStyle=b.coverUrl?`background-image:url('${b.coverUrl}');background-size:cover;`:`background:linear-gradient(135deg,var(--accent3),var(--accent));`;
+    return`<div class="lcard ${isCompleted?'completed':''}" style="${isCompleted?'opacity:0.6;':''}" onclick="openBook('${b.id}')">
+      <div class="lcover" style="${coverStyle}">${!b.coverUrl?(b.source==='ai'?'📖':'📄'):''}</div>
+      <div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div>
+      <div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div>
+      <div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button>
+      <button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div>
+    </div>`;
   }).join('');
 }
 function delBook(id){if(!confirm('Удалить книгу?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];markModified();renderLib();updStats();}
@@ -2047,82 +2022,42 @@ function showBl(idx){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   idx=Math.max(0,Math.min(idx,b.totalBlocks-1));
   b.curBlock=idx;
-
-  if(b.curBlock>=b.totalBlocks){
-    $('rProgF').style.width='100%';
-    $('rProgT').textContent='100%';
-    return;
-  }
-
+  if(b.curBlock>=b.totalBlocks){$('rProgF').style.width='100%';$('rProgT').textContent='100%';return;}
   const tb=$('tBlock');
   const pr=b.totalBlocks?Math.min(100,Math.round((idx+1)/b.totalBlocks*100)):0;
   const lbl=$('blockLabel'),lblTxt=$('blockLabelTxt'),blNum=$('blockNum');
   if(lbl){lbl.style.display='flex';lblTxt.textContent=getBlockLabel(idx,b.totalBlocks);blNum.textContent=(idx+1)+' / '+b.totalBlocks;}
-
   let txt=b.blocks[idx]||'Конец!';
-  
-  // Обработка заголовков (Глава X, Часть X, Раздел X и т.д.)
   txt = txt.replace(/^(Глава\s+\d+[^.!?\n]*)/gmi, '<div class="block-heading">$1</div>');
   txt = txt.replace(/^(Часть\s+\d+[^.!?\n]*)/gmi, '<div class="block-heading">$1</div>');
   txt = txt.replace(/^(Раздел\s+\d+[^.!?\n]*)/gmi, '<div class="block-heading">$1</div>');
   txt = txt.replace(/^(Глава\s+[IVX]+[^.!?\n]*)/gmi, '<div class="block-heading">$1</div>');
-  
   const hls=(S.highlights[b.id]||{})[idx];
   if(hls&&hls.length){
     const sorted=[...hls].sort((a,c)=>c.s-a.s);
     for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}
     tb.innerHTML=txt;
-  }else{
-    // Если нет выделений, просто вставляем текст с заголовками
-    tb.innerHTML = txt.replace(/\n\n/g, '<br><br>');
-  }
-
+  }else tb.innerHTML = txt.replace(/\n\n/g, '<br><br>');
   tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
   $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';
-  markModified();
-  discussSelectedText='';
-  window.scrollTo(0,0);
+  markModified();discussSelectedText='';window.scrollTo(0,0);
 }
 function nextBl(){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  if(b.curBlock<b.totalBlocks-1){
-    showBl(b.curBlock+1);
-    window.scrollTo(0,0);
-  }else{
-    b.curBlock=b.totalBlocks;
-    markModified();renderLib();
-    $('rProgF').style.width='100%';
-    $('rProgT').textContent='100%';
-    toast('Книга прочитана! 🎉');
-    addXP(50,'📚 Книга завершена! +50 XP');
-    checkBadges();
-    window.scrollTo(0,0);
-  }
+  if(b.curBlock<b.totalBlocks-1){showBl(b.curBlock+1);window.scrollTo(0,0);}
+  else{b.curBlock=b.totalBlocks;markModified();renderLib();$('rProgF').style.width='100%';$('rProgT').textContent='100%';toast('Книга прочитана! 🎉');addXP(50,'📚 Книга завершена! +50 XP');checkBadges();window.scrollTo(0,0);}
 }
-function prevBl(){
-  const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  if(b.curBlock>0){
-    showBl(b.curBlock-1);
-    window.scrollTo(0,0);
-  }
-}
+function prevBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock>0){showBl(b.curBlock-1);window.scrollTo(0,0);}}
 function exitReader(){
   clearInterval(rtInt);rtInt=null;
   const b=S.library.find(x=>x.id===S.curBookId);
-  if(b&&rtSec>0){
-    b.readMin=(b.readMin||0)+Math.ceil(rtSec/60);
-    S.totalMin=(S.totalMin||0)+Math.ceil(rtSec/60);
-    markModified();
-  }
+  if(b&&rtSec>0){b.readMin=(b.readMin||0)+Math.ceil(rtSec/60);S.totalMin=(S.totalMin||0)+Math.ceil(rtSec/60);markModified();}
   nav('home');
 }
 function sessDone(){
   toast('✅ '+S.readTime+' мин прочитано!');
   const b=S.library.find(x=>x.id===S.curBookId);
-  if(b&&b.curBlock>2){
-    savedScrollPos=window.scrollY;
-    setTimeout(()=>trigQuiz(b),2500);
-  }
+  if(b&&b.curBlock>2){savedScrollPos=window.scrollY;setTimeout(()=>trigQuiz(b),2500);}
 }
 function backToReader(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2133,27 +2068,22 @@ function backToReader(){
 // HIGHLIGHTING + SELECTION
 let selectionTimeout=null;
 let lastSelText='';
-
 $('rContent').addEventListener('mouseup',()=>{setTimeout(handleSel,50)});
 $('rContent').addEventListener('touchend',()=>{setTimeout(handleSel,150)});
-
 function handleSel(){
   const sel=window.getSelection();
   if(!sel||sel.isCollapsed){return;}
   const txt=sel.toString().trim();
   if(!txt||txt.length<2){hideHlTT();return;}
   if(!$('readerScr').classList.contains('active'))return;
-  lastSelText=txt;
-  discussSelectedText=txt;
+  lastSelText=txt;discussSelectedText=txt;
   const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('hlTT');
   const ttLeft=Math.max(8,Math.min(innerWidth-230,rect.left+rect.width/2-100));
   const ttTop=rect.top<60?rect.bottom+6:rect.top-50;
   tt.style.left=ttLeft+'px';tt.style.top=ttTop+'px';
   tt.classList.add('active');
 }
-
 function hideHlTT(){$('hlTT').classList.remove('active');}
-
 function hlSel(){
   const sel=window.getSelection();
   let txt='';let si=-1;
@@ -2172,7 +2102,6 @@ function hlSel(){
   S.hlCount=(S.hlCount||0)+1;
   markModified();hideHlTT();showBl(bi);toast('Выделено');checkBadges();
 }
-
 $('rContent').addEventListener('click',e=>{
   if(e.target.classList.contains('uhl')){
     if(confirm('Убрать выделение?')){const s=+e.target.dataset.s,en=+e.target.dataset.e;const b=S.library.find(x=>x.id===S.curBookId);if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));markModified();showBl(b.curBlock);}}return;}
@@ -2199,7 +2128,7 @@ if(ua){
   ua.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){const i=$('fileInp'),dt=new DataTransfer();dt.items.add(f);i.files=dt.files;handleFile({target:i})}});
 }
 
-// KEYBOARD — только кнопки, свайпы отключены
+// KEYBOARD
 document.addEventListener('keydown',e=>{
   if($('readerScr').classList.contains('active')&&!e.target.matches('input,textarea')){
     if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextBl();}
@@ -2208,11 +2137,8 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// SWIPE ОТКЛЮЧЕН — удаляем обработчики touch
-
 // INIT
 load();
 </script>
 </body>
 </html>
- 
