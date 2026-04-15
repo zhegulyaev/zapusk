@@ -784,13 +784,16 @@ let S={
   streak:0,lastRead:null,totalMin:0,xp:0,quizCount:0,hlCount:0,discussCount:0,
   library:[],curBookId:null,highlights:{},
   goal:0,goalMonth:null,goalDone:false,
-  earnedBadges:[],allRecs:[],lastSync:null
+  earnedBadges:[],allRecs:[],lastSync:null,lastModified:0
 };
 let biBookTitle='',biBookAuthor='';
 let discussSelectedText='';
 let discussBookCtx='';
 let savedScrollPos=0;
 const $=id=>document.getElementById(id);
+
+// MARK TIMESTAMP для синхронизации
+function markModified(){S.lastModified=Date.now();save();}
 
 // GEN OVERLAY
 let genStepTimer=null;
@@ -816,7 +819,9 @@ function save(){
 }
 
 function load(){
-  try{const s=localStorage.getItem('ff6');if(s){const p=JSON.parse(s);S={...S,...p}}}catch(e){}
+  try{const s=localStorage.getItem('ff6');if(s){const p=JSON.parse(s);S={...S,...p}};}catch(e){}
+  // Ensure lastModified exists
+  if(!S.lastModified)S.lastModified=Date.now();
   // Apply defaults for new fields
   if(!S.sheetsUrl)S.sheetsUrl=DEFAULT_SHEETS;
   if(S.targetBlocks===undefined)S.targetBlocks=0;
@@ -850,7 +855,7 @@ function setCompressOpt(el){
   document.querySelectorAll('.copt').forEach(e=>e.classList.remove('active'));
   el.classList.add('active');
   updateCompressBadge(v);
-  save();
+  markModified();
 }
 
 function setCustomBlocks(){
@@ -859,7 +864,7 @@ function setCustomBlocks(){
   S.targetBlocks=v;
   document.querySelectorAll('.copt').forEach(e=>e.classList.remove('active'));
   updateCompressBadge(v);
-  save();toast('Объём: '+v+' блоков');
+  markModified();toast('Объём: '+v+' блоков');
 }
 
 function updateCompressBadge(v){
@@ -902,8 +907,8 @@ function applyTheme(t){
   const ic=t==='dark'?'i-moon':'i-sun';
   ['themeBtn','rThemeBtn'].forEach(id=>{const b=$(id);if(b)b.innerHTML='<span class="ic"><svg><use href="#'+ic+'"/></svg></span>';});
 }
-function toggleTheme(){applyTheme(S.theme==='dark'?'light':'dark');save();}
-function setTheme(t){applyTheme(t);save();}
+function toggleTheme(){applyTheme(S.theme==='dark'?'light':'dark');markModified();}
+function setTheme(t){applyTheme(t);markModified();}
 
 // SETTINGS MODAL
 function showModal(id){$(id).classList.add('active')}
@@ -913,7 +918,7 @@ function saveSet(){
   S.endpoint=$('apiEnd').value;
   S.fontSize=+$('fsSel').value;
   const su=$('sheetsUrl').value.trim();if(su)S.sheetsUrl=su;
-  save();closeModal('setModal');toast('Сохранено ✓');
+  markModified();closeModal('setModal');toast('Сохранено ✓');
 }
 function switchTab(id,el){
   document.querySelectorAll('.stab-pane').forEach(p=>p.classList.remove('active'));
@@ -922,17 +927,17 @@ function switchTab(id,el){
 }
 function setTime(m,el){
   S.readTime=m;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.toggle('active',+e.dataset.m===m));
-  buildFonts();save();
+  buildFonts();markModified();
 }
 function setCustomTime(){
   const v=+$('ctInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
   S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
-  buildFonts();save();toast('Время: '+v+' мин');$('ctInp').value='';
+  buildFonts();markModified();toast('Время: '+v+' мин');$('ctInp').value='';
 }
 function setCustomTimeR(){
   const v=+$('rCtInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
   S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
-  buildFonts();save();toast('Время: '+v+' мин');$('rCtInp').value='';
+  buildFonts();markModified();toast('Время: '+v+' мин');$('rCtInp').value='';
 }
 function prevFS(v){$('setFPrev').style.fontSize=v+'px';$('setFPrev').style.fontFamily=S.fontFamily;}
 function clearAll(){if(confirm('Удалить все данные?')){localStorage.removeItem('ff6');location.reload();}}
@@ -949,11 +954,11 @@ function selFont(i){
   document.documentElement.style.setProperty('--font-read',S.fontFamily);
   buildFonts();
   ['setFPrev','rfPrev','tBlock'].forEach(id=>{const e=$(id);if(e)e.style.fontFamily=S.fontFamily;});
-  save();
+  markModified();
 }
 function toggleFP(){$('rfPanel').classList.toggle('active');$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';$('rfPrev').style.fontFamily=S.fontFamily;}
-function chgFS(d){S.fontSize=Math.max(12,Math.min(40,S.fontSize+d));$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';const tb=$('tBlock');if(tb)tb.style.fontSize=S.fontSize+'px';save();}
-function toggleBM(){S.bookMode=!S.bookMode;applyBookMode();save();}
+function chgFS(d){S.fontSize=Math.max(12,Math.min(40,S.fontSize+d));$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';const tb=$('tBlock');if(tb)tb.style.fontSize=S.fontSize+'px';markModified();}
+function toggleBM(){S.bookMode=!S.bookMode;applyBookMode();markModified();}
 function applyBookMode(){
   const tb=$('tBlock');if(!tb)return;
   tb.style.textAlign=S.bookMode?'justify':'left';
@@ -969,19 +974,19 @@ function updXP(){
   ['xpPts','gXpPts'].forEach(id=>{const e=$(id);if(e)e.textContent=cur+' / 100 XP';});
   ['xpFill','gXpFill'].forEach(id=>{const e=$(id);if(e)e.style.width=cur+'%';});
 }
-function addXP(n,reason){S.xp+=n;save();updStats();showXpPop('+'+n+' XP');if(reason)toast(reason);}
+function addXP(n,reason){S.xp+=n;markModified();updStats();showXpPop('+'+n+' XP');if(reason)toast(reason);}
 function showXpPop(txt){const d=document.createElement('div');d.className='xp-pop';d.textContent=txt;d.style.left=(20+Math.random()*60)+'%';d.style.top='25%';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);}
 function recordRead(){
   const td=new Date().toDateString();const y=new Date();y.setDate(y.getDate()-1);
   if(S.lastRead!==td){S.streak=(S.lastRead===y.toDateString()||S.streak===0)?S.streak+1:1;S.lastRead=td;if(S.streak>1)addXP(30,'🔥 Streak '+S.streak+' дней!');}
-  save();updStats();
+  markModified();updStats();
 }
 
 // GOAL
 function saveGoal(){
   const v=+$('goalInp').value;if(!v||v<1)return;
   S.goal=v;S.goalMonth=new Date().getMonth();S.goalDone=false;
-  save();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');
+  markModified();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');
 }
 function updGoalUI(){
   if(!S.goal){['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent='Поставь цель';});['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent='Нажми чтобы установить';});return;}
@@ -991,7 +996,7 @@ function updGoalUI(){
   ['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent=pct>=100?'Цель достигнута! 🎉':'До цели: '+(S.goal-done);});
   ['goalF','gGoalF'].forEach(id=>{const e=$(id);if(e)e.style.width=pct+'%';});
   ['goalPct','gGoalPct'].forEach(id=>{const e=$(id);if(e)e.textContent=pct+'%';});
-  if(pct>=100&&!S.goalDone){S.goalDone=true;addXP(200,'🎯 Цель месяца! +200 XP');save();}
+  if(pct>=100&&!S.goalDone){S.goalDone=true;addXP(200,'🎯 Цель месяца! +200 XP');markModified();}
 }
 
 // BADGES
@@ -1002,12 +1007,12 @@ function renderBadges(){
 function checkBadges(){
   let nw=false;
   BADGES.forEach(b=>{if(!S.earnedBadges.includes(b.id)&&b.ok(S)){S.earnedBadges.push(b.id);nw=true;toast('🏆 '+b.nm+' +50 XP');S.xp+=50;}});
-  if(nw){save();updStats();renderBadges();}
+  if(nw){markModified();updStats();renderBadges();}
 }
 
 // PREFS
-function tPref(el){const p=el.dataset.p;el.classList.toggle('active');if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);else S.prefs.push(p);save();}
-function addCustPref(){const v=$('custPrefInp').value.trim();if(!v)return;if(S.prefs.includes(v)){toast('Уже есть');return;}if(!S.custPrefs)S.custPrefs=[];S.custPrefs.push(v);S.prefs.push(v);save();renderCustPrefs();$('custPrefInp').value='';}
+function tPref(el){const p=el.dataset.p;el.classList.toggle('active');if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);else S.prefs.push(p);markModified();}
+function addCustPref(){const v=$('custPrefInp').value.trim();if(!v)return;if(S.prefs.includes(v)){toast('Уже есть');return;}if(!S.custPrefs)S.custPrefs=[];S.custPrefs.push(v);S.prefs.push(v);markModified();renderCustPrefs();$('custPrefInp').value='';}
 function renderCustPrefs(){document.querySelectorAll('.pchip.custom').forEach(e=>e.remove());const c=$('prefChips');(S.custPrefs||[]).forEach(p=>{const d=document.createElement('div');d.className='pchip custom'+(S.prefs.includes(p)?' active':'');d.dataset.p=p;d.textContent='✏️ '+p;d.onclick=function(){tPref(this)};c.appendChild(d);});}
 
 // AI
@@ -1049,7 +1054,7 @@ async function getRecs(more){
   try{
     const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр 1-2 слова\nWHY: Одно предложение почему читать\n---\nТолько этот формат.`}],2000);
     const recs=parseRecsList(raw);if(!recs.length)throw new Error('Нет данных');
-    S.allRecs=S.allRecs.concat(recs);save();renderRecs();$('clearRecsBtn').classList.remove('hidden');
+    S.allRecs=S.allRecs.concat(recs);markModified();renderRecs();$('clearRecsBtn').classList.remove('hidden');
   }catch(e){
     if(!more)rg.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;
     $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Попробовать ещё</button>';
@@ -1061,7 +1066,7 @@ function renderRecs(){
   $('loadMoreRow').classList.remove('hidden');
   $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
 }
-function clearRecs(){S.allRecs=[];save();$('recsGrid').innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Очищено</div><div class="ed">Нажми «Рекомендации» снова</div></div>';$('loadMoreRow').classList.add('hidden');$('clearRecsBtn').classList.add('hidden');}
+function clearRecs(){S.allRecs=[];markModified();$('recsGrid').innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Очищено</div><div class="ed">Нажми «Рекомендации» снова</div></div>';$('loadMoreRow').classList.add('hidden');$('clearRecsBtn').classList.add('hidden');}
 
 // SEARCH
 function parseSearchList(raw){
@@ -1118,13 +1123,11 @@ function readBIBook(){closeModal('biModal');loadAIBook(biBookTitle,biBookAuthor)
 function discussSel(){
   const sel=window.getSelection();
   const txt=sel&&!sel.isCollapsed?sel.toString().trim():'';
-  // Also check stored selection
   const useTxt=txt||discussSelectedText;
   if(!useTxt){hideHlTT();toast('Выдели текст для обсуждения');return;}
   discussSelectedText=useTxt;
   hideHlTT();
   const b=S.library.find(x=>x.id===S.curBookId);
-  // Build context from nearby blocks
   if(b){
     const start=Math.max(0,b.curBlock-2);
     const end=Math.min(b.totalBlocks-1,b.curBlock+1);
@@ -1134,14 +1137,13 @@ function discussSel(){
   $('discussChat').innerHTML='';
   $('discussInp').value='';
   showModal('discussModal');
-  // Auto-ask initial context
   ai([
     {role:'system',content:`Ты помогаешь читателю разобраться в книге "${b?b.title:biBookTitle}". Контекст текущей страницы:\n${discussBookCtx}\n\nОтвечай кратко и ясно на русском.`},
     {role:'user',content:`Объясни этот фрагмент из книги: "${useTxt}"`}
   ],800).then(r=>{
     $('discussChat').innerHTML=`<div class="bi-msg ai">${esc(r).replace(/\n/g,'<br>')}</div>`;
     $('discussChat').scrollTop=99999;
-    S.discussCount=(S.discussCount||0)+1;save();checkBadges();
+    S.discussCount=(S.discussCount||0)+1;markModified();checkBadges();
   }).catch(e=>{
     $('discussChat').innerHTML=`<div class="bi-msg ai" style="color:var(--red)">${esc(e.message)}</div>`;
   });
@@ -1175,14 +1177,11 @@ async function loadAIBook(title,author){
   const modeDesc=n>=60?'максимально подробно, как полную книгу' : n>=40?'детально с примерами' : n>=20?'ключевые идеи и примеры' : 'только главные тезисы кратко';
   showGen('Готовим «'+title.substring(0,28)+'»...');
   try{
-    // Generate in multiple parts if full mode
     let allBlocks=[];
     if(n>=50){
-      // Part 1: intro + first half
       const raw1=await ai([{role:'user',content:`Книга "${title}" (${author}). Создай первые 35 текстовых блоков для чтения. Каждый блок 120-200 слов. Начни с введения, затем ключевые идеи (главы 1-5). Пиши ${modeDesc}. Каждый блок отделяй строкой ---. Только текст без JSON и нумерации.`}],8000);
       const b1=parseBlocks(raw1);
       allBlocks=allBlocks.concat(b1);
-      // Part 2: second half + conclusion
       updateGenStep(3);
       const raw2=await ai([{role:'user',content:`Книга "${title}" (${author}). Продолжение: создай ещё 35 текстовых блоков. Главы 6-конец, финальные выводы, практические советы. Пиши ${modeDesc}. Каждый блок 120-200 слов. Каждый блок отделяй строкой ---. Только текст.`}],8000);
       const b2=parseBlocks(raw2);
@@ -1193,7 +1192,7 @@ async function loadAIBook(title,author){
     }
     if(allBlocks.length<3)throw new Error('Мало контента, попробуй ещё раз');
     const book={id:Date.now().toString(),title,author:author||'',blocks:allBlocks,curBlock:0,totalBlocks:allBlocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai',targetBlocks:n};
-    S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);
+    S.library.unshift(book);markModified();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);
     addXP(10,'📚 Книга добавлена ('+allBlocks.length+' блоков)');checkBadges();
   }catch(e){hideGen();toast('Ошибка: '+e.message);}
 }
@@ -1227,37 +1226,49 @@ async function processText(){
     else{try{const r=await ai([{role:'user',content:`Раздели на блоки 120-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],8000);bl=parseBlocks(r);}catch(e){bl=smartSplit(t);}if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));}
   }catch(e){bl=smartSplit(t);}
   const book={id:Date.now().toString(),title,author:'',blocks:bl,curBlock:0,totalBlocks:bl.length,addedAt:new Date().toISOString(),readMin:0,source:'upload'};
-  S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';
+  S.library.unshift(book);markModified();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';
 }
 function smartSplit(t){const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';for(const p of ps){const tr=p.trim();if(!tr)continue;if(c.length+tr.length<800){c+=(c?'\n\n':'')+tr}else{if(c)bl.push(c);if(tr.length>800){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<800)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}}if(c)bl.push(c);return bl.length?bl:[t];}
 
 // EXPORT / IMPORT
 function exportData(){const data=JSON.stringify(S,null,2);const blob=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='focusflow-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Экспорт выполнен');}
 function importData(){$('importInp').click();}
-function handleImport(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const p=JSON.parse(e.target.result);S={...S,...p};save();load();toast('Данные импортированы!');}catch(err){toast('Ошибка импорта');}};rd.readAsText(f);ev.target.value='';}
+function handleImport(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const p=JSON.parse(e.target.result);S={...S,...p};markModified();load();toast('Данные импортированы!');}catch(err){toast('Ошибка импорта');}};rd.readAsText(f);ev.target.value='';}
 
-// GOOGLE SHEETS SYNC
+// GOOGLE SHEETS SYNC — с приоритетом по lastModified
 async function syncToSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
   if(!url){toast('Укажи URL Google Apps Script');return;}
-  S.sheetsUrl=url;save();setSyncStatus('loading','Сохраняем...');
+  S.sheetsUrl=url;markModified();setSyncStatus('loading','Сохраняем...');
   try{
     await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(S)});
-    S.lastSync=new Date().toISOString();save();
+    S.lastSync=new Date().toISOString();markModified();
     setSyncStatus('ok','Сохранено: '+new Date().toLocaleTimeString());toast('✅ Данные сохранены в Google Sheets');
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
 }
 async function syncFromSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
   if(!url){toast('Укажи URL Google Apps Script');return;}
-  S.sheetsUrl=url;save();setSyncStatus('loading','Загружаем...');
+  S.sheetsUrl=url;markModified();setSyncStatus('loading','Загружаем...');
   try{
     const resp=await fetch(url+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     const txt=await resp.text();
     if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных');toast('В таблице нет данных. Сначала сохрани.');return;}
     let data;try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат');}
-    if(data&&data.library){S={...S,...data};save();load();setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());toast('✅ Загружено! Книг: '+S.library.length);}
+    if(data&&data.library){
+      const remoteMod=data.lastModified||0;
+      const localMod=S.lastModified||0;
+      if(remoteMod>localMod){
+        S={...S,...data};markModified();load();
+        setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());toast('✅ Загружено! Книг: '+S.library.length);
+      }else if(remoteMod<localMod){
+        setSyncStatus('ok','Локальные данные новее');
+        toast('💾 Локальные данные новее. Сохрани в облако.');
+      }else{
+        setSyncStatus('ok','Данные синхронизированы');
+      }
+    }
     else if(data&&data.status==='error'){throw new Error(data.message||'Ошибка скрипта');}
     else{throw new Error('Неверный формат данных');}
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
@@ -1273,9 +1284,9 @@ async function autoSyncFromSheets(){
     if(!resp.ok)return;
     const txt=await resp.text();if(!txt||txt.includes('"status":"empty"'))return;
     const data=JSON.parse(txt);if(!data||!data.library)return;
-    const localTime=S.lastSync?new Date(S.lastSync):new Date(0);
-    const remoteTime=data.lastSync?new Date(data.lastSync):new Date(0);
-    if(remoteTime>localTime){
+    const remoteMod=data.lastModified||0;
+    const localMod=S.lastModified||0;
+    if(remoteMod>localMod){
       S={...S,...data};try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
       renderLib();updStats();updGoalUI();updXP();renderBadges();
       if(S.allRecs&&S.allRecs.length)renderRecs();
@@ -1297,7 +1308,7 @@ function renderLib(){
     return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`;
   }).join('');
 }
-function delBook(id){if(!confirm('Удалить книгу?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];save();renderLib();updStats();}
+function delBook(id){if(!confirm('Удалить книгу?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];markModified();renderLib();updStats();}
 
 // READER
 let rtInt=null,rtSec=0;
@@ -1319,7 +1330,7 @@ function openBook(id){
   rtInt=setInterval(()=>{
     rtSec++;const m=Math.floor(rtSec/60),s=rtSec%60;
     $('rTimer').textContent=m+':'+String(s).padStart(2,'0');
-    if(rtSec>0&&rtSec%60===0){S.xp+=10;save();updStats();showXpPop('+10 XP');}
+    if(rtSec>0&&rtSec%60===0){S.xp+=10;markModified();updStats();showXpPop('+10 XP');}
     if(rtSec>0&&rtSec%(S.readTime*60)===0)sessDone();
   },1000);
   if(b.curBlock>0)genCtx(b);else $('ctxHint').style.display='none';
@@ -1338,7 +1349,6 @@ function showBl(idx){
   idx=Math.max(0,Math.min(idx,b.totalBlocks-1));
   b.curBlock=idx;
 
-  // если curBlock >= totalBlocks — книга дочитана
   if(b.curBlock>=b.totalBlocks){
     $('rProgF').style.width='100%';
     $('rProgT').textContent='100%';
@@ -1360,7 +1370,7 @@ function showBl(idx){
 
   tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
   $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';
-  save();
+  markModified();
   discussSelectedText='';
 }
 function nextBl(){
@@ -1368,9 +1378,8 @@ function nextBl(){
   if(b.curBlock<b.totalBlocks-1){
     showBl(b.curBlock+1);
   }else{
-    // Книга дочитана — ставим 100%
-    b.curBlock=b.totalBlocks; // за пределы = 100%
-    save();renderLib();
+    b.curBlock=b.totalBlocks;
+    markModified();renderLib();
     $('rProgF').style.width='100%';
     $('rProgT').textContent='100%';
     toast('Книга прочитана! 🎉');
@@ -1378,17 +1387,31 @@ function nextBl(){
     checkBadges();
   }
 }
+function prevBl(){
+  const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
+  if(b.curBlock>0){
+    showBl(b.curBlock-1);
+  }
+}
+function exitReader(){
+  clearInterval(rtInt);rtInt=null;
+  const b=S.library.find(x=>x.id===S.curBookId);
+  if(b&&rtSec>0){
+    b.readMin=(b.readMin||0)+Math.ceil(rtSec/60);
+    S.totalMin=(S.totalMin||0)+Math.ceil(rtSec/60);
+    markModified();
+  }
+  nav('home');
+}
 function sessDone(){
   toast('✅ '+S.readTime+' мин прочитано!');
   const b=S.library.find(x=>x.id===S.curBookId);
   if(b&&b.curBlock>2){
-    // Save scroll position and trigger quiz after delay
     savedScrollPos=window.scrollY;
     setTimeout(()=>trigQuiz(b),2500);
   }
 }
 function backToReader(){
-  // Return to reader from quiz without losing position
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $('readerScr').classList.add('active');
   window.scrollTo(0,savedScrollPos||0);
@@ -1403,15 +1426,12 @@ $('rContent').addEventListener('touchend',()=>{setTimeout(handleSel,150)});
 
 function handleSel(){
   const sel=window.getSelection();
-  if(!sel||sel.isCollapsed){
-    // Don't hide if just clicked on a word (check after small delay)
-    return;
-  }
+  if(!sel||sel.isCollapsed){return;}
   const txt=sel.toString().trim();
   if(!txt||txt.length<2){hideHlTT();return;}
   if(!$('readerScr').classList.contains('active'))return;
   lastSelText=txt;
-  discussSelectedText=txt; // Store immediately
+  discussSelectedText=txt;
   const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('hlTT');
   const ttLeft=Math.max(8,Math.min(innerWidth-230,rect.left+rect.width/2-100));
   const ttTop=rect.top<60?rect.bottom+6:rect.top-50;
@@ -1426,9 +1446,7 @@ function hlSel(){
   let txt='';let si=-1;
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   const bi=b.curBlock,bt=b.blocks[bi]||'';
-  // Try current selection first
   if(sel&&!sel.isCollapsed){txt=sel.toString().trim();}
-  // Fallback to stored
   if(!txt)txt=lastSelText;
   if(!txt){hideHlTT();toast('Выдели текст');return;}
   si=bt.indexOf(txt);
@@ -1439,18 +1457,18 @@ function hlSel(){
   S.highlights[b.id][bi]=S.highlights[b.id][bi].filter(h=>!(h.s>=si&&h.e<=ei));
   S.highlights[b.id][bi].push({s:si,e:ei});
   S.hlCount=(S.hlCount||0)+1;
-  save();hideHlTT();showBl(bi);toast('Выделено');checkBadges();
+  markModified();hideHlTT();showBl(bi);toast('Выделено');checkBadges();
 }
 
 $('rContent').addEventListener('click',e=>{
   if(e.target.classList.contains('uhl')){
-    if(confirm('Убрать выделение?')){const s=+e.target.dataset.s,en=+e.target.dataset.e;const b=S.library.find(x=>x.id===S.curBookId);if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));save();showBl(b.curBlock);}}return;}
+    if(confirm('Убрать выделение?')){const s=+e.target.dataset.s,en=+e.target.dataset.e;const b=S.library.find(x=>x.id===S.curBookId);if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));markModified();showBl(b.curBlock);}}return;}
 });
 
 // QUIZ
 function parseQuiz(raw){const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l);let q='',opts=[],correct=0;for(const l of lines){if(l.startsWith('QUESTION:'))q=l.replace('QUESTION:','').trim();else if(l.startsWith('A:'))opts[0]=l.replace('A:','').trim();else if(l.startsWith('B:'))opts[1]=l.replace('B:','').trim();else if(l.startsWith('C:'))opts[2]=l.replace('C:','').trim();else if(l.startsWith('CORRECT:')){const c=l.replace('CORRECT:','').trim();correct=c==='A'?0:c==='B'?1:2;}}if(!q||opts.filter(Boolean).length<2)return null;return{question:q,options:opts.filter(Boolean),correct};}
 async function trigQuiz(b){const rec=b.blocks.slice(Math.max(0,b.curBlock-3),b.curBlock+1).join('\n');try{const raw=await ai([{role:'user',content:`1 вопрос по тексту.\nФормат:\nQUESTION: ?\nA:\nB:\nC:\nCORRECT: A\nТекст: "${rec.substring(0,1200)}"`}],400);const q=parseQuiz(raw);if(!q)return;$('quizC').innerHTML=`<h3><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка</h3><p class="quiz-q">${esc(q.question)}</p><div class="quiz-opts">${q.options.map((o,i)=>`<div class="quiz-o" onclick="ansQ(this,${i},${q.correct})">${esc(o)}</div>`).join('')}</div><button class="btn btn-g" style="margin-top:12px" onclick="nav('readerScr')">Пропустить</button>`;nav('quizScr');}catch(e){}}
-function ansQ(el,s,c){S.quizCount=(S.quizCount||0)+1;save();document.querySelectorAll('.quiz-o').forEach((o,i)=>{o.onclick=null;o.style.cursor='default';if(i===c)o.classList.add('ok');if(i===s&&i!==c)o.classList.add('no');});if(s===c)addXP(25,'🧠 Правильно!');setTimeout(()=>{nav('readerScr');toast(s===c?'Правильно! 🎉':'Не совсем, запомнишь!');checkBadges();},1400);}
+function ansQ(el,s,c){S.quizCount=(S.quizCount||0)+1;markModified();document.querySelectorAll('.quiz-o').forEach((o,i)=>{o.onclick=null;o.style.cursor='default';if(i===c)o.classList.add('ok');if(i===s&&i!==c)o.classList.add('no');});if(s===c)addXP(25,'🧠 Правильно!');setTimeout(()=>{nav('readerScr');toast(s===c?'Правильно! 🎉':'Не совсем, запомнишь!');checkBadges();},1400);}
 
 // TOAST
 function toast(m){const w=$('toastWrap');const t=document.createElement('div');t.className='toast';t.textContent=m;w.appendChild(t);requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),320);},2800);}
@@ -1468,19 +1486,16 @@ if(ua){
   ua.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){const i=$('fileInp'),dt=new DataTransfer();dt.items.add(f);i.files=dt.files;handleFile({target:i})}});
 }
 
-// KEYBOARD
+// KEYBOARD — только кнопки, свайпы отключены
 document.addEventListener('keydown',e=>{
   if($('readerScr').classList.contains('active')&&!e.target.matches('input,textarea')){
     if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextBl();}
     else if(e.key==='ArrowLeft'){e.preventDefault();prevBl();}
-    else if(e.key==='Escape')exitReader();
+    else if(e.key==='Escape'){e.preventDefault();exitReader();}
   }
 });
 
-// SWIPE
-let tsx=0;
-$('rContent').addEventListener('touchstart',e=>{tsx=e.changedTouches[0].screenX},{passive:true});
-$('rContent').addEventListener('touchend',e=>{const d=tsx-e.changedTouches[0].screenX;if(Math.abs(d)>65){if(d>0)nextBl();else prevBl();}},{passive:true});
+// SWIPE ОТКЛЮЧЕН — удаляем обработчики touch
 
 // INIT
 load();
