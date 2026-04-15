@@ -363,12 +363,14 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <!-- HOME -->
 <div class="screen active" id="home">
 <div class="hdr">
-  <div class="hdr-l"><div class="logo" onclick="nav('home')"><div class="hdr-r">
-  <button class="ibtn" onclick="syncFromSheets()" title="Синхронизировать" id="syncBtn">
-    <span class="ic"><svg><use href="#i-sync"/></svg></span>
-  </button>
-  <button class="ibtn" onclick="toggleTheme()" id="themeBtn" title="Тема">...<div class="logo-ic"><span class="ic" style="color:#fff"><svg><use href="#i-book"/></svg></span></div>FocusFlow</div></div>
- 
+  <div class="hdr-l">
+    <div class="logo" onclick="nav('home')">
+      <div class="logo-ic"><span class="ic" style="color:#fff"><svg><use href="#i-book"/></svg></span></div>
+      FocusFlow
+    </div>
+  </div>
+  <div class="hdr-r">
+    <button class="ibtn" onclick="syncFromSheets()" title="Синхронизировать" id="syncBtn"><span class="ic"><svg><use href="#i-sync"/></svg></span></button>
     <button class="ibtn" onclick="toggleTheme()" id="themeBtn" title="Тема"><span class="ic"><svg><use href="#i-moon"/></svg></span></button>
     <button class="ibtn" onclick="nav('gamification')" title="Достижения"><span class="ic"><svg><use href="#i-trophy"/></svg></span></button>
     <button class="ibtn" onclick="showModal('setModal')" title="Настройки"><span class="ic"><svg><use href="#i-set"/></svg></span></button>
