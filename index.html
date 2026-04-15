@@ -618,10 +618,11 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="aic"><span class="ic ic-xl"><svg><use href="#i-upload"/></svg></span></div>
       <div class="albl">Загрузить</div><div class="adsc">TXT, FB2, PDF</div>
     </div>
-    <div class="acard" onclick="showRecsOrGet()">
-      <div class="aic"><span class="ic ic-xl"><svg><use href="#i-spark"/></svg></span></div>
-      <div class="albl">Рекомендации</div><div class="adsc">Подборка под вкусы</div>
-    </div>
+   <div class="acard" onclick="showRecsOrGet()">
+  <div class="aic"><span class="ic ic-xl"><svg><use href="#i-spark"/></svg></span></div>
+  <div class="albl">Рекомендации</div>
+  <div class="adsc">Подборка под вкусы</div>
+</div>
   </div>
 
   <!-- TIME + COMPRESS -->
@@ -1536,13 +1537,32 @@ function checkBadges(){
 
 // ===== PREFS =====
 function tPref(el){
-  const p=el.dataset.p;
-  if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);
+  const p = el.dataset.p;
+  if (S.prefs.includes(p)) S.prefs = S.prefs.filter(x => x !== p);
   else S.prefs.push(p);
-  el.classList.toggle('active',S.prefs.includes(p));
+  el.classList.toggle('active', S.prefs.includes(p));
   markModified();
-  if(S.prefs.length>0 && !S.allRecs.length){
-    $('recsE').innerHTML='<div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Готово! Нажми «Рекомендации»</div><div class="ed">AI подберёт книги под твои интересы</div>';
+
+  // Обновляем подсказку в блоке рекомендаций
+  const recsGrid = $('recsGrid');
+  if (recsGrid) {
+    if (S.prefs.length > 0) {
+      if (!S.allRecs.length) {
+        recsGrid.innerHTML = `<div class="empty">
+          <div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div>
+          <div class="et">Готово! Нажми «Рекомендации»</div>
+          <div class="ed">AI подберёт книги под твои интересы</div>
+        </div>`;
+      }
+    } else {
+      if (!S.allRecs.length) {
+        recsGrid.innerHTML = `<div class="empty">
+          <div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div>
+          <div class="et">Выбери интересы и нажми «Рекомендации»</div>
+          <div class="ed">Нейронка подберёт книги под тебя</div>
+        </div>`;
+      }
+    }
   }
 }
 function addCustPref(){
