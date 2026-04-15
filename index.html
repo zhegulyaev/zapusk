@@ -1288,7 +1288,7 @@ function renderLib(){
   if(!S.library.length){g.innerHTML='';if(e){g.appendChild(e);e.style.display='';}return;}
   if(e)e.style.display='none';
   g.innerHTML=S.library.map(b=>{
-    const pr=b.totalBlocks?Math.round(b.curBlock/b.totalBlocks*100):0;
+    const pr=b.totalBlocks?Math.min(100,Math.round((b.curBlock+1)/b.totalBlocks*100)):0;
     return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`;
   }).join('');
 }
@@ -1330,10 +1330,21 @@ async function genCtx(b){
 }
 function showBl(idx){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  idx=Math.max(0,Math.min(idx,b.totalBlocks-1));b.curBlock=idx;
-  const tb=$('tBlock');const pr=b.totalBlocks?Math.round((idx+1)/b.totalBlocks*100):0;
+  idx=Math.max(0,Math.min(idx,b.totalBlocks-1));
+  b.curBlock=idx;
+
+  // если curBlock >= totalBlocks — книга дочитана
+  if(b.curBlock>=b.totalBlocks){
+    $('rProgF').style.width='100%';
+    $('rProgT').textContent='100%';
+    return;
+  }
+
+  const tb=$('tBlock');
+  const pr=b.totalBlocks?Math.min(100,Math.round((idx+1)/b.totalBlocks*100)):0;
   const lbl=$('blockLabel'),lblTxt=$('blockLabelTxt'),blNum=$('blockNum');
   if(lbl){lbl.style.display='flex';lblTxt.textContent=getBlockLabel(idx,b.totalBlocks);blNum.textContent=(idx+1)+' / '+b.totalBlocks;}
+
   let txt=b.blocks[idx]||'Конец!';
   const hls=(S.highlights[b.id]||{})[idx];
   if(hls&&hls.length){
@@ -1341,17 +1352,26 @@ function showBl(idx){
     for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}
     tb.innerHTML=txt;
   }else{tb.textContent=txt;}
+
   tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
   $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';
-  save();discussSelectedText='';
+  save();
+  discussSelectedText='';
 }
-function nextBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock<b.totalBlocks-1)showBl(b.curBlock+1);else{toast('Книга прочитана! 🎉');addXP(50,'📚 Книга завершена! +50 XP');checkBadges();}}
-function prevBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock>0)showBl(b.curBlock-1);}
-function exitReader(){
-  clearInterval(rtInt);$('rfPanel').classList.remove('active');
-  const b=S.library.find(x=>x.id===S.curBookId);
-  if(b){const m=Math.ceil(rtSec/60);b.readMin=(b.readMin||0)+m;S.totalMin+=m;if(m>0)recordRead();}
-  save();nav('home');renderLib();updStats();updGoalUI();checkBadges();
+function nextBl(){
+  const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
+  if(b.curBlock<b.totalBlocks-1){
+    showBl(b.curBlock+1);
+  }else{
+    // Книга дочитана — ставим 100%
+    b.curBlock=b.totalBlocks; // за пределы = 100%
+    save();renderLib();
+    $('rProgF').style.width='100%';
+    $('rProgT').textContent='100%';
+    toast('Книга прочитана! 🎉');
+    addXP(50,'📚 Книга завершена! +50 XP');
+    checkBadges();
+  }
 }
 function sessDone(){
   toast('✅ '+S.readTime+' мин прочитано!');
