@@ -1537,26 +1537,24 @@ function checkBadges(){
 
 // ===== PREFS =====
 function tPref(el){
-  const p = el.dataset.p;
-  if (S.prefs.includes(p)) S.prefs = S.prefs.filter(x => x !== p);
+  const p=el.dataset.p;
+  if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);
   else S.prefs.push(p);
-  el.classList.toggle('active', S.prefs.includes(p));
+  el.classList.toggle('active',S.prefs.includes(p));
   markModified();
-
-  // Обновляем подсказку в блоке рекомендаций
-  const recsGrid = $('recsGrid');
-  if (recsGrid) {
-    if (S.prefs.length > 0) {
-      if (!S.allRecs.length) {
-        recsGrid.innerHTML = `<div class="empty">
+  const recsGrid=$('recsGrid');
+  if(recsGrid){
+    if(S.prefs.length>0){
+      if(!S.allRecs.length){
+        recsGrid.innerHTML=`<div class="empty">
           <div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div>
           <div class="et">Готово! Нажми «Рекомендации»</div>
           <div class="ed">AI подберёт книги под твои интересы</div>
         </div>`;
       }
-    } else {
-      if (!S.allRecs.length) {
-        recsGrid.innerHTML = `<div class="empty">
+    }else{
+      if(!S.allRecs.length){
+        recsGrid.innerHTML=`<div class="empty">
           <div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div>
           <div class="et">Выбери интересы и нажми «Рекомендации»</div>
           <div class="ed">Нейронка подберёт книги под тебя</div>
@@ -1589,8 +1587,11 @@ function delCustPref(p,el){
 }
 function showRecsOrGet(){
   if(!S.prefs.length){toast('Выбери хотя бы один интерес');return;}
-  if(S.allRecs.length){$('recsGrid').scrollIntoView({behavior:'smooth'});}
-  else getRecs();
+  if(S.allRecs.length){
+    $('recsGrid').scrollIntoView({behavior:'smooth'});
+  }else{
+    getRecs();
+  }
 }
 
 // ===== SETTINGS =====
