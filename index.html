@@ -363,7 +363,11 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <!-- HOME -->
 <div class="screen active" id="home">
 <div class="hdr">
-  <div class="hdr-l"><div class="logo" onclick="nav('home')"><div class="logo-ic"><span class="ic" style="color:#fff"><svg><use href="#i-book"/></svg></span></div>FocusFlow</div></div>
+  <div class="hdr-l"><div class="logo" onclick="nav('home')"><div class="hdr-r">
+  <button class="ibtn" onclick="syncFromSheets()" title="Синхронизировать" id="syncBtn">
+    <span class="ic"><svg><use href="#i-sync"/></svg></span>
+  </button>
+  <button class="ibtn" onclick="toggleTheme()" id="themeBtn" title="Тема">...<div class="logo-ic"><span class="ic" style="color:#fff"><svg><use href="#i-book"/></svg></span></div>FocusFlow</div></div>
   <div class="hdr-r">
     <button class="ibtn" onclick="toggleTheme()" id="themeBtn" title="Тема"><span class="ic"><svg><use href="#i-moon"/></svg></span></button>
     <button class="ibtn" onclick="nav('gamification')" title="Достижения"><span class="ic"><svg><use href="#i-trophy"/></svg></span></button>
@@ -1254,23 +1258,28 @@ async function syncFromSheets(){
     const resp=await fetch(url+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     const txt=await resp.text();
-    if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных');toast('В таблице нет данных. Сначала сохрани.');return;}
+    if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных в облаке');toast('В облаке нет данных. Сначала сохрани с телефона.');return;}
     let data;try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат');}
     if(data&&data.library){
-      const remoteMod=data.lastModified||0;
-      const localMod=S.lastModified||0;
-      if(remoteMod>localMod){
-        S={...S,...data};markModified();load();
-        setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());toast('✅ Загружено! Книг: '+S.library.length);
-      }else if(remoteMod<localMod){
-        setSyncStatus('ok','Локальные данные новее');
-        toast('💾 Локальные данные новее. Сохрани в облако.');
-      }else{
-        setSyncStatus('ok','Данные синхронизированы');
-      }
+      // Сохраняем настройки API
+      const oldToken = S.token;
+      const oldEndpoint = S.endpoint;
+      const oldSheetsUrl = S.sheetsUrl;
+      
+      S = {...S, ...data};
+      
+      // Восстанавливаем настройки
+      S.token = oldToken;
+      S.endpoint = oldEndpoint;
+      S.sheetsUrl = oldSheetsUrl;
+      S.lastModified = Date.now();
+      
+      markModified();load();
+      setSyncStatus('ok','Загружено! Книг: '+S.library.length);
+      toast('✅ Загружено из облака!');
+    }else{
+      throw new Error('Нет данных');
     }
-    else if(data&&data.status==='error'){throw new Error(data.message||'Ошибка скрипта');}
-    else{throw new Error('Неверный формат данных');}
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
 }
 async function autoSyncToSheets(){
@@ -1287,13 +1296,28 @@ async function autoSyncFromSheets(){
     const remoteMod=data.lastModified||0;
     const localMod=S.lastModified||0;
     if(remoteMod>localMod){
-      S={...S,...data};try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
+      // ВАЖНО: сохраняем старые настройки API
+      const oldToken = S.token;
+      const oldEndpoint = S.endpoint;
+      const oldSheetsUrl = S.sheetsUrl;
+      
+      S = {...S, ...data};
+      
+      // Восстанавливаем настройки API (они не должны перезаписываться)
+      S.token = oldToken;
+      S.endpoint = oldEndpoint;
+      S.sheetsUrl = oldSheetsUrl;
+      S.lastModified = Date.now();
+      
+      try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
       renderLib();updStats();updGoalUI();updXP();renderBadges();
       if(S.allRecs&&S.allRecs.length)renderRecs();
-      setSyncStatus('ok','Синхронизировано: '+new Date().toLocaleTimeString());
-      toast('🔄 Данные обновлены из облака');
-    }else{setSyncStatus('ok','Актуально: '+new Date().toLocaleTimeString());}
-  }catch(e){console.log('Auto sync:',e.message);}
+      setSyncStatus('ok','Загружено из облака');
+      toast('🔄 Данные обновлены!');
+    }else{
+      setSyncStatus('ok','Данные актуальны');
+    }
+  }catch(e){console.log('Auto sync error:',e);}
 }
 function setSyncStatus(type,msg){const d=$('syncDot'),m=$('syncMsg');if(d)d.className='sync-dot '+type;if(m)m.textContent=msg;}
 function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй вручную'));}
