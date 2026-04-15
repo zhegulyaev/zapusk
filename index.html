@@ -9,9 +9,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FocusFlow">
+
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23818cf8'/%3E%3Cstop offset='100%25' stop-color='%234f46e5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M25 30h18a12 12 0 0 1 12 12v28a8 8 0 0 0-8-8H25z' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M75 30H57a12 12 0 0 0-12 12v28a8 8 0 0 1 8-8h22z' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<style>
-/* ВСЕ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ */
+  <style>
 :root{
 --bg:#09090b;--bg2:#111113;--bg3:#18181b;--bg4:#222228;
 --surface:#141416;--surface2:#1e1e22;
@@ -91,6 +91,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .custom-time-inp:focus{border-color:var(--accent)}
 .custom-time-btn{padding:8px 10px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit}
 .custom-time-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* COMPRESSION CONTROL */
 .compress-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:10px}
 .compress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .compress-header .ch-title{font-size:13px;font-weight:600;color:var(--text)}
@@ -113,6 +114,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .custom-blocks-btn{padding:6px 12px;border-radius:var(--radius-xs);border:1px solid var(--accent);background:var(--accent-glow);color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr)}
 .custom-blocks-btn:hover{background:var(--accent);color:#fff}
 .compress-hint{font-size:10px;color:var(--text3);margin-top:8px;line-height:1.5}
+/* ACTION GRID */
 .action-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .acard{padding:16px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr);text-align:center}
 .acard:hover{border-color:var(--accent);background:var(--bg3);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
@@ -170,6 +172,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .qchips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
 .qchip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:500;cursor:pointer;transition:var(--tr)}
 .qchip:hover{border-color:var(--accent);color:var(--accent)}
+/* READER */
 .rhdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;gap:6px}
 .rhdr-title{font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;margin:0 6px}
 .rhdr-tools{display:flex;gap:3px;align-items:center;flex-shrink:0}
@@ -196,6 +199,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .rfchip:hover:not(.active){border-color:var(--border2)}
 .rfdiv{height:1px;background:var(--border);margin:9px 0}
 .fprev{padding:10px;background:var(--bg3);border-radius:var(--radius-xs);border:1px solid var(--border);margin-top:5px;font-size:18px;line-height:1.6;color:var(--text2);font-family:var(--font-read);text-align:justify}
+/* MODAL */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center;padding:18px}
 .modal-ov.active{display:flex;animation:fadeIn .2s}
 .modal{background:var(--bg2);border-radius:var(--radius);width:100%;max-width:500px;max-height:88vh;overflow-y:auto;animation:slideUp .25s ease;border:1px solid var(--border)}
@@ -219,6 +223,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .font-o{padding:9px 13px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:space-between}
 .font-o:hover{border-color:var(--border2)}.font-o.active{border-color:var(--accent);background:var(--accent-glow)}
 .font-o .fn{font-size:11px;font-weight:600}.font-o .fp{font-size:13px;color:var(--text2)}
+/* BOOK INFO / AI DISCUSS CHAT */
 .bi-chat{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;margin-bottom:11px;padding:4px 0;scroll-behavior:smooth}
 .bi-msg{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:92%}
 .bi-msg.ai{background:var(--bg3);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
@@ -227,6 +232,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .bi-input-row{display:flex;gap:5px}
 .bi-input{flex:1;padding:9px 13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-family:inherit;outline:none;transition:var(--tr)}
 .bi-input:focus{border-color:var(--accent)}
+/* BADGES */
 .badges-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .badge-card{padding:14px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);width:calc(50% - 4px);display:flex;align-items:center;gap:12px}
 .badge-card.earned{border-color:var(--yellow);background:var(--yellow-bg)}
@@ -265,30 +271,48 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .quiz-opts{display:flex;flex-direction:column;gap:7px}
 .quiz-o{padding:11px 15px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:12px;text-align:left;cursor:pointer;transition:var(--tr)}
 .quiz-o:hover{border-color:var(--accent)}.quiz-o.ok{border-color:var(--green);background:var(--green-bg)}.quiz-o.no{border-color:var(--red);background:rgba(248,113,113,.1)}
+/* HIGHLIGHT TOOLTIP */
 .hl-tt{position:fixed;z-index:300;padding:5px 6px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);box-shadow:var(--shadow);display:none;gap:4px;flex-wrap:wrap;max-width:220px}
 .hl-tt.active{display:flex}
 .ht-b{padding:5px 9px;border-radius:5px;border:none;font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit;display:flex;align-items:center;gap:3px;white-space:nowrap}
 .ht-b.mk{background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent)}.ht-b.mk:hover{background:var(--accent);color:#fff}
 .ht-b.discuss{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}.ht-b.discuss:hover{background:var(--green);color:#fff}
 .ht-b.um{background:var(--bg4);color:var(--text3);border:1px solid var(--border)}.ht-b.um:hover{color:var(--text)}
+/* SYNC */
 .sync-status{font-size:11px;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:5px}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0}
 .sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.loading{background:var(--yellow);animation:pulse 1s infinite}
 .code-block{background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px 13px;font-size:10px;font-family:monospace;color:var(--text2);line-height:1.6;overflow-x:auto;margin:6px 0;white-space:pre}
+/* BOOK SETUP MODAL */
 .book-setup-modal .bs-section{margin-bottom:16px}
 .book-setup-modal .bs-section h4{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .hidden{display:none!important}
+/* LDOTS */
 .ldots{display:flex;gap:5px;justify-content:center;padding:16px}
 .ldots span{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.2s ease infinite}
 .ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
-.block-heading{font-size:1.3em;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin:5px 0 5px 0;color:var(--accent);text-align:center;line-height:1.3;font-family:'Inter',sans-serif;border-bottom:2px solid var(--accent-glow);padding-bottom:10px}
+
+.block-heading {
+  font-size: 1.3em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+margin: 5px 0 5px 0;
+  color: var(--accent);
+  text-align: center;
+  line-height: 1.3;
+  font-family: 'Inter', sans-serif;
+  border-bottom: 2px solid var(--accent-glow);
+  padding-bottom: 10px;
+}
+
+    
 @media(max-width:600px){.action-grid{grid-template-columns:1fr 1fr}.stats-row{grid-template-columns:1fr 1fr}.rfpanel{right:6px;left:6px;width:auto}.badge-card{width:100%}.compress-opts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:380px){.action-grid{grid-template-columns:1fr}}
 @media(min-width:768px){.hero h1{font-size:34px}.tblock{font-size:22px}.rcontent{padding:44px 32px 100px}}
 </style>
 </head>
 <body>
-<!-- SVG спрайты -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
@@ -333,286 +357,679 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
 </svg>
 
-<!-- ВСЯ HTML СТРУКТУРА ОСТАЁТСЯ ТАКОЙ ЖЕ КАК У ВАС -->
-<!-- Я пропускаю её для краткости, но она полностью идентична вашему коду -->
+<div class="gen-ov" id="genOv">
+  <div class="gen-spin"></div>
+  <div class="gen-txt">
+    <strong id="genTitle">Готовим для чтения...</strong>
+    <div class="gen-steps">
+      <div class="gen-step active" id="gs1">📖 Анализируем книгу</div>
+      <div class="gen-step" id="gs2">✂️ Нарезаем на блоки</div>
+      <div class="gen-step" id="gs3">🎯 Подбираем структуру</div>
+      <div class="gen-step" id="gs4">✨ Финальная обработка</div>
+    </div>
+  </div>
+</div>
+<div class="toast-wrap" id="toastWrap"></div>
+<div class="hl-tt" id="hlTT">
+  <button class="ht-b mk" onclick="hlSel()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-hl"/></svg></span>Выделить</button>
+  <button class="ht-b discuss" onclick="discussSel()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-chat"/></svg></span>Обсудить</button>
+  <button class="ht-b um" onclick="hideHlTT()">✕</button>
+</div>
+
+<!-- HOME -->
+<div class="screen active" id="home">
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="logo" onclick="nav('home')">
+      <div class="logo-ic"><span class="ic" style="color:#fff"><svg><use href="#i-book"/></svg></span></div>
+      FocusFlow
+    </div>
+  </div>
+  <div class="hdr-r">
+    <button class="ibtn" onclick="syncFromSheets()" title="Синхронизировать" id="syncBtn"><span class="ic"><svg><use href="#i-sync"/></svg></span></button>
+    <button class="ibtn" onclick="toggleTheme()" id="themeBtn" title="Тема"><span class="ic"><svg><use href="#i-moon"/></svg></span></button>
+    <button class="ibtn" onclick="nav('gamification')" title="Достижения"><span class="ic"><svg><use href="#i-trophy"/></svg></span></button>
+    <button class="ibtn" onclick="showModal('setModal')" title="Настройки"><span class="ic"><svg><use href="#i-set"/></svg></span></button>
+  </div>
+</div>
+<div class="main">
+  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-book"/></svg></span> Главная страница</div>
+  <div class="hero"><h1>Читай по 3 минуты</h1><p>Маленькие порции — большие знания. Без стресса, с удовольствием.</p></div>
+  <div class="xp-bar"><div class="xp-top"><span class="xp-lvl" id="xpLvl">Уровень 1</span><span class="xp-pts" id="xpPts">0 / 100 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+  <div class="stats-row">
+    <div class="scard fire"><span class="v" id="stS">0</span><span class="l">🔥 Дней</span></div>
+    <div class="scard books"><span class="v" id="stB">0</span><span class="l">📚 Книг</span></div>
+    <div class="scard time"><span class="v" id="stM">0</span><span class="l">⏱ Минут</span></div>
+    <div class="scard xp"><span class="v" id="stX">0</span><span class="l">⭐ XP</span></div>
+  </div>
+  <div class="divider"></div>
+  <div class="goal-bar" onclick="showModal('goalModal')">
+    <span class="ic"><svg><use href="#i-target"/></svg></span>
+    <div class="goal-txt"><strong id="goalTxt">Поставь цель</strong><span id="goalSub">Нажми чтобы установить</span></div>
+    <div class="goal-prog"><div class="gf" id="goalF" style="width:0%"></div></div>
+    <div class="goal-pct" id="goalPct">0%</div>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-clock"/></svg></span> Время сессии чтения</div>
+  <div class="time-row" id="timeRow">
+    <div class="tc" data-m="2" onclick="setTime(2,this)">2<small>мин</small></div>
+    <div class="tc active" data-m="3" onclick="setTime(3,this)">3<small>мин</small></div>
+    <div class="tc" data-m="5" onclick="setTime(5,this)">5<small>мин</small></div>
+    <div class="tc" data-m="10" onclick="setTime(10,this)">10<small>мин</small></div>
+    <div class="tc-custom">
+      <input class="custom-time-inp" id="ctInp" type="number" min="1" max="120" placeholder="—">
+      <button class="custom-time-btn" onclick="setCustomTime()">мин</button>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-layers"/></svg></span> Объём книги <span class="badge">настрой сколько блоков генерировать</span></div>
+  <div class="compress-panel">
+    <div class="compress-header">
+      <span class="ch-title">Режим генерации</span>
+      <span class="ch-badge" id="compressBadge">Полная книга</span>
+    </div>
+    <div class="compress-opts">
+      <div class="copt" data-blocks="0" onclick="setCompressOpt(this)">
+        <span class="co-num">∞</span><span class="co-lbl">Полная</span>
+      </div>
+      <div class="copt" data-blocks="40" onclick="setCompressOpt(this)">
+        <span class="co-num">40</span><span class="co-lbl">Детальная</span>
+      </div>
+      <div class="copt" data-blocks="20" onclick="setCompressOpt(this)">
+        <span class="co-num">20</span><span class="co-lbl">Средняя</span>
+      </div>
+      <div class="copt" data-blocks="8" onclick="setCompressOpt(this)">
+        <span class="co-num">8</span><span class="co-lbl">Краткая</span>
+      </div>
+    </div>
+    <div class="custom-blocks-row">
+      <label>Своё количество блоков:</label>
+      <input class="custom-blocks-inp" id="customBlocksInp" type="number" min="3" max="200" placeholder="50">
+      <button class="custom-blocks-btn" onclick="setCustomBlocks()">Применить</button>
+    </div>
+    <div class="compress-hint" id="compressHint">∞ Полная книга — нейронка генерирует максимум контента (60-80 блоков). Идеально для глубокого погружения.</div>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-book"/></svg></span> Начать чтение</div>
+  <div class="action-grid">
+    <div class="acard" onclick="nav('searchScr')"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-search"/></svg></span></div><div class="albl">Найти книгу</div><div class="adsc">AI найдёт и подготовит</div></div>
+    <div class="acard" onclick="nav('uploadScr')"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-upload"/></svg></span></div><div class="albl">Загрузить</div><div class="adsc">TXT, FB2, PDF</div></div>
+    <div class="acard" onclick="getRecs()"><div class="aic"><span class="ic ic-xl"><svg><use href="#i-spark"/></svg></span></div><div class="albl">Рекомендации</div><div class="adsc">Подборка под вкусы</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-star"/></svg></span> Твои интересы <span class="badge">выбери → нажми ✨</span></div>
+  <div class="pref-chips" id="prefChips">
+    <div class="pchip" data-p="саморазвитие" onclick="tPref(this)">💡 Саморазвитие</div>
+    <div class="pchip" data-p="психология" onclick="tPref(this)">🧠 Психология</div>
+    <div class="pchip" data-p="бизнес" onclick="tPref(this)">💼 Бизнес</div>
+    <div class="pchip" data-p="философия" onclick="tPref(this)">🏛️ Философия</div>
+    <div class="pchip" data-p="наука" onclick="tPref(this)">🔬 Наука</div>
+    <div class="pchip" data-p="фантастика" onclick="tPref(this)">🚀 Фантастика</div>
+    <div class="pchip" data-p="история" onclick="tPref(this)">📜 История</div>
+    <div class="pchip" data-p="здоровье" onclick="tPref(this)">🏃 Здоровье</div>
+    <div class="pchip" data-p="финансы" onclick="tPref(this)">💰 Финансы</div>
+    <div class="pchip" data-p="продуктивность" onclick="tPref(this)">⚡ Продуктивность</div>
+    <div class="pchip" data-p="классика" onclick="tPref(this)">📕 Классика</div>
+  </div>
+  <div class="add-row">
+    <input class="add-inp" id="custPrefInp" placeholder="Свой интерес..." onkeydown="if(event.key==='Enter')addCustPref()">
+    <button class="add-btn" onclick="addCustPref()"><span class="ic" style="width:11px;height:11px"><svg><use href="#i-plus"/></svg></span>Добавить</button>
+  </div>
+  <div class="divider"></div>
+  <div class="recs-hdr">
+    <div class="sec-title" style="margin-bottom:0"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-spark"/></svg></span> Рекомендации <span class="badge">AI</span></div>
+    <button class="clear-recs-btn hidden" id="clearRecsBtn" onclick="clearRecs()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-eraser"/></svg></span>Очистить</button>
+  </div>
+  <div class="recs-grid" id="recsGrid"><div class="empty" id="recsE"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Выбери интересы и нажми «Рекомендации»</div><div class="ed">Нейронка подберёт книги под тебя</div></div></div>
+  <div class="load-more-row hidden" id="loadMoreRow"><button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button></div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-lib"/></svg></span> Моя библиотека</div>
+  <div class="lib-grid" id="libGrid"><div class="empty" id="libE"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-lib"/></svg></span></div><div class="et">Библиотека пуста</div><div class="ed">Найди или загрузи книгу</div></div></div>
+</div>
+</div>
+
+<!-- SEARCH -->
+<div class="screen" id="searchScr">
+<div class="hdr"><button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button><div class="logo"><span class="ic ic-lg"><svg><use href="#i-search"/></svg></span>Поиск книги</div><div style="width:36px"></div></div>
+<div class="main">
+  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-search"/></svg></span> Поиск книги</div>
+  <div class="sbar"><input class="sinput" id="searchInp" placeholder="Название, автор или тема..." onkeydown="if(event.key==='Enter')doSearch()"><button class="btn btn-p" onclick="doSearch()"><span class="ic"><svg><use href="#i-spark"/></svg></span>Найти</button></div>
+  <div class="sec-title">Популярное</div>
+  <div class="qchips">
+    <div class="qchip" onclick="qSearch('Атомные привычки')">Атомные привычки</div>
+    <div class="qchip" onclick="qSearch('Думай медленно решай быстро')">Думай медленно</div>
+    <div class="qchip" onclick="qSearch('48 законов власти')">48 законов власти</div>
+    <div class="qchip" onclick="qSearch('Sapiens')">Sapiens</div>
+    <div class="qchip" onclick="qSearch('Богатый папа бедный папа')">Богатый папа</div>
+    <div class="qchip" onclick="qSearch('7 навыков высокоэффективных людей')">7 навыков</div>
+  </div>
+  <div id="searchRes"></div>
+</div>
+</div>
+
+<!-- UPLOAD -->
+<div class="screen" id="uploadScr">
+<div class="hdr">
+  <button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button>
+  <div class="logo"><span class="ic ic-lg"><svg><use href="#i-upload"/></svg></span>Загрузка</div>
+  <div style="display:flex;gap:5px">
+    <button class="ibtn" onclick="exportData()" title="Экспорт"><span class="ic"><svg><use href="#i-download"/></svg></span></button>
+    <button class="ibtn" onclick="importData()" title="Импорт"><span class="ic"><svg><use href="#i-upload"/></svg></span></button>
+  </div>
+</div>
+<div class="main">
+  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-upload"/></svg></span> Загрузить книгу</div>
+  <div class="uarea" id="uploadArea" onclick="$('fileInp').click()">
+    <div class="uic"><span class="ic ic-hero"><svg><use href="#i-upload"/></svg></span></div>
+    <div class="ut">Нажми или перетащи файл</div><div class="uh">Поддерживаемые форматы:</div>
+    <div class="ftags"><span class="ftag">.txt</span><span class="ftag">.fb2</span><span class="ftag">.pdf</span><span class="ftag">.html</span><span class="ftag">.md</span></div>
+  </div>
+  <input type="file" id="fileInp" accept=".txt,.fb2,.html,.htm,.md,.pdf" style="display:none" onchange="handleFile(event)">
+  <input type="file" id="importInp" accept=".json" style="display:none" onchange="handleImport(event)">
+  <div class="sec-title" style="margin-top:18px">Или вставь текст</div>
+  <textarea class="tarea" id="pasteArea" placeholder="Вставь текст книги..."></textarea>
+  <div style="margin-top:11px;display:flex;gap:7px">
+    <input class="sinput" id="uploadTitle" placeholder="Название книги" style="flex:1">
+    <button class="btn btn-p" onclick="processText()"><span class="ic"><svg><use href="#i-book"/></svg></span>Подготовить</button>
+  </div>
+</div>
+</div>
+
+<!-- READER -->
+<div class="screen" id="readerScr">
+<div class="rhdr">
+  <button class="ibtn" onclick="exitReader()"><span class="ic"><svg><use href="#i-left"/></svg></span></button>
+  <div class="rhdr-title" id="rTitle">Книга</div>
+  <div class="rhdr-tools">
+    <button class="ibtn" onclick="toggleTheme()" id="rThemeBtn"><span class="ic"><svg><use href="#i-moon"/></svg></span></button>
+    <button class="ibtn" id="bmBtn" onclick="toggleBM()" title="Режим книги"><span class="ic"><svg><use href="#i-justify"/></svg></span></button>
+    <button class="ibtn" onclick="toggleFP()" title="Вид и шрифт"><span class="ic"><svg><use href="#i-palette"/></svg></span></button>
+    <div class="rprog"><div class="rpbar"><div class="fill" id="rProgF" style="width:0%"></div></div><span id="rProgT">0%</span></div>
+  </div>
+</div>
+<div class="rcontent" id="rContent">
+  <div class="ctx-hint" id="ctxHint" style="display:none"></div>
+  <div class="block-label" id="blockLabel" style="display:none">
+    <span class="ic" style="width:12px;height:12px"><svg><use href="#i-book"/></svg></span>
+    <span id="blockLabelTxt"></span><span class="bl-num" id="blockNum"></span>
+  </div>
+  <div class="tblock" id="tBlock">Нажми «Далее» чтобы начать...</div>
+</div>
+<div class="rfpanel" id="rfPanel">
+  <h4>Шрифт</h4><div class="rfrow" id="rfFonts"></div>
+  <div class="rfdiv"></div>
+  <h4>Размер текста</h4>
+  <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+    <button class="ibtn" style="width:28px;height:28px" onclick="chgFS(-2)"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-minus"/></svg></span></button>
+    <span id="rfSL" style="font-size:13px;font-weight:700;min-width:32px;text-align:center">20</span>
+    <button class="ibtn" style="width:28px;height:28px" onclick="chgFS(2)"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-plus"/></svg></span></button>
+  </div>
+  <div class="fprev" id="rfPrev">Пример текста.</div>
+  <div class="rfdiv"></div>
+  <h4>Время сессии</h4>
+  <div class="rfrow" id="rTimeRow"></div>
+  <div style="display:flex;align-items:center;gap:5px;margin-top:4px">
+    <input class="custom-time-inp" id="rCtInp" type="number" min="1" max="120" placeholder="—" style="width:50px">
+    <button class="custom-time-btn" onclick="setCustomTimeR()">мин</button>
+  </div>
+</div>
+<div class="rnav">
+  <button class="nbtn" onclick="prevBl()"><span class="ic"><svg><use href="#i-left"/></svg></span>Назад</button>
+  <div class="ncenter"><div class="timer-b"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-clock"/></svg></span><span id="rTimer">0:00</span></div></div>
+  <button class="nbtn np" onclick="nextBl()">Далее<span class="ic"><svg><use href="#i-right"/></svg></span></button>
+</div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="quizScr">
+<div class="hdr">
+  <button class="ibtn" onclick="backToReader()"><span class="ic"><svg><use href="#i-left"/></svg></span></button>
+  <div class="logo"><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка знаний</div>
+  <div style="width:36px"></div>
+</div>
+<div class="main"><div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-brain"/></svg></span> Квиз — активное запоминание</div><div class="quiz-c" id="quizC"></div></div>
+</div>
+
+<!-- GAMIFICATION -->
+<div class="screen" id="gamification">
+<div class="hdr"><button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button><div class="logo"><span class="ic ic-lg"><svg><use href="#i-trophy"/></svg></span>Достижения</div><div style="width:36px"></div></div>
+<div class="main">
+  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-trophy"/></svg></span> Геймификация и достижения</div>
+  <div class="xp-bar"><div class="xp-top"><span class="xp-lvl" id="gXpLvl">Уровень 1</span><span class="xp-pts" id="gXpPts">0/100 XP</span></div><div class="xp-track"><div class="xp-fill" id="gXpFill" style="width:0%"></div></div></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-help"/></svg></span> Как работает система</div>
+  <div class="how-card">
+    <p><strong style="color:var(--text)">Зарабатывай XP:</strong></p>
+    <p>⭐ +10 XP за каждую прочитанную минуту</p>
+    <p>📚 +50 XP за завершение книги</p>
+    <p>🧠 +25 XP за правильный ответ на квиз</p>
+    <p>🔥 +30 XP за серию дней подряд</p>
+    <p>🎯 +200 XP за цель месяца</p>
+    <p>🏆 +50 XP за каждое достижение</p>
+    <p style="margin-top:5px"><strong style="color:var(--text)">Объём книги:</strong> на главной выбирай сколько блоков генерировать — от 8 (краткое саммари) до полной книги (60-80 блоков).</p>
+    <p><strong style="color:var(--text)">Обсуждение:</strong> выдели текст при чтении → «Обсудить» — AI ответит с учётом контекста книги.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-star"/></svg></span> Достижения</div>
+  <div class="badges-grid" id="badgesGrid"></div>
+  <div class="divider"></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-target"/></svg></span> Цель на месяц</div>
+  <div class="goal-bar" onclick="showModal('goalModal')">
+    <span class="ic"><svg><use href="#i-target"/></svg></span>
+    <div class="goal-txt"><strong id="gGoalTxt">Поставь цель</strong><span id="gGoalSub">Нажми чтобы установить</span></div>
+    <div class="goal-prog"><div class="gf" id="gGoalF" style="width:0%"></div></div>
+    <div class="goal-pct" id="gGoalPct">0%</div>
+  </div>
+</div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-ov" id="setModal" onclick="if(event.target===this)closeModal('setModal')">
+<div class="modal">
+  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-set"/></svg></span>Настройки</h2><button class="ibtn" onclick="closeModal('setModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
+  <div class="modal-b">
+    <div class="stabs">
+      <div class="stab active" onclick="switchTab('tab-api',this)">🔑 API</div>
+      <div class="stab" onclick="switchTab('tab-view',this)">🎨 Вид</div>
+      <div class="stab" onclick="switchTab('tab-sync',this)">☁️ Синхронизация</div>
+    </div>
+    <div class="stab-pane active" id="tab-api">
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-key"/></svg></span>API Токен (OpenRouter)</label><input type="password" id="apiTok" placeholder="sk-or-v1-..."><div class="shint">Модель: Gemini 2.0 Flash 001</div></div>
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-link"/></svg></span>API Endpoint</label><input type="text" id="apiEnd" value="https://openrouter.ai/api/v1/chat/completions"></div>
+    </div>
+    <div class="stab-pane" id="tab-view">
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Тема</label>
+        <div class="theme-tog"><button class="theme-o" data-t="dark" onclick="setTheme('dark')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-moon"/></svg></span>Тёмная</button><button class="theme-o" data-t="light" onclick="setTheme('light')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Светлая</button></div>
+      </div>
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-type"/></svg></span>Шрифт чтения</label><div class="font-sel" id="setFontSel"></div></div>
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-type"/></svg></span>Размер текста</label>
+        <select id="fsSel" onchange="prevFS(this.value)"><option value="16">16px — Маленький</option><option value="18">18px — Обычный</option><option value="20" selected>20px — Комфортный</option><option value="24">24px — Большой</option><option value="28">28px — Очень большой</option></select>
+        <div class="fprev" id="setFPrev" style="font-size:20px;margin-top:6px;font-family:var(--font-read);text-align:justify">Пример текста для чтения книги.</div>
+      </div>
+    </div>
+    <div class="stab-pane" id="tab-sync">
+      <div class="sgroup">
+        <label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-database"/></svg></span>Google Sheets Web App URL</label>
+        <input type="text" id="sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec">
+        <div class="shint">Вставь URL своего Google Apps Script</div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="syncToSheets()"><span class="ic"><svg><use href="#i-sync"/></svg></span>Сохранить в Sheets</button>
+        <button class="btn btn-s" onclick="syncFromSheets()"><span class="ic"><svg><use href="#i-cloud"/></svg></span>Загрузить</button>
+      </div>
+      <div class="sync-status" id="syncStatus"><div class="sync-dot" id="syncDot"></div><span id="syncMsg">Не синхронизировано</span></div>
+      <div class="divider"></div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.7">
+        <p style="margin-bottom:5px">1. Google Таблицы → Расширения → Apps Script</p>
+        <p style="margin-bottom:5px">2. Вставь код:</p>
+        <div class="code-block" id="appsScriptCode">function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName('FocusFlow');
+    
+    // Если листа нет - создаем
+    if (!sheet) {
+      sheet = ss.insertSheet('FocusFlow');
+      // Создаем заголовки
+      sheet.getRange('A1').setValue('Данные');
+      sheet.getRange('B1').setValue('Последнее обновление');
+    }
+    
+    // Сохраняем JSON в A2
+    sheet.getRange('A2').setValue(JSON.stringify(data));
+    sheet.getRange('B2').setValue(new Date());
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error', message:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName('FocusFlow');
+    
+    if (!sheet) {
+      return ContentService
+        .createTextOutput(JSON.stringify({status:'empty'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    var data = sheet.getRange('A2').getValue();
+    
+    if (!data || data === '') {
+      return ContentService
+        .createTextOutput(JSON.stringify({status:'empty'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // Возвращаем как JSON (уже строка)
+    return ContentService
+      .createTextOutput(data)
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error', message:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</div>
+        <button onclick="copyAppsScript()" class="btn btn-s" style="margin-top:6px;padding:6px 12px;font-size:10px"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-copy"/></svg></span>Скопировать</button>
+        <p style="margin-top:8px;margin-bottom:3px">3. Развернуть → Новое развёртывание → Веб-приложение</p>
+        <p style="margin-bottom:3px">4. Доступ: <strong style="color:var(--text)">Все</strong></p>
+        <p>5. Скопируй URL и вставь выше</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="saveSet()"><span class="ic"><svg><use href="#i-save"/></svg></span>Сохранить</button>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+      <button class="btn btn-s" style="width:100%;justify-content:center;color:var(--red)" onclick="clearAll()"><span class="ic"><svg><use href="#i-trash"/></svg></span>Очистить все данные</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- GOAL MODAL -->
+<div class="modal-ov" id="goalModal" onclick="if(event.target===this)closeModal('goalModal')">
+<div class="modal">
+  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-target"/></svg></span>Цель на месяц</h2><button class="ibtn" onclick="closeModal('goalModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
+  <div class="modal-b">
+    <div class="sgroup"><label>Сколько книг прочитать?</label><input type="number" id="goalInp" min="1" max="100" value="5"></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="saveGoal()"><span class="ic"><svg><use href="#i-target"/></svg></span>Установить</button>
+  </div>
+</div>
+</div>
+
+<!-- BOOK INFO MODAL -->
+<div class="modal-ov" id="biModal" onclick="if(event.target===this)closeModal('biModal')">
+<div class="modal">
+  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-info"/></svg></span><span id="biTitle">О книге</span></h2><button class="ibtn" onclick="closeModal('biModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
+  <div class="modal-b">
+    <div class="bi-chat" id="biChat"></div>
+    <div class="bi-input-row">
+      <input class="bi-input" id="biInp" placeholder="Задай вопрос о книге..." onkeydown="if(event.key==='Enter')askBI()">
+      <button class="btn btn-p" style="padding:9px 13px" onclick="askBI()"><span class="ic"><svg><use href="#i-send"/></svg></span></button>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-p" style="flex:1;justify-content:center" onclick="readBIBook()"><span class="ic"><svg><use href="#i-play"/></svg></span>Читать эту книгу</button>
+      <button class="btn btn-s" onclick="closeModal('biModal')">Закрыть</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- DISCUSS MODAL -->
+<div class="modal-ov" id="discussModal" onclick="if(event.target===this)closeModal('discussModal')">
+<div class="modal">
+  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-chat"/></svg></span>Обсудить с AI</h2><button class="ibtn" onclick="closeModal('discussModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
+  <div class="modal-b">
+    <div style="padding:10px 13px;background:var(--hl);border:1px solid var(--hl-border);border-radius:var(--radius-xs);margin-bottom:12px;font-size:12px;color:var(--text);font-family:var(--font-read);line-height:1.5;font-style:italic" id="discussQuote"></div>
+    <div class="bi-chat" id="discussChat"></div>
+    <div class="bi-input-row">
+      <input class="bi-input" id="discussInp" placeholder="Спроси об этом фрагменте..." onkeydown="if(event.key==='Enter')askDiscuss()">
+      <button class="btn btn-p" style="padding:9px 13px" onclick="askDiscuss()"><span class="ic"><svg><use href="#i-send"/></svg></span></button>
+    </div>
+  </div>
+</div>
+</div>
 
 <script>
-// ВСЕ КОНСТАНТЫ И ПЕРЕМЕННЫЕ ТЕ ЖЕ
 const TK='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';
 const DEFAULT_SHEETS='https://script.google.com/macros/s/AKfycby1Hu0NCGqDfri62hf7YvWRrDl-3tC6EzeoRrnid-pOhMwB6POl2-jA6xvBRLqXjCSH/exec';
 const MDL='google/gemini-2.0-flash-001';
-// ... все остальные константы ...
+const FONTS=[
+  {n:'Literata',f:"'Literata',Georgia,serif"},
+  {n:'Merriweather',f:"'Merriweather',Georgia,serif"},
+  {n:'PT Serif',f:"'PT Serif',Georgia,serif"},
+  {n:'Roboto Slab',f:"'Roboto Slab',Georgia,serif"},
+  {n:'Inter',f:"'Inter',sans-serif"},
+  {n:'Nunito',f:"'Nunito',sans-serif"},
+  {n:'Open Sans',f:"'Open Sans',sans-serif"}
+];
+const COMPRESS_OPTS=[
+  {blocks:0,lbl:'Полная книга',hint:'∞ Полная книга — нейронка генерирует максимум контента (60-80 блоков). Идеально для глубокого погружения.'},
+  {blocks:40,lbl:'Детальная',hint:'40 блоков — подробное содержание с примерами и деталями. Хороший баланс.'},
+  {blocks:20,lbl:'Средняя',hint:'20 блоков — ключевые идеи без лишних деталей. Быстрое знакомство с книгой.'},
+  {blocks:8,lbl:'Краткая',hint:'8 блоков — главные мысли одним взглядом. Для беглого ознакомления.'}
+];
+const BADGES=[
+  {id:'first_read',em:'📖',nm:'Первое чтение',dsc:'Прочитай первую минуту',ok:s=>s.totalMin>=1},
+  {id:'streak_3',em:'🔥',nm:'3 дня подряд',dsc:'Серия из 3 дней',ok:s=>s.streak>=3},
+  {id:'streak_7',em:'🏅',nm:'Неделя читателя',dsc:'Серия из 7 дней',ok:s=>s.streak>=7},
+  {id:'streak_30',em:'🏆',nm:'Месяц силы',dsc:'Серия из 30 дней',ok:s=>s.streak>=30},
+  {id:'books_1',em:'📗',nm:'Первая книга',dsc:'Добавь первую книгу',ok:s=>s.library.length>=1},
+  {id:'books_3',em:'📚',nm:'Малая полка',dsc:'Добавь 3 книги',ok:s=>s.library.length>=3},
+  {id:'books_10',em:'🗂️',nm:'Большая полка',dsc:'Добавь 10 книг',ok:s=>s.library.length>=10},
+  {id:'min_30',em:'⏱️',nm:'Полчаса чтения',dsc:'30 минут суммарно',ok:s=>s.totalMin>=30},
+  {id:'min_100',em:'⌛',nm:'Час мудрости',dsc:'100 минут суммарно',ok:s=>s.totalMin>=100},
+  {id:'min_500',em:'⏳',nm:'Время знаний',dsc:'500 минут суммарно',ok:s=>s.totalMin>=500},
+  {id:'xp_500',em:'⭐',nm:'500 XP',dsc:'Набери 500 очков',ok:s=>s.xp>=500},
+  {id:'xp_2000',em:'🌟',nm:'2000 XP',dsc:'Набери 2000 очков',ok:s=>s.xp>=2000},
+  {id:'quiz_5',em:'🧠',nm:'5 квизов',dsc:'Ответь на 5 вопросов',ok:s=>s.quizCount>=5},
+  {id:'quiz_20',em:'🎓',nm:'Студент',dsc:'Ответь на 20 вопросов',ok:s=>s.quizCount>=20},
+  {id:'goal_done',em:'🎯',nm:'Цель!',dsc:'Выполни цель месяца',ok:s=>s.goalDone},
+  {id:'hl_first',em:'✏️',nm:'Первое выделение',dsc:'Выдели текст',ok:s=>s.hlCount>=1},
+  {id:'discuss_first',em:'💬',nm:'Первое обсуждение',dsc:'Обсуди фрагмент с AI',ok:s=>s.discussCount>=1},
+];
 
 let S={
   token:TK,endpoint:'https://openrouter.ai/api/v1/chat/completions',
   sheetsUrl:DEFAULT_SHEETS,
   readTime:3,fontSize:20,fontIdx:0,fontFamily:FONTS[0].f,
   theme:'dark',bookMode:true,
-  targetBlocks:0,
+  targetBlocks:0, // 0 = full
   prefs:[],custPrefs:[],
   streak:0,lastRead:null,totalMin:0,xp:0,quizCount:0,hlCount:0,discussCount:0,
   library:[],curBookId:null,highlights:{},
   goal:0,goalMonth:null,goalDone:false,
   earnedBadges:[],allRecs:[],lastSync:null,lastModified:0
 };
+let biBookTitle='',biBookAuthor='';
+let discussSelectedText='';
+let discussBookCtx='';
+let savedScrollPos=0;
+const $=id=>document.getElementById(id);
 
-// ============ ИСПРАВЛЕННЫЕ ФУНКЦИИ СИНХРОНИЗАЦИИ ============
+// MARK TIMESTAMP для синхронизации
+function markModified(){S.lastModified=Date.now();save();}
 
-// Сохраняем в localStorage и запускаем автосинхронизацию
-function markModified(){
+// GEN OVERLAY
+let genStepTimer=null;
+function showGen(title){
+  $('genOv').classList.add('active');
+  $('genTitle').textContent=title||'Готовим для чтения...';
+  ['gs1','gs2','gs3','gs4'].forEach(id=>{const e=$(id);e.classList.remove('active','done');e.style.opacity='.4';});
+  $('gs1').classList.add('active');$('gs1').style.opacity='1';
+  let step=1;
+  genStepTimer=setInterval(()=>{
+    if(step>0&&$(('gs'+step))){$('gs'+step).classList.remove('active');$('gs'+step).classList.add('done');$('gs'+step).style.opacity='.6';}
+    step++;if(step>4){clearInterval(genStepTimer);return;}
+    if($('gs'+step)){$('gs'+step).classList.add('active');$('gs'+step).style.opacity='1';}
+  },2000);
+}
+function hideGen(){$('genOv').classList.remove('active');clearInterval(genStepTimer);}
+
+// LOAD / SAVE
+let autoSaveTimer=null;
+function save(){
+  try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
+  if(S.sheetsUrl){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>autoSyncToSheets(),4000);}
+}
+
+function load(){
+  try{const s=localStorage.getItem('ff6');if(s){const p=JSON.parse(s);S={...S,...p}};}catch(e){}
+  // Ensure lastModified exists
+  if(!S.lastModified)S.lastModified=Date.now();
+  // Apply defaults for new fields
+  if(!S.sheetsUrl)S.sheetsUrl=DEFAULT_SHEETS;
+  if(S.targetBlocks===undefined)S.targetBlocks=0;
+  $('apiTok').value=S.token;$('apiEnd').value=S.endpoint;$('fsSel').value=S.fontSize;
+  $('sheetsUrl').value=S.sheetsUrl;
+  if(S.lastSync)setSyncStatus('ok','Последняя синхронизация: '+new Date(S.lastSync).toLocaleTimeString());
+  document.querySelectorAll('.tc').forEach(e=>e.classList.toggle('active',+e.dataset.m===S.readTime));
+  document.querySelectorAll('.pchip[data-p]').forEach(e=>e.classList.toggle('active',S.prefs.includes(e.dataset.p)));
+  applyTheme(S.theme);renderCustPrefs();buildFonts();updStats();renderLib();updGoalUI();updXP();renderBadges();
+  initCompressUI();
+  if(S.allRecs&&S.allRecs.length){renderRecs();$('clearRecsBtn').classList.remove('hidden');$('loadMoreRow').classList.remove('hidden');}
+  document.documentElement.style.setProperty('--font-read',S.fontFamily);
+  handleRoute();
+  // Auto load from sheets on start
+  if(S.sheetsUrl){setTimeout(()=>autoSyncFromSheets(),2000);}
+}
+
+
+
+// ============ БЫСТРАЯ АВТОСИНХРОНИЗАЦИЯ ============
+let cloudCheckInterval = null;
+let saveTimer = null;
+
+// Запуск быстрой проверки облака
+function startCloudAutoCheck() {
+  if (cloudCheckInterval) clearInterval(cloudCheckInterval);
+  
+  cloudCheckInterval = setInterval(async () => {
+    if (S.sheetsUrl && document.visibilityState === 'visible' && navigator.onLine) {
+      console.log('🔄 Проверка облака...');
+      await autoSyncFromSheets();
+    }
+  }, 5000); // Каждые 5 секунд (вместо 30)
+}
+
+// Остановка проверки
+function stopCloudAutoCheck() {
+  if (cloudCheckInterval) {
+    clearInterval(cloudCheckInterval);
+    cloudCheckInterval = null;
+  }
+}
+
+// Мгновенное сохранение при изменениях (переопределяем markModified)
+const originalMarkModified = markModified;
+markModified = function() {
   S.lastModified = Date.now();
   save();
-}
-
-// Сохранение в localStorage
-function save(){
-  try {
-    localStorage.setItem('ff6', JSON.stringify(S));
-  } catch(e) {}
   
-  // Запускаем отложенную синхронизацию с облаком
+  // Быстрое автосохранение в облако (1 секунда вместо 4)
   if (S.sheetsUrl) {
-    clearTimeout(window._saveTimer);
-    window._saveTimer = setTimeout(() => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
       if (navigator.onLine) {
         autoSyncToSheets();
+        console.log('💾 Автосохранение в облако');
       }
-    }, 2000); // 2 секунды после последнего изменения
+    }, 1000);
   }
-}
-
-// Автоматическая отправка в облако (без подтверждений)
-async function autoSyncToSheets() {
-  if (!S.sheetsUrl || !navigator.onLine) return;
   
-  try {
-    console.log('💾 Автосохранение в облако...');
-    await fetch(S.sheetsUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify(S)
-    });
-    S.lastSync = new Date().toISOString();
-    try { localStorage.setItem('ff6', JSON.stringify(S)); } catch(e) {}
-    setSyncStatus('ok', '💾 ' + new Date().toLocaleTimeString());
-    console.log('✅ Автосохранение выполнено');
-  } catch(e) {
-    console.warn('⚠️ Ошибка автосохранения:', e);
-  }
-}
+  // Вызываем оригинальную логику если нужно
+  if (originalMarkModified) originalMarkModified();
+};
 
-// Автоматическая загрузка из облака
-async function autoSyncFromSheets() {
-  if (!S.sheetsUrl || !navigator.onLine) return;
-  
-  try {
-    console.log('🔍 Проверяем облако...');
-    const resp = await fetch(S.sheetsUrl + '?t=' + Date.now(), {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache'
-    });
-    
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    
-    const txt = await resp.text();
-    if (!txt || txt.includes('"status":"empty"')) {
-      console.log('📭 Облако пустое');
-      return;
-    }
-    
-    let data;
-    try {
-      data = JSON.parse(txt);
-    } catch(e) {
-      const cleaned = txt.replace(/^"|"$/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-      data = JSON.parse(cleaned);
-    }
-    
-    if (!data || !data.library) return;
-    
-    const remoteMod = data.lastModified || 0;
-    const localMod = S.lastModified || 0;
-    
-    console.log('📊 Облако:', new Date(remoteMod).toLocaleTimeString(), 
-                'Локально:', new Date(localMod).toLocaleTimeString());
-    
-    // Если в облаке данные новее - загружаем
-    if (remoteMod > localMod) {
-      console.log('✅ Загружаем новые данные из облака!');
-      
-      // Сохраняем настройки
-      const savedSettings = {
-        token: S.token,
-        endpoint: S.endpoint,
-        sheetsUrl: S.sheetsUrl,
-        theme: S.theme,
-        readTime: S.readTime,
-        fontSize: S.fontSize,
-        fontFamily: S.fontFamily
-      };
-      
-      // Обновляем данные
-      S.library = data.library || [];
-      S.xp = data.xp || 0;
-      S.totalMin = data.totalMin || 0;
-      S.streak = data.streak || 0;
-      S.lastRead = data.lastRead || null;
-      S.highlights = data.highlights || {};
-      S.earnedBadges = data.earnedBadges || [];
-      S.allRecs = data.allRecs || [];
-      S.goal = data.goal || 0;
-      S.quizCount = data.quizCount || 0;
-      S.discussCount = data.discussCount || 0;
-      S.hlCount = data.hlCount || 0;
-      
-      // Восстанавливаем настройки
-      Object.assign(S, savedSettings);
-      S.lastModified = Date.now();
-      
-      // Сохраняем и обновляем интерфейс
-      save();
-      renderLib();
-      updStats();
-      updGoalUI();
-      updXP();
-      renderBadges();
-      applyTheme(S.theme);
-      
-      if (S.allRecs && S.allRecs.length) {
-        renderRecs();
-        $('clearRecsBtn')?.classList.remove('hidden');
-        $('loadMoreRow')?.classList.remove('hidden');
+// Запуск при загрузке
+window.addEventListener('load', () => {
+  if (S.sheetsUrl) {
+    startCloudAutoCheck();
+    // Мгновенная проверка при старте
+    setTimeout(() => {
+      if (navigator.onLine) {
+        autoSyncFromSheets();
+        console.log('🚀 Стартовая синхронизация');
       }
-      
-      setSyncStatus('ok', '📥 Загружено: ' + new Date().toLocaleTimeString());
-      toast('🔄 Данные обновлены из облака!');
-      console.log('✅ Синхронизация завершена!');
-    } else {
-      console.log('ℹ️ Локальные данные актуальны');
-    }
-    
-  } catch(e) {
-    console.warn('⚠️ Ошибка проверки облака:', e);
+    }, 500);
   }
-}
+});
 
-// Ручная синхронизация (кнопки в интерфейсе)
-async function syncToSheets() {
-  const url = ($('sheetsUrl').value || S.sheetsUrl || '').trim();
-  if (!url) {
-    toast('Укажи URL Google Apps Script');
+// Остановка при закрытии
+window.addEventListener('beforeunload', () => {
+  stopCloudAutoCheck();
+  // Финальное сохранение перед закрытием
+  if (S.sheetsUrl && navigator.onLine) {
+    autoSyncToSheets();
+  }
+});
+
+// Пауза когда вкладка неактивна
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && S.sheetsUrl) {
+    startCloudAutoCheck();
+    // Сразу проверяем при возврате
+    setTimeout(() => {
+      if (navigator.onLine) autoSyncFromSheets();
+    }, 300);
+  } else {
+    stopCloudAutoCheck();
+  }
+});
+
+// Возобновление при появлении интернета
+window.addEventListener('online', () => {
+  if (S.sheetsUrl && document.visibilityState === 'visible') {
+    startCloudAutoCheck();
+    toast('📡 Онлайн — синхронизируем...');
+    setTimeout(() => autoSyncFromSheets(), 500);
+    setTimeout(() => autoSyncToSheets(), 800);
+  }
+});
+
+// Пауза при отключении интернета
+window.addEventListener('offline', () => {
+  stopCloudAutoCheck();
+  toast('📴 Офлайн — данные сохранятся локально');
+});
+
+// ============ КНОПКА МГНОВЕННОЙ СИНХРОНИЗАЦИИ ============
+function forceSyncNow() {
+  if (!navigator.onLine) {
+    toast('❌ Нет интернета');
     return;
   }
   
-  S.sheetsUrl = url;
-  markModified();
-  setSyncStatus('loading', 'Сохраняем...');
-  
-  try {
-    await fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify(S)
-    });
-    S.lastSync = new Date().toISOString();
-    markModified();
-    setSyncStatus('ok', '✅ Сохранено!');
-    toast('✅ Данные сохранены в Google Sheets');
-  } catch(e) {
-    setSyncStatus('err', 'Ошибка: ' + e.message);
-    toast('❌ ' + e.message);
-  }
-}
-
-async function syncFromSheets() {
-  const url = ($('sheetsUrl').value || S.sheetsUrl || '').trim();
-  if (!url) {
-    toast('Укажи URL Google Apps Script');
+  if (!S.sheetsUrl) {
+    toast('❌ Настройте URL в синхронизации');
     return;
   }
   
-  S.sheetsUrl = url;
-  markModified();
-  setSyncStatus('loading', 'Загружаем...');
+  toast('🔄 Синхронизация...');
   
-  try {
-    await autoSyncFromSheets();
-  } catch(e) {
-    setSyncStatus('err', 'Ошибка: ' + e.message);
-    toast('❌ ' + e.message);
+  Promise.all([
+    autoSyncToSheets(),
+    autoSyncFromSheets()
+  ]).then(() => {
+    toast('✅ Синхронизировано!');
+    setSyncStatus('ok', 'Синхронизировано: ' + new Date().toLocaleTimeString());
+  }).catch(e => {
+    toast('❌ Ошибка: ' + e.message);
+  });
+}
+
+// Добавляем кнопку в интерфейс (вызовите эту функцию после загрузки)
+function addForceSyncButton() {
+  const headerRight = document.querySelector('.hdr-r');
+  if (!headerRight) return;
+  
+  const syncBtn = document.createElement('button');
+  syncBtn.className = 'ibtn';
+  syncBtn.onclick = forceSyncNow;
+  syncBtn.title = 'Мгновенная синхронизация';
+  syncBtn.innerHTML = '<span class="ic"><svg><use href="#i-refresh"/></svg></span>';
+  
+  // Вставляем перед кнопкой настроек
+  const settingsBtn = headerRight.querySelector('[onclick*="setModal"]');
+  if (settingsBtn) {
+    headerRight.insertBefore(syncBtn, settingsBtn);
+  } else {
+    headerRight.appendChild(syncBtn);
   }
 }
 
-// Запуск автоматической проверки облака
-function startAutoSync() {
-  // Проверяем сразу при старте
-  setTimeout(() => {
-    if (navigator.onLine && S.sheetsUrl) {
-      autoSyncFromSheets();
-    }
-  }, 1000);
+// Запускаем добавление кнопки после полной загрузки
+setTimeout(addForceSyncButton, 1000);
   
-  // И затем каждые 10 секунд
-  setInterval(() => {
-    if (navigator.onLine && S.sheetsUrl && document.visibilityState === 'visible') {
-      autoSyncFromSheets();
-    }
-  }, 10000);
-}
-
-// Обновление статуса синхронизации
-function setSyncStatus(type, msg) {
-  const d = $('syncDot');
-  const m = $('syncMsg');
-  if (d) d.className = 'sync-dot ' + type;
-  if (m) m.textContent = msg;
-}
-
-// Загрузка при старте
-function load() {
-  try {
-    const s = localStorage.getItem('ff6');
-    if (s) {
-      const p = JSON.parse(s);
-      S = {...S, ...p};
-    }
-  } catch(e) {}
-  
-  if (!S.lastModified) S.lastModified = Date.now();
-  if (!S.sheetsUrl) S.sheetsUrl = DEFAULT_SHEETS;
-  if (S.targetBlocks === undefined) S.targetBlocks = 0;
-  
-  $('apiTok').value = S.token;
-  $('apiEnd').value = S.endpoint;
-  $('fsSel').value = S.fontSize;
-  $('sheetsUrl').value = S.sheetsUrl;
-  
-  applyTheme(S.theme);
-  renderCustPrefs();
-  buildFonts();
-  updStats();
-  renderLib();
-  updGoalUI();
-  updXP();
-  renderBadges();
-  initCompressUI();
-  
-  if (S.allRecs && S.allRecs.length) {
-    renderRecs();
-    $('clearRecsBtn').classList.remove('hidden');
-    $('loadMoreRow').classList.remove('hidden');
-  }
-  
-  document.documentElement.style.setProperty('--font-read', S.fontFamily);
-  handleRoute();
-  
-  // Запускаем автосинхронизацию
-  startAutoSync();
-}
-
 // COMPRESS UI
 function initCompressUI(){
   const cur=S.targetBlocks||0;
