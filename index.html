@@ -14,7 +14,7 @@
 --text:#fafafa;--text2:#a1a1aa;--text3:#71717a;
 --accent:#818cf8;--accent2:#6366f1;--accent3:#4f46e5;
 --accent-glow:rgba(129,140,248,.15);--accent-glow2:rgba(129,140,248,.06);
---green:#34d399;--green-bg:rgba(52,211,153,.1);
+--green:#34d399;--green2:#10b981;--green-bg:rgba(52,211,153,.1);
 --orange:#fb923c;--yellow:#fbbf24;--yellow-bg:rgba(251,191,36,.12);
 --red:#f87171;
 --hl:rgba(250,204,21,.22);--hl-border:rgba(250,204,21,.45);
@@ -45,8 +45,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes xpPop{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-60px) scale(1.3);opacity:0}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .hdr-l,.hdr-r{display:flex;align-items:center;gap:6px}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.5px;cursor:pointer}
@@ -55,74 +53,68 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .ibtn:hover{background:var(--surface2);color:var(--text);border-color:var(--border2)}
 .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:18px 18px 130px}
 .page-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:14px;font-weight:600;display:flex;align-items:center;gap:5px}
-.divider{height:1px;background:var(--border);margin:22px 0;opacity:.6}
-/* HERO */
-.hero{text-align:center;padding:20px 0 18px}
+.divider{height:1px;background:var(--border);margin:24px 0;opacity:.6}
+.hero{text-align:center;padding:22px 0 20px}
 .hero h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{color:var(--text3);font-size:13px;max-width:360px;margin:0 auto}
-/* XP */
-.xp-bar{padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px}
+.hero p{color:var(--text3);font-size:13px;max-width:360px;margin:0 auto;line-height:1.5}
+.xp-bar{padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px}
 .xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .xp-lvl{font-size:13px;font-weight:700}.xp-pts{font-size:11px;color:var(--text3)}
 .xp-track{height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
-.xp-fill{height:100%;background:linear-gradient(90deg,var(--yellow),var(--orange));border-radius:3px;transition:width .6s}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--yellow),var(--orange));border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .xp-pop{position:fixed;pointer-events:none;z-index:9999;font-size:14px;font-weight:700;color:var(--yellow);animation:xpPop .9s ease forwards;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .scard{padding:12px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center}
 .scard .v{font-size:18px;font-weight:800;display:block;margin-bottom:1px}
 .scard .l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
 .scard.fire .v{color:var(--orange)}.scard.books .v{color:var(--accent)}.scard.time .v{color:var(--green)}.scard.xp .v{color:var(--yellow)}
-/* GOAL */
 .goal-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
 .goal-bar:hover{border-color:var(--accent)}
 .goal-txt{flex:1;font-size:12px;color:var(--text2)}.goal-txt strong{color:var(--text);font-size:14px;display:block}
 .goal-prog{width:80px;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
 .goal-prog .gf{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:3px;transition:width .5s}
 .goal-pct{font-size:11px;font-weight:700;color:var(--accent);min-width:30px;text-align:right}
-/* TIME */
 .sec-title{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;letter-spacing:-.3px}
 .sec-title .badge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;background:var(--accent-glow);color:var(--accent)}
 .time-row{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.tc{flex:1;min-width:44px;padding:9px 4px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text3);text-align:center;cursor:pointer;transition:var(--tr);font-size:14px;font-weight:700}
+.tc{flex:1;min-width:48px;padding:9px 4px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text3);text-align:center;cursor:pointer;transition:var(--tr);font-size:14px;font-weight:700}
 .tc.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
 .tc:hover:not(.active){border-color:var(--border2)}
 .tc small{display:block;font-size:9px;font-weight:500;margin-top:1px}
 .tc-custom{display:flex;align-items:center;gap:4px}
-.custom-time-inp{width:50px;padding:8px 6px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:inherit}
+.custom-time-inp{width:52px;padding:8px 6px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:inherit}
 .custom-time-inp:focus{border-color:var(--accent)}
 .custom-time-btn{padding:8px 10px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit}
 .custom-time-btn:hover{border-color:var(--accent);color:var(--accent)}
-/* COMPRESSION PANEL */
+/* COMPRESSION CONTROL */
 .compress-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:10px}
-.compress-panel-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.compress-levels{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-.cl{flex:1;min-width:60px;padding:8px 6px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);color:var(--text3);text-align:center;cursor:pointer;transition:var(--tr);font-size:11px;font-weight:600}
-.cl.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
-.cl:hover:not(.active){border-color:var(--border2)}
-.cl .cl-name{display:block;font-size:11px;font-weight:700;margin-bottom:2px}
-.cl .cl-pages{display:block;font-size:9px;color:var(--text3);font-weight:400}
-.cl.active .cl-pages{color:var(--accent);opacity:.8}
-.custom-pages-row{display:flex;align-items:center;gap:6px;margin-top:6px}
-.custom-pages-inp{width:64px;padding:7px 8px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:inherit}
-.custom-pages-inp:focus{border-color:var(--accent)}
-.compress-desc{font-size:10px;color:var(--text3);margin-top:6px;line-height:1.5}
-/* TOGGLE */
-.compress-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xs);margin-top:8px}
-.compress-row .cr-txt{font-size:12px;color:var(--text2)}.compress-row .cr-txt strong{color:var(--text);font-size:13px;display:block}
-.toggle-sw{position:relative;width:40px;height:22px;flex-shrink:0}
-.toggle-sw input{opacity:0;width:0;height:0}
-.toggle-sw .sl{position:absolute;inset:0;background:var(--border2);border-radius:11px;cursor:pointer;transition:.3s}
-.toggle-sw .sl:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-.toggle-sw input:checked+.sl{background:var(--accent)}
-.toggle-sw input:checked+.sl:before{transform:translateX(18px)}
-/* ACTIONS */
+.compress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.compress-header .ch-title{font-size:13px;font-weight:600;color:var(--text)}
+.compress-header .ch-badge{font-size:10px;padding:2px 8px;border-radius:5px;font-weight:600}
+.compress-header .ch-badge.full{background:var(--green-bg);color:var(--green)}
+.compress-header .ch-badge.medium{background:var(--accent-glow);color:var(--accent)}
+.compress-header .ch-badge.short{background:rgba(251,146,60,.1);color:var(--orange)}
+.compress-header .ch-badge.micro{background:rgba(248,113,113,.1);color:var(--red)}
+.compress-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.copt{padding:10px 4px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);text-align:center;cursor:pointer;transition:var(--tr)}
+.copt.active{border-color:var(--accent);background:var(--accent-glow)}
+.copt .co-num{font-size:16px;font-weight:800;color:var(--text);display:block}
+.copt .co-lbl{font-size:9px;color:var(--text3);font-weight:500}
+.copt.active .co-num{color:var(--accent)}.copt.active .co-lbl{color:var(--accent)}
+.copt:hover:not(.active){border-color:var(--border2)}
+.custom-blocks-row{display:flex;align-items:center;gap:8px}
+.custom-blocks-row label{font-size:11px;color:var(--text2)}
+.custom-blocks-inp{width:64px;padding:6px 8px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:inherit}
+.custom-blocks-inp:focus{border-color:var(--accent)}
+.custom-blocks-btn{padding:6px 12px;border-radius:var(--radius-xs);border:1px solid var(--accent);background:var(--accent-glow);color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr)}
+.custom-blocks-btn:hover{background:var(--accent);color:#fff}
+.compress-hint{font-size:10px;color:var(--text3);margin-top:8px;line-height:1.5}
+/* ACTION GRID */
 .action-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .acard{padding:16px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr);text-align:center}
 .acard:hover{border-color:var(--accent);background:var(--bg3);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
 .acard .aic{margin-bottom:9px;color:var(--accent);display:flex;justify-content:center}
 .acard .albl{font-size:11px;font-weight:600;margin-bottom:2px}.acard .adsc{font-size:9px;color:var(--text3)}
-/* PREFS */
 .pref-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
 .pchip{padding:6px 13px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:11px;cursor:pointer;transition:var(--tr)}
 .pchip.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
@@ -132,7 +124,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .add-inp:focus{border-color:var(--accent)}
 .add-btn{padding:7px 12px;border-radius:20px;border:1px solid var(--accent);background:var(--accent-glow);color:var(--accent);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr);display:flex;align-items:center;gap:3px}
 .add-btn:hover{background:var(--accent);color:#fff}
-/* RECS */
 .recs-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .recs-grid{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
 .rcard{display:flex;align-items:center;gap:11px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:var(--tr)}
@@ -152,7 +143,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .lm-btn:hover{border-color:var(--accent);background:var(--accent-glow)}
 .clear-recs-btn{padding:6px 12px;border-radius:var(--radius-xs);border:1px solid var(--border);background:transparent;color:var(--text3);font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;transition:var(--tr);display:flex;align-items:center;gap:4px}
 .clear-recs-btn:hover{border-color:var(--red);color:var(--red)}
-/* LIBRARY */
 .lib-grid{display:flex;flex-direction:column;gap:7px}
 .lcard{display:flex;align-items:center;gap:11px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:var(--tr)}
 .lcard:hover{border-color:var(--accent);background:var(--bg3)}
@@ -163,7 +153,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .lpfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:2px;transition:width .5s}
 .lmeta{font-size:10px;color:var(--text3)}
 .lbtns{display:flex;gap:3px}
-/* SEARCH */
 .sbar{display:flex;gap:7px;margin-bottom:14px}
 .sinput{flex:1;padding:11px 15px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:var(--tr)}
 .sinput:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
@@ -184,20 +173,19 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .rhdr-tools{display:flex;gap:3px;align-items:center;flex-shrink:0}
 .rprog{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);flex-shrink:0}
 .rpbar{width:44px;height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}.rpbar .fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
-.rcontent{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 120px);padding:28px 18px;max-width:640px;margin:0 auto;width:100%}
-.ctx-hint{font-size:11px;color:var(--text3);text-align:center;padding:8px 13px;background:var(--accent-glow2);border-radius:var(--radius-xs);margin-bottom:24px;max-width:460px;line-height:1.5;border:1px solid rgba(129,140,248,.08)}
-.tblock{font-family:var(--font-read);font-size:20px;line-height:1.85;color:var(--text);text-align:justify;hyphens:auto;max-width:100%;width:100%;animation:slideUp .4s ease;font-weight:400;letter-spacing:.01em;transition:opacity .2s,transform .2s;user-select:text}
+.rcontent{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:calc(100vh - 120px);padding:28px 18px 100px;max-width:640px;margin:0 auto;width:100%}
+.ctx-hint{font-size:11px;color:var(--text3);text-align:center;padding:8px 13px;background:var(--accent-glow2);border-radius:var(--radius-xs);margin-bottom:24px;max-width:460px;width:100%;line-height:1.5;border:1px solid rgba(129,140,248,.08)}
+.tblock{font-family:var(--font-read);font-size:20px;line-height:1.85;color:var(--text);text-align:justify;hyphens:auto;width:100%;font-weight:400;letter-spacing:.01em;user-select:text}
 .tblock .uhl{background:var(--hl);border-bottom:2px solid var(--hl-border);border-radius:2px;padding:0 1px;cursor:pointer;transition:background .2s}
 .tblock .uhl:hover{background:rgba(250,204,21,.35)}
-.block-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;margin-bottom:16px;align-self:flex-start;display:flex;align-items:center;gap:5px}
+.block-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;margin-bottom:16px;align-self:flex-start;display:flex;align-items:center;gap:5px;width:100%}
 .block-label .bl-num{background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:5px}
 .rnav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(20px);border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100}
 .nbtn{padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:4px}
 .nbtn:hover{background:var(--surface2)}.nbtn.np{background:var(--accent3);border-color:var(--accent3);color:#fff}.nbtn.np:hover{background:var(--accent2)}
 .ncenter{display:flex;align-items:center;gap:6px}
 .timer-b{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--green);font-weight:600}
-/* READER FONT PANEL */
-.rfpanel{position:fixed;bottom:58px;right:10px;z-index:150;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:13px;width:260px;box-shadow:var(--shadow);display:none;animation:slideUp .2s}
+.rfpanel{position:fixed;bottom:58px;right:10px;z-index:150;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:13px;width:260px;box-shadow:var(--shadow);display:none;animation:slideUp .2s;max-height:70vh;overflow-y:auto}
 .rfpanel.active{display:block}
 .rfpanel h4{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px}
 .rfrow{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:7px}
@@ -205,7 +193,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .rfchip.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
 .rfchip:hover:not(.active){border-color:var(--border2)}
 .rfdiv{height:1px;background:var(--border);margin:9px 0}
-.fprev{padding:10px;background:var(--bg3);border-radius:var(--radius-xs);border:1px solid var(--border);margin-top:5px;font-size:16px;line-height:1.6;color:var(--text2);font-family:var(--font-read);text-align:justify}
+.fprev{padding:10px;background:var(--bg3);border-radius:var(--radius-xs);border:1px solid var(--border);margin-top:5px;font-size:18px;line-height:1.6;color:var(--text2);font-family:var(--font-read);text-align:justify}
 /* MODAL */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center;padding:18px}
 .modal-ov.active{display:flex;animation:fadeIn .2s}
@@ -230,35 +218,25 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .font-o{padding:9px 13px;border-radius:var(--radius-xs);border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:space-between}
 .font-o:hover{border-color:var(--border2)}.font-o.active{border-color:var(--accent);background:var(--accent-glow)}
 .font-o .fn{font-size:11px;font-weight:600}.font-o .fp{font-size:13px;color:var(--text2)}
-/* BOOK INFO / DISCUSS CHAT */
-.bi-chat{display:flex;flex-direction:column;gap:7px;max-height:320px;overflow-y:auto;margin-bottom:11px;padding:2px 0;scroll-behavior:smooth}
-.bi-msg{padding:9px 13px;border-radius:12px;font-size:12px;line-height:1.6;max-width:92%;animation:slideUp .15s}
+/* BOOK INFO / AI DISCUSS CHAT */
+.bi-chat{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;margin-bottom:11px;padding:4px 0;scroll-behavior:smooth}
+.bi-msg{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:92%}
 .bi-msg.ai{background:var(--bg3);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
 .bi-msg.user{background:var(--accent-glow);color:var(--accent);align-self:flex-end;border-bottom-right-radius:3px;font-weight:500}
-.bi-msg.context{background:var(--yellow-bg);border:1px solid rgba(251,191,36,.2);color:var(--text2);align-self:flex-start;font-size:11px;font-style:italic}
-.cursor{display:inline-block;width:2px;height:13px;background:var(--accent);border-radius:1px;margin-left:2px;animation:blink 1s ease infinite;vertical-align:text-bottom}
+.bi-msg.loading{background:var(--bg3);align-self:flex-start;color:var(--text3);font-style:italic}
 .bi-input-row{display:flex;gap:5px}
 .bi-input{flex:1;padding:9px 13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-family:inherit;outline:none;transition:var(--tr)}
 .bi-input:focus{border-color:var(--accent)}
-/* DISCUSS BUTTON in reader */
-.discuss-tt{position:fixed;z-index:201;display:none;flex-direction:column;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:var(--shadow)}
-.discuss-tt.active{display:flex}
-.dt-btn{padding:6px 12px;border-radius:6px;border:none;font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit;display:flex;align-items:center;gap:5px;white-space:nowrap}
-.dt-btn.hl{background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent)}.dt-btn.hl:hover{background:var(--accent);color:#fff}
-.dt-btn.discuss{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}.dt-btn.discuss:hover{border-color:var(--accent);color:var(--accent)}
-.dt-btn.cancel{background:var(--bg4);color:var(--text3);border:1px solid var(--border)}.dt-btn.cancel:hover{color:var(--text)}
-/* GAMIFICATION */
+/* BADGES */
 .badges-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.badge-card{padding:12px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);width:calc(50% - 4px);display:flex;align-items:center;gap:10px;transition:var(--tr)}
+.badge-card{padding:14px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);width:calc(50% - 4px);display:flex;align-items:center;gap:12px}
 .badge-card.earned{border-color:var(--yellow);background:var(--yellow-bg)}
-.badge-card .bem{font-size:28px;flex-shrink:0;width:36px;text-align:center}
+.badge-card .bem{font-size:32px;flex-shrink:0;width:40px;text-align:center}
 .badge-card .binfo{text-align:left}
-.badge-card .bnm{font-size:11px;font-weight:700;color:var(--text);margin-bottom:1px}
+.badge-card .bnm{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px}
 .badge-card .bxp{font-size:10px;color:var(--text3)}
-.badge-card.locked .bem{filter:grayscale(1);opacity:.4}
 .how-card{padding:13px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px;font-size:12px;color:var(--text2);line-height:1.7}
 .how-card p{margin-bottom:3px}
-/* UPLOAD */
 .uarea{border:2px dashed var(--border);border-radius:var(--radius);padding:36px 18px;text-align:center;cursor:pointer;transition:var(--tr);background:var(--bg2);margin-bottom:13px}
 .uarea:hover,.uarea.dg{border-color:var(--accent);background:var(--accent-glow2)}
 .uarea .uic{margin-bottom:11px;color:var(--text3);display:flex;justify-content:center}
@@ -267,16 +245,13 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .ftag{font-size:8px;padding:2px 6px;border-radius:3px;background:var(--bg4);color:var(--text3);font-weight:600;text-transform:uppercase}
 .tarea{width:100%;min-height:160px;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-family:'Literata',serif;font-size:13px;line-height:1.7;resize:vertical;outline:none;transition:var(--tr)}
 .tarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-/* TOAST */
 .toast-wrap{position:fixed;bottom:70px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:5px;z-index:2000;pointer-events:none}
 .toast{padding:8px 16px;background:var(--surface2);color:var(--text);border-radius:var(--radius-sm);font-size:12px;font-weight:500;border:1px solid var(--border);box-shadow:var(--shadow);max-width:88vw;text-align:center;transform:translateY(16px);opacity:0;transition:all .28s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
-/* EMPTY */
 .empty{text-align:center;padding:32px 18px;color:var(--text3)}
 .empty .eic{margin-bottom:9px;opacity:.4;display:flex;justify-content:center}
 .empty .et{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:3px}.empty .ed{font-size:11px}
 .err-box{padding:12px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);border-radius:var(--radius-xs);color:var(--red);font-size:11px;margin-top:9px;display:flex;align-items:flex-start;gap:7px}
-/* GENERATING */
 .gen-ov{position:fixed;inset:0;background:rgba(9,9,11,.93);backdrop-filter:blur(10px);z-index:1500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 .gen-ov.active{display:flex;animation:fadeIn .3s}
 .gen-spin{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
@@ -285,26 +260,35 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .gen-steps{display:flex;flex-direction:column;gap:6px;margin-top:4px}
 .gen-step{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;opacity:.4;transition:.3s}
 .gen-step.active{opacity:1;color:var(--accent)}.gen-step.done{opacity:.6;color:var(--green)}
-/* QUIZ */
 .quiz-c{max-width:460px;margin:0 auto;padding:24px 18px;text-align:center}
 .quiz-c h3{font-size:15px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:5px}
 .quiz-q{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.5}
 .quiz-opts{display:flex;flex-direction:column;gap:7px}
 .quiz-o{padding:11px 15px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:12px;text-align:left;cursor:pointer;transition:var(--tr)}
 .quiz-o:hover{border-color:var(--accent)}.quiz-o.ok{border-color:var(--green);background:var(--green-bg)}.quiz-o.no{border-color:var(--red);background:rgba(248,113,113,.1)}
+/* HIGHLIGHT TOOLTIP */
+.hl-tt{position:fixed;z-index:300;padding:5px 6px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);box-shadow:var(--shadow);display:none;gap:4px;flex-wrap:wrap;max-width:220px}
+.hl-tt.active{display:flex}
+.ht-b{padding:5px 9px;border-radius:5px;border:none;font-size:11px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:inherit;display:flex;align-items:center;gap:3px;white-space:nowrap}
+.ht-b.mk{background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent)}.ht-b.mk:hover{background:var(--accent);color:#fff}
+.ht-b.discuss{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}.ht-b.discuss:hover{background:var(--green);color:#fff}
+.ht-b.um{background:var(--bg4);color:var(--text3);border:1px solid var(--border)}.ht-b.um:hover{color:var(--text)}
 /* SYNC */
 .sync-status{font-size:11px;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:5px}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0}
 .sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.loading{background:var(--yellow);animation:pulse 1s infinite}
 .code-block{background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px 13px;font-size:10px;font-family:monospace;color:var(--text2);line-height:1.6;overflow-x:auto;margin:6px 0;white-space:pre}
+/* BOOK SETUP MODAL */
+.book-setup-modal .bs-section{margin-bottom:16px}
+.book-setup-modal .bs-section h4{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .hidden{display:none!important}
-/* LOADING DOTS */
+/* LDOTS */
 .ldots{display:flex;gap:5px;justify-content:center;padding:16px}
 .ldots span{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.2s ease infinite}
 .ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
-@media(max-width:600px){.action-grid{grid-template-columns:1fr 1fr}.stats-row{grid-template-columns:1fr 1fr}.rfpanel{right:6px;left:6px;width:auto}.badge-card{width:100%}.compress-levels{gap:4px}}
+@media(max-width:600px){.action-grid{grid-template-columns:1fr 1fr}.stats-row{grid-template-columns:1fr 1fr}.rfpanel{right:6px;left:6px;width:auto}.badge-card{width:100%}.compress-opts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:380px){.action-grid{grid-template-columns:1fr}}
-@media(min-width:768px){.hero h1{font-size:34px}.tblock{font-size:22px}.rcontent{padding:44px 32px}}
+@media(min-width:768px){.hero h1{font-size:34px}.tblock{font-size:22px}.rcontent{padding:44px 32px 100px}}
 </style>
 </head>
 <body>
@@ -348,30 +332,27 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></symbol>
 <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></symbol>
 <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
-<symbol id="i-compress" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
-<symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
 </svg>
 
-<!-- GEN OVERLAY -->
 <div class="gen-ov" id="genOv">
   <div class="gen-spin"></div>
   <div class="gen-txt">
     <strong id="genTitle">Готовим для чтения...</strong>
     <div class="gen-steps">
       <div class="gen-step active" id="gs1">📖 Анализируем книгу</div>
-      <div class="gen-step" id="gs2">✂️ Формируем блоки</div>
+      <div class="gen-step" id="gs2">✂️ Нарезаем на блоки</div>
       <div class="gen-step" id="gs3">🎯 Подбираем структуру</div>
       <div class="gen-step" id="gs4">✨ Финальная обработка</div>
     </div>
   </div>
 </div>
 <div class="toast-wrap" id="toastWrap"></div>
-
-<!-- SELECTION TOOLTIP -->
-<div class="discuss-tt" id="discTT">
-  <button class="dt-btn hl" onclick="hlSel()"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-hl"/></svg></span>Выделить</button>
-  <button class="dt-btn discuss" onclick="discussSel()"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-message"/></svg></span>Обсудить с AI</button>
-  <button class="dt-btn cancel" onclick="hideDiscTT()">Отмена</button>
+<div class="hl-tt" id="hlTT">
+  <button class="ht-b mk" onclick="hlSel()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-hl"/></svg></span>Выделить</button>
+  <button class="ht-b discuss" onclick="discussSel()"><span class="ic" style="width:12px;height:12px"><svg><use href="#i-chat"/></svg></span>Обсудить</button>
+  <button class="ht-b um" onclick="hideHlTT()">✕</button>
 </div>
 
 <!-- HOME -->
@@ -414,24 +395,32 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
   <div class="divider"></div>
-  <!-- COMPRESSION PANEL -->
-  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-compress"/></svg></span> Объём книги <span class="badge">выбери формат</span></div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-layers"/></svg></span> Объём книги <span class="badge">настрой сколько блоков генерировать</span></div>
   <div class="compress-panel">
-    <div class="compress-panel-title"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-compress"/></svg></span>Сколько блоков читать?</div>
-    <div class="compress-levels" id="compressLevels">
-      <div class="cl" data-pages="20" onclick="setCompressLevel(20,this)"><span class="cl-name">Кратко</span><span class="cl-pages">~20 блоков</span></div>
-      <div class="cl" data-pages="40" onclick="setCompressLevel(40,this)"><span class="cl-name">Суть</span><span class="cl-pages">~40 блоков</span></div>
-      <div class="cl active" data-pages="80" onclick="setCompressLevel(80,this)"><span class="cl-name">Полная</span><span class="cl-pages">~80 блоков</span></div>
-      <div class="cl" data-pages="150" onclick="setCompressLevel(150,this)"><span class="cl-name">Детально</span><span class="cl-pages">~150 блоков</span></div>
-      <div class="cl" data-pages="0" onclick="setCompressLevel(0,this)"><span class="cl-name">Макс</span><span class="cl-pages">200+</span></div>
+    <div class="compress-header">
+      <span class="ch-title">Режим генерации</span>
+      <span class="ch-badge" id="compressBadge">Полная книга</span>
     </div>
-    <div class="custom-pages-row">
-      <span style="font-size:11px;color:var(--text3)">Своё:</span>
-      <input class="custom-pages-inp" id="customPagesInp" type="number" min="5" max="500" placeholder="50">
-      <span style="font-size:11px;color:var(--text3)">блоков</span>
-      <button class="custom-time-btn" onclick="setCustomPages()">Применить</button>
+    <div class="compress-opts">
+      <div class="copt" data-blocks="0" onclick="setCompressOpt(this)">
+        <span class="co-num">∞</span><span class="co-lbl">Полная</span>
+      </div>
+      <div class="copt" data-blocks="40" onclick="setCompressOpt(this)">
+        <span class="co-num">40</span><span class="co-lbl">Детальная</span>
+      </div>
+      <div class="copt" data-blocks="20" onclick="setCompressOpt(this)">
+        <span class="co-num">20</span><span class="co-lbl">Средняя</span>
+      </div>
+      <div class="copt" data-blocks="8" onclick="setCompressOpt(this)">
+        <span class="co-num">8</span><span class="co-lbl">Краткая</span>
+      </div>
     </div>
-    <div class="compress-desc" id="compressDesc">📖 Полная версия — ~80 блоков по 150-200 слов. Глубокое погружение в книгу.</div>
+    <div class="custom-blocks-row">
+      <label>Своё количество блоков:</label>
+      <input class="custom-blocks-inp" id="customBlocksInp" type="number" min="3" max="200" placeholder="50">
+      <button class="custom-blocks-btn" onclick="setCustomBlocks()">Применить</button>
+    </div>
+    <div class="compress-hint" id="compressHint">∞ Полная книга — нейронка генерирует максимум контента (60-80 блоков). Идеально для глубокого погружения.</div>
   </div>
   <div class="divider"></div>
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-book"/></svg></span> Начать чтение</div>
@@ -527,7 +516,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <div class="rhdr-tools">
     <button class="ibtn" onclick="toggleTheme()" id="rThemeBtn"><span class="ic"><svg><use href="#i-moon"/></svg></span></button>
     <button class="ibtn" id="bmBtn" onclick="toggleBM()" title="Режим книги"><span class="ic"><svg><use href="#i-justify"/></svg></span></button>
-    <button class="ibtn" onclick="toggleFP()" title="Вид"><span class="ic"><svg><use href="#i-palette"/></svg></span></button>
+    <button class="ibtn" onclick="toggleFP()" title="Вид и шрифт"><span class="ic"><svg><use href="#i-palette"/></svg></span></button>
     <div class="rprog"><div class="rpbar"><div class="fill" id="rProgF" style="width:0%"></div></div><span id="rProgT">0%</span></div>
   </div>
 </div>
@@ -548,7 +537,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <span id="rfSL" style="font-size:13px;font-weight:700;min-width:32px;text-align:center">20</span>
     <button class="ibtn" style="width:28px;height:28px" onclick="chgFS(2)"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-plus"/></svg></span></button>
   </div>
-  <div class="fprev" id="rfPrev">Пример текста для чтения.</div>
+  <div class="fprev" id="rfPrev">Пример текста.</div>
   <div class="rfdiv"></div>
   <h4>Время сессии</h4>
   <div class="rfrow" id="rTimeRow"></div>
@@ -566,28 +555,31 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 <!-- QUIZ -->
 <div class="screen" id="quizScr">
-<div class="hdr"><div class="logo"><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка знаний</div></div>
-<div class="main"><div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-brain"/></svg></span> Квиз</div><div class="quiz-c" id="quizC"></div></div>
+<div class="hdr">
+  <button class="ibtn" onclick="backToReader()"><span class="ic"><svg><use href="#i-left"/></svg></span></button>
+  <div class="logo"><span class="ic ic-lg"><svg><use href="#i-brain"/></svg></span>Проверка знаний</div>
+  <div style="width:36px"></div>
+</div>
+<div class="main"><div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-brain"/></svg></span> Квиз — активное запоминание</div><div class="quiz-c" id="quizC"></div></div>
 </div>
 
 <!-- GAMIFICATION -->
 <div class="screen" id="gamification">
 <div class="hdr"><button class="ibtn" onclick="nav('home')"><span class="ic"><svg><use href="#i-left"/></svg></span></button><div class="logo"><span class="ic ic-lg"><svg><use href="#i-trophy"/></svg></span>Достижения</div><div style="width:36px"></div></div>
 <div class="main">
-  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-trophy"/></svg></span> Геймификация</div>
+  <div class="page-lbl"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-trophy"/></svg></span> Геймификация и достижения</div>
   <div class="xp-bar"><div class="xp-top"><span class="xp-lvl" id="gXpLvl">Уровень 1</span><span class="xp-pts" id="gXpPts">0/100 XP</span></div><div class="xp-track"><div class="xp-fill" id="gXpFill" style="width:0%"></div></div></div>
-  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-help"/></svg></span> Как работает</div>
+  <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-help"/></svg></span> Как работает система</div>
   <div class="how-card">
     <p><strong style="color:var(--text)">Зарабатывай XP:</strong></p>
-    <p>⭐ +10 XP за каждую минуту чтения</p>
+    <p>⭐ +10 XP за каждую прочитанную минуту</p>
     <p>📚 +50 XP за завершение книги</p>
     <p>🧠 +25 XP за правильный ответ на квиз</p>
-    <p>🔥 +30 XP за streak дней</p>
+    <p>🔥 +30 XP за серию дней подряд</p>
     <p>🎯 +200 XP за цель месяца</p>
     <p>🏆 +50 XP за каждое достижение</p>
-    <p style="margin-top:5px"><strong style="color:var(--text)">Уровни:</strong> каждые 100 XP = новый уровень.</p>
-    <p><strong style="color:var(--text)">Объём книги:</strong> выбирай формат на главной — от краткого (20 блоков) до максимального (200+).</p>
-    <p><strong style="color:var(--text)">Обсуждение:</strong> выдели текст при чтении → «Обсудить с AI» — задавай вопросы в контексте книги.</p>
+    <p style="margin-top:5px"><strong style="color:var(--text)">Объём книги:</strong> на главной выбирай сколько блоков генерировать — от 8 (краткое саммари) до полной книги (60-80 блоков).</p>
+    <p><strong style="color:var(--text)">Обсуждение:</strong> выдели текст при чтении → «Обсудить» — AI ответит с учётом контекста книги.</p>
   </div>
   <div class="divider"></div>
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-star"/></svg></span> Достижения</div>
@@ -596,7 +588,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <div class="sec-title"><span class="ic" style="width:16px;height:16px"><svg><use href="#i-target"/></svg></span> Цель на месяц</div>
   <div class="goal-bar" onclick="showModal('goalModal')">
     <span class="ic"><svg><use href="#i-target"/></svg></span>
-    <div class="goal-txt"><strong id="gGoalTxt">Поставь цель</strong><span id="gGoalSub">Нажми</span></div>
+    <div class="goal-txt"><strong id="gGoalTxt">Поставь цель</strong><span id="gGoalSub">Нажми чтобы установить</span></div>
     <div class="goal-prog"><div class="gf" id="gGoalF" style="width:0%"></div></div>
     <div class="goal-pct" id="gGoalPct">0%</div>
   </div>
@@ -621,28 +613,27 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Тема</label>
         <div class="theme-tog"><button class="theme-o" data-t="dark" onclick="setTheme('dark')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-moon"/></svg></span>Тёмная</button><button class="theme-o" data-t="light" onclick="setTheme('light')"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-sun"/></svg></span>Светлая</button></div>
       </div>
-      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-type"/></svg></span>Шрифт</label><div class="font-sel" id="setFontSel"></div></div>
+      <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-type"/></svg></span>Шрифт чтения</label><div class="font-sel" id="setFontSel"></div></div>
       <div class="sgroup"><label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-type"/></svg></span>Размер текста</label>
-        <select id="fsSel" onchange="prevFS(this.value)"><option value="16">16px</option><option value="18">18px</option><option value="20" selected>20px</option><option value="24">24px</option><option value="28">28px</option></select>
-        <div class="fprev" id="setFPrev" style="font-size:20px;margin-top:6px;font-family:var(--font-read)">Пример текста для чтения книги.</div>
+        <select id="fsSel" onchange="prevFS(this.value)"><option value="16">16px — Маленький</option><option value="18">18px — Обычный</option><option value="20" selected>20px — Комфортный</option><option value="24">24px — Большой</option><option value="28">28px — Очень большой</option></select>
+        <div class="fprev" id="setFPrev" style="font-size:20px;margin-top:6px;font-family:var(--font-read);text-align:justify">Пример текста для чтения книги.</div>
       </div>
     </div>
     <div class="stab-pane" id="tab-sync">
       <div class="sgroup">
-        <label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-database"/></svg></span>Google Sheets URL</label>
+        <label><span class="ic" style="width:13px;height:13px"><svg><use href="#i-database"/></svg></span>Google Sheets Web App URL</label>
         <input type="text" id="sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec">
-        <div class="shint">Данные автоматически синхронизируются</div>
+        <div class="shint">Вставь URL своего Google Apps Script</div>
       </div>
-      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
-        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="syncToSheets()"><span class="ic"><svg><use href="#i-sync"/></svg></span>Сохранить</button>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="syncToSheets()"><span class="ic"><svg><use href="#i-sync"/></svg></span>Сохранить в Sheets</button>
         <button class="btn btn-s" onclick="syncFromSheets()"><span class="ic"><svg><use href="#i-cloud"/></svg></span>Загрузить</button>
       </div>
       <div class="sync-status" id="syncStatus"><div class="sync-dot" id="syncDot"></div><span id="syncMsg">Не синхронизировано</span></div>
       <div class="divider"></div>
       <div style="font-size:11px;color:var(--text2);line-height:1.7">
-        <p style="margin-bottom:5px"><strong style="color:var(--text)">Инструкция:</strong></p>
-        <p style="margin-bottom:4px">1. Google Таблицы → Расширения → Apps Script</p>
-        <p style="margin-bottom:4px">2. Вставь код:</p>
+        <p style="margin-bottom:5px">1. Google Таблицы → Расширения → Apps Script</p>
+        <p style="margin-bottom:5px">2. Вставь код:</p>
         <div class="code-block" id="appsScriptCode">function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
@@ -680,10 +671,10 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 }</div>
-        <button onclick="copyAppsScript()" class="btn btn-s" style="margin-top:5px;padding:6px 12px;font-size:10px"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-copy"/></svg></span>Скопировать</button>
-        <p style="margin-top:7px;margin-bottom:3px">3. Развернуть → Новое развёртывание → Веб-приложение</p>
+        <button onclick="copyAppsScript()" class="btn btn-s" style="margin-top:6px;padding:6px 12px;font-size:10px"><span class="ic" style="width:13px;height:13px"><svg><use href="#i-copy"/></svg></span>Скопировать</button>
+        <p style="margin-top:8px;margin-bottom:3px">3. Развернуть → Новое развёртывание → Веб-приложение</p>
         <p style="margin-bottom:3px">4. Доступ: <strong style="color:var(--text)">Все</strong></p>
-        <p>5. Скопируй URL → вставь выше</p>
+        <p>5. Скопируй URL и вставь выше</p>
       </div>
     </div>
     <div class="divider"></div>
@@ -700,7 +691,7 @@ function doGet(e) {
 <div class="modal">
   <div class="modal-h"><h2><span class="ic"><svg><use href="#i-target"/></svg></span>Цель на месяц</h2><button class="ibtn" onclick="closeModal('goalModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
   <div class="modal-b">
-    <div class="sgroup"><label>Сколько книг за месяц?</label><input type="number" id="goalInp" min="1" max="100" value="5"></div>
+    <div class="sgroup"><label>Сколько книг прочитать?</label><input type="number" id="goalInp" min="1" max="100" value="5"></div>
     <button class="btn btn-p" style="width:100%;justify-content:center" onclick="saveGoal()"><span class="ic"><svg><use href="#i-target"/></svg></span>Установить</button>
   </div>
 </div>
@@ -717,7 +708,7 @@ function doGet(e) {
       <button class="btn btn-p" style="padding:9px 13px" onclick="askBI()"><span class="ic"><svg><use href="#i-send"/></svg></span></button>
     </div>
     <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">
-      <button class="btn btn-p" style="flex:1;justify-content:center" onclick="readBIBook()"><span class="ic"><svg><use href="#i-play"/></svg></span>Читать</button>
+      <button class="btn btn-p" style="flex:1;justify-content:center" onclick="readBIBook()"><span class="ic"><svg><use href="#i-play"/></svg></span>Читать эту книгу</button>
       <button class="btn btn-s" onclick="closeModal('biModal')">Закрыть</button>
     </div>
   </div>
@@ -727,21 +718,21 @@ function doGet(e) {
 <!-- DISCUSS MODAL -->
 <div class="modal-ov" id="discussModal" onclick="if(event.target===this)closeModal('discussModal')">
 <div class="modal">
-  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-message"/></svg></span>Обсудить с AI</h2><button class="ibtn" onclick="closeModal('discussModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
+  <div class="modal-h"><h2><span class="ic"><svg><use href="#i-chat"/></svg></span>Обсудить с AI</h2><button class="ibtn" onclick="closeModal('discussModal')"><span class="ic"><svg><use href="#i-x"/></svg></span></button></div>
   <div class="modal-b">
+    <div style="padding:10px 13px;background:var(--hl);border:1px solid var(--hl-border);border-radius:var(--radius-xs);margin-bottom:12px;font-size:12px;color:var(--text);font-family:var(--font-read);line-height:1.5;font-style:italic" id="discussQuote"></div>
     <div class="bi-chat" id="discussChat"></div>
     <div class="bi-input-row">
-      <input class="bi-input" id="discussInp" placeholder="Спроси что-нибудь об этом тексте..." onkeydown="if(event.key==='Enter')askDiscuss()">
+      <input class="bi-input" id="discussInp" placeholder="Спроси об этом фрагменте..." onkeydown="if(event.key==='Enter')askDiscuss()">
       <button class="btn btn-p" style="padding:9px 13px" onclick="askDiscuss()"><span class="ic"><svg><use href="#i-send"/></svg></span></button>
     </div>
-    <button class="btn btn-s" style="width:100%;justify-content:center;margin-top:10px" onclick="closeModal('discussModal');$('rfPanel').classList.remove('active')">Вернуться к чтению</button>
   </div>
 </div>
 </div>
 
 <script>
 const TK='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';
-const DEFAULT_SHEETS_URL='https://script.google.com/macros/s/AKfycby1Hu0NCGqDfri62hf7YvWRrDl-3tC6EzeoRrnid-pOhMwB6POl2-jA6xvBRLqXjCSH/exec';
+const DEFAULT_SHEETS='https://script.google.com/macros/s/AKfycby1Hu0NCGqDfri62hf7YvWRrDl-3tC6EzeoRrnid-pOhMwB6POl2-jA6xvBRLqXjCSH/exec';
 const MDL='google/gemini-2.0-flash-001';
 const FONTS=[
   {n:'Literata',f:"'Literata',Georgia,serif"},
@@ -752,52 +743,48 @@ const FONTS=[
   {n:'Nunito',f:"'Nunito',sans-serif"},
   {n:'Open Sans',f:"'Open Sans',sans-serif"}
 ];
-const COMPRESS_LEVELS=[
-  {pages:20,name:'Кратко',desc:'📝 Краткое изложение — ~20 блоков. Ключевые мысли за 15-20 минут.'},
-  {pages:40,name:'Суть',desc:'📖 Основные идеи — ~40 блоков. Хороший баланс за 30-40 минут.'},
-  {pages:80,name:'Полная',desc:'📚 Полная версия — ~80 блоков. Глубокое погружение в книгу.'},
-  {pages:150,name:'Детально',desc:'🔍 Детальный разбор — ~150 блоков. Максимум деталей и примеров.'},
-  {pages:0,name:'Макс',desc:'🚀 Максимум — 200+ блоков. Полный текст со всеми нюансами.'},
+const COMPRESS_OPTS=[
+  {blocks:0,lbl:'Полная книга',hint:'∞ Полная книга — нейронка генерирует максимум контента (60-80 блоков). Идеально для глубокого погружения.'},
+  {blocks:40,lbl:'Детальная',hint:'40 блоков — подробное содержание с примерами и деталями. Хороший баланс.'},
+  {blocks:20,lbl:'Средняя',hint:'20 блоков — ключевые идеи без лишних деталей. Быстрое знакомство с книгой.'},
+  {blocks:8,lbl:'Краткая',hint:'8 блоков — главные мысли одним взглядом. Для беглого ознакомления.'}
 ];
 const BADGES=[
   {id:'first_read',em:'📖',nm:'Первое чтение',dsc:'Прочитай первую минуту',ok:s=>s.totalMin>=1},
   {id:'streak_3',em:'🔥',nm:'3 дня подряд',dsc:'Серия из 3 дней',ok:s=>s.streak>=3},
-  {id:'streak_7',em:'🏅',nm:'Неделя читателя',dsc:'7 дней подряд',ok:s=>s.streak>=7},
-  {id:'streak_30',em:'🏆',nm:'Месяц силы',dsc:'30 дней подряд',ok:s=>s.streak>=30},
+  {id:'streak_7',em:'🏅',nm:'Неделя читателя',dsc:'Серия из 7 дней',ok:s=>s.streak>=7},
+  {id:'streak_30',em:'🏆',nm:'Месяц силы',dsc:'Серия из 30 дней',ok:s=>s.streak>=30},
   {id:'books_1',em:'📗',nm:'Первая книга',dsc:'Добавь первую книгу',ok:s=>s.library.length>=1},
-  {id:'books_3',em:'📚',nm:'Малая полка',dsc:'3 книги',ok:s=>s.library.length>=3},
-  {id:'books_10',em:'🗂️',nm:'Большая полка',dsc:'10 книг',ok:s=>s.library.length>=10},
-  {id:'min_30',em:'⏱️',nm:'Полчаса',dsc:'30 минут чтения',ok:s=>s.totalMin>=30},
-  {id:'min_100',em:'⌛',nm:'Час мудрости',dsc:'100 минут',ok:s=>s.totalMin>=100},
-  {id:'min_500',em:'⏳',nm:'Время знаний',dsc:'500 минут',ok:s=>s.totalMin>=500},
-  {id:'xp_500',em:'⭐',nm:'500 XP',dsc:'Набери 500 XP',ok:s=>s.xp>=500},
-  {id:'xp_2000',em:'🌟',nm:'2000 XP',dsc:'Набери 2000 XP',ok:s=>s.xp>=2000},
+  {id:'books_3',em:'📚',nm:'Малая полка',dsc:'Добавь 3 книги',ok:s=>s.library.length>=3},
+  {id:'books_10',em:'🗂️',nm:'Большая полка',dsc:'Добавь 10 книг',ok:s=>s.library.length>=10},
+  {id:'min_30',em:'⏱️',nm:'Полчаса чтения',dsc:'30 минут суммарно',ok:s=>s.totalMin>=30},
+  {id:'min_100',em:'⌛',nm:'Час мудрости',dsc:'100 минут суммарно',ok:s=>s.totalMin>=100},
+  {id:'min_500',em:'⏳',nm:'Время знаний',dsc:'500 минут суммарно',ok:s=>s.totalMin>=500},
+  {id:'xp_500',em:'⭐',nm:'500 XP',dsc:'Набери 500 очков',ok:s=>s.xp>=500},
+  {id:'xp_2000',em:'🌟',nm:'2000 XP',dsc:'Набери 2000 очков',ok:s=>s.xp>=2000},
   {id:'quiz_5',em:'🧠',nm:'5 квизов',dsc:'Ответь на 5 вопросов',ok:s=>s.quizCount>=5},
-  {id:'quiz_20',em:'🎓',nm:'Студент',dsc:'20 вопросов',ok:s=>s.quizCount>=20},
+  {id:'quiz_20',em:'🎓',nm:'Студент',dsc:'Ответь на 20 вопросов',ok:s=>s.quizCount>=20},
   {id:'goal_done',em:'🎯',nm:'Цель!',dsc:'Выполни цель месяца',ok:s=>s.goalDone},
   {id:'hl_first',em:'✏️',nm:'Первое выделение',dsc:'Выдели текст',ok:s=>s.hlCount>=1},
-  {id:'discuss_first',em:'💬',nm:'Первое обсуждение',dsc:'Обсуди текст с AI',ok:s=>s.discussCount>=1},
+  {id:'discuss_first',em:'💬',nm:'Первое обсуждение',dsc:'Обсуди фрагмент с AI',ok:s=>s.discussCount>=1},
 ];
 
 let S={
-  token:TK,
-  endpoint:'https://openrouter.ai/api/v1/chat/completions',
-  sheetsUrl:DEFAULT_SHEETS_URL,
+  token:TK,endpoint:'https://openrouter.ai/api/v1/chat/completions',
+  sheetsUrl:DEFAULT_SHEETS,
   readTime:3,fontSize:20,fontIdx:0,fontFamily:FONTS[0].f,
   theme:'dark',bookMode:true,
-  targetPages:80,
+  targetBlocks:0, // 0 = full
   prefs:[],custPrefs:[],
   streak:0,lastRead:null,totalMin:0,xp:0,quizCount:0,hlCount:0,discussCount:0,
   library:[],curBookId:null,highlights:{},
   goal:0,goalMonth:null,goalDone:false,
   earnedBadges:[],allRecs:[],lastSync:null
 };
-
 let biBookTitle='',biBookAuthor='';
-let selectedText='';
-let discussContext=[];
-let autoSaveTimer=null;
-
+let discussSelectedText='';
+let discussBookCtx='';
+let savedScrollPos=0;
 const $=id=>document.getElementById(id);
 
 // GEN OVERLAY
@@ -809,51 +796,88 @@ function showGen(title){
   $('gs1').classList.add('active');$('gs1').style.opacity='1';
   let step=1;
   genStepTimer=setInterval(()=>{
-    if(step>0){$('gs'+step).classList.remove('active');$('gs'+step).classList.add('done');$('gs'+step).style.opacity='.6';}
+    if(step>0&&$(('gs'+step))){$('gs'+step).classList.remove('active');$('gs'+step).classList.add('done');$('gs'+step).style.opacity='.6';}
     step++;if(step>4){clearInterval(genStepTimer);return;}
-    $('gs'+step).classList.add('active');$('gs'+step).style.opacity='1';
+    if($('gs'+step)){$('gs'+step).classList.add('active');$('gs'+step).style.opacity='1';}
   },2000);
 }
 function hideGen(){$('genOv').classList.remove('active');clearInterval(genStepTimer);}
 
+// LOAD / SAVE
+let autoSaveTimer=null;
+function save(){
+  try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
+  if(S.sheetsUrl){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>autoSyncToSheets(),4000);}
+}
+
 function load(){
-  try{const s=localStorage.getItem('ff6');if(s){const p=JSON.parse(s);S={...S,...p};}}catch(e){}
-  // Defaults
-  if(!S.sheetsUrl)S.sheetsUrl=DEFAULT_SHEETS_URL;
-  $('apiTok').value=S.token;
-  $('apiEnd').value=S.endpoint;
-  $('fsSel').value=S.fontSize;
+  try{const s=localStorage.getItem('ff6');if(s){const p=JSON.parse(s);S={...S,...p}}}catch(e){}
+  // Apply defaults for new fields
+  if(!S.sheetsUrl)S.sheetsUrl=DEFAULT_SHEETS;
+  if(S.targetBlocks===undefined)S.targetBlocks=0;
+  $('apiTok').value=S.token;$('apiEnd').value=S.endpoint;$('fsSel').value=S.fontSize;
   $('sheetsUrl').value=S.sheetsUrl;
-  if(S.lastSync)setSyncStatus('ok','Последняя синхронизация: '+new Date(S.lastSync).toLocaleString());
+  if(S.lastSync)setSyncStatus('ok','Последняя синхронизация: '+new Date(S.lastSync).toLocaleTimeString());
   document.querySelectorAll('.tc').forEach(e=>e.classList.toggle('active',+e.dataset.m===S.readTime));
   document.querySelectorAll('.pchip[data-p]').forEach(e=>e.classList.toggle('active',S.prefs.includes(e.dataset.p)));
-  // Restore compress level UI
-  document.querySelectorAll('.cl').forEach(e=>e.classList.toggle('active',+e.dataset.pages===S.targetPages));
-  updateCompressDesc(S.targetPages);
-  applyTheme(S.theme);
-  renderCustPrefs();buildFonts();updStats();renderLib();updGoalUI();updXP();renderBadges();
+  applyTheme(S.theme);renderCustPrefs();buildFonts();updStats();renderLib();updGoalUI();updXP();renderBadges();
+  initCompressUI();
   if(S.allRecs&&S.allRecs.length){renderRecs();$('clearRecsBtn').classList.remove('hidden');$('loadMoreRow').classList.remove('hidden');}
   document.documentElement.style.setProperty('--font-read',S.fontFamily);
   handleRoute();
-  // AUTO-LOAD from Sheets on start
-  if(S.sheetsUrl){
-    setTimeout(()=>autoSyncFromSheets(),1800);
+  // Auto load from sheets on start
+  if(S.sheetsUrl){setTimeout(()=>autoSyncFromSheets(),2000);}
+}
+
+// COMPRESS UI
+function initCompressUI(){
+  const cur=S.targetBlocks||0;
+  document.querySelectorAll('.copt').forEach(el=>{
+    const v=+el.dataset.blocks;
+    el.classList.toggle('active',v===cur);
+  });
+  updateCompressBadge(cur);
+}
+
+function setCompressOpt(el){
+  const v=+el.dataset.blocks;
+  S.targetBlocks=v;
+  document.querySelectorAll('.copt').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  updateCompressBadge(v);
+  save();
+}
+
+function setCustomBlocks(){
+  const v=+$('customBlocksInp').value;
+  if(!v||v<3||v>200){toast('Введи от 3 до 200');return;}
+  S.targetBlocks=v;
+  document.querySelectorAll('.copt').forEach(e=>e.classList.remove('active'));
+  updateCompressBadge(v);
+  save();toast('Объём: '+v+' блоков');
+}
+
+function updateCompressBadge(v){
+  const badge=$('compressBadge'),hint=$('compressHint');
+  if(v===0){
+    badge.textContent='Полная книга';badge.className='ch-badge full';
+    if(hint)hint.textContent='∞ Полная книга — нейронка генерирует максимум контента (60-80 блоков). Идеально для глубокого погружения.';
+  }else if(v>=40){
+    badge.textContent='Детальная ('+v+' бл.)';badge.className='ch-badge full';
+    if(hint)hint.textContent=v+' блоков — подробное содержание с примерами. Хороший баланс глубины и времени.';
+  }else if(v>=20){
+    badge.textContent='Средняя ('+v+' бл.)';badge.className='ch-badge medium';
+    if(hint)hint.textContent=v+' блоков — ключевые идеи без лишних деталей. Быстрое знакомство с книгой.';
+  }else{
+    badge.textContent='Краткая ('+v+' бл.)';badge.className='ch-badge short';
+    if(hint)hint.textContent=v+' блоков — главные мысли одним взглядом. Для беглого ознакомления.';
   }
 }
 
-function save(){
-  try{localStorage.setItem('ff6',JSON.stringify(S));}catch(e){}
-  // Auto-save to Sheets 3s after last change
-  if(S.sheetsUrl){
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer=setTimeout(()=>autoSyncToSheets(),3000);
-  }
-}
-
-function switchTab(id,el){
-  document.querySelectorAll('.stab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
-  $(id).classList.add('active');el.classList.add('active');
+function getTargetBlocks(){
+  const t=S.targetBlocks||0;
+  if(t===0)return 70; // full = 70 blocks
+  return t;
 }
 
 // ROUTING
@@ -864,7 +888,7 @@ function handleRoute(){
 }
 window.addEventListener('hashchange',handleRoute);
 function nav(id){location.hash=id==='home'?'':id;}
-function navRaw(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));if($(id))$(id).classList.add('active');window.scrollTo(0,0);$('rfPanel')?.classList.remove('active');}
+function navRaw(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));if($(id)){$(id).classList.add('active');}window.scrollTo(0,0);$('rfPanel')?.classList.remove('active');}
 
 // THEME
 function applyTheme(t){
@@ -876,82 +900,87 @@ function applyTheme(t){
 function toggleTheme(){applyTheme(S.theme==='dark'?'light':'dark');save();}
 function setTheme(t){applyTheme(t);save();}
 
-// SETTINGS
-function showModal(id){$(id).classList.add('active');}
-function closeModal(id){$(id).classList.remove('active');}
+// SETTINGS MODAL
+function showModal(id){$(id).classList.add('active')}
+function closeModal(id){$(id).classList.remove('active')}
 function saveSet(){
   S.token=$('apiTok').value||TK;
   S.endpoint=$('apiEnd').value;
   S.fontSize=+$('fsSel').value;
-  const su=$('sheetsUrl').value.trim();
-  if(su)S.sheetsUrl=su;
+  const su=$('sheetsUrl').value.trim();if(su)S.sheetsUrl=su;
   save();closeModal('setModal');toast('Сохранено ✓');
 }
+function switchTab(id,el){
+  document.querySelectorAll('.stab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  $(id).classList.add('active');el.classList.add('active');
+}
 function setTime(m,el){
-  S.readTime=m;
-  document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.toggle('active',+e.dataset.m===m));
+  S.readTime=m;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.toggle('active',+e.dataset.m===m));
   buildFonts();save();
 }
-function setCustomTime(){const v=+$('ctInp').value;if(!v||v<1||v>120){toast('Введи 1–120');return;}S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));buildFonts();save();toast('Время: '+v+' мин');$('ctInp').value='';}
-function setCustomTimeR(){const v=+$('rCtInp').value;if(!v||v<1||v>120){toast('Введи 1–120');return;}S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));buildFonts();save();toast('Время: '+v+' мин');$('rCtInp').value='';}
+function setCustomTime(){
+  const v=+$('ctInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
+  S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
+  buildFonts();save();toast('Время: '+v+' мин');$('ctInp').value='';
+}
+function setCustomTimeR(){
+  const v=+$('rCtInp').value;if(!v||v<1||v>120){toast('Введи от 1 до 120 мин');return;}
+  S.readTime=v;document.querySelectorAll('.tc,.rtime-c').forEach(e=>e.classList.remove('active'));
+  buildFonts();save();toast('Время: '+v+' мин');$('rCtInp').value='';
+}
 function prevFS(v){$('setFPrev').style.fontSize=v+'px';$('setFPrev').style.fontFamily=S.fontFamily;}
 function clearAll(){if(confirm('Удалить все данные?')){localStorage.removeItem('ff6');location.reload();}}
-
-// COMPRESS LEVELS
-function setCompressLevel(pages,el){
-  S.targetPages=pages;
-  document.querySelectorAll('.cl').forEach(e=>e.classList.remove('active'));
-  if(el)el.classList.add('active');
-  updateCompressDesc(pages);
-  save();
-}
-function setCustomPages(){
-  const v=+$('customPagesInp').value;
-  if(!v||v<5||v>500){toast('Введи от 5 до 500');return;}
-  S.targetPages=v;
-  document.querySelectorAll('.cl').forEach(e=>e.classList.remove('active'));
-  updateCompressDesc(v);
-  save();toast('Объём: '+v+' блоков');$('customPagesInp').value='';
-}
-function updateCompressDesc(pages){
-  const el=$('compressDesc');if(!el)return;
-  const found=COMPRESS_LEVELS.find(l=>l.pages===pages);
-  if(found){el.textContent=found.desc;}
-  else if(pages===0){el.textContent='🚀 Максимум — 200+ блоков. Полный текст со всеми нюансами.';}
-  else{el.textContent='📖 Пользовательский объём — '+pages+' блоков.';}
-}
-function getTargetBlocks(){
-  // Returns number of blocks to request
-  if(S.targetPages===0)return 200;
-  return S.targetPages||80;
-}
 
 // FONTS
 function buildFonts(){
   const ss=$('setFontSel'),rf=$('rfFonts'),rt=$('rTimeRow');
-  if(ss)ss.innerHTML=FONTS.map((f,i)=>`<div class="font-o ${i===S.fontIdx?'active':''}" onclick="selFont(${i})"><span class="fn">${f.n}</span><span class="fp" style="font-family:${f.f}">Абвгд Abc</span></div>`).join('');
+  if(ss)ss.innerHTML=FONTS.map((f,i)=>`<div class="font-o ${i===S.fontIdx?'active':''}" onclick="selFont(${i})"><span class="fn">${f.n}</span><span class="fp" style="font-family:${f.f}">Абвгд Abc 123</span></div>`).join('');
   if(rf)rf.innerHTML=FONTS.map((f,i)=>`<div class="rfchip ${i===S.fontIdx?'active':''}" onclick="selFont(${i})" style="font-family:${f.f}">${f.n}</div>`).join('');
   if(rt)rt.innerHTML=[2,3,5,10].map(m=>`<div class="rtime-c rfchip ${m===S.readTime?'active':''}" data-m="${m}" onclick="setTime(${m},this)">${m}м</div>`).join('');
 }
-function selFont(i){S.fontIdx=i;S.fontFamily=FONTS[i].f;document.documentElement.style.setProperty('--font-read',S.fontFamily);buildFonts();['setFPrev','rfPrev','tBlock'].forEach(id=>{const e=$(id);if(e)e.style.fontFamily=S.fontFamily;});save();}
+function selFont(i){
+  S.fontIdx=i;S.fontFamily=FONTS[i].f;
+  document.documentElement.style.setProperty('--font-read',S.fontFamily);
+  buildFonts();
+  ['setFPrev','rfPrev','tBlock'].forEach(id=>{const e=$(id);if(e)e.style.fontFamily=S.fontFamily;});
+  save();
+}
 function toggleFP(){$('rfPanel').classList.toggle('active');$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';$('rfPrev').style.fontFamily=S.fontFamily;}
 function chgFS(d){S.fontSize=Math.max(12,Math.min(40,S.fontSize+d));$('rfSL').textContent=S.fontSize;$('rfPrev').style.fontSize=S.fontSize+'px';const tb=$('tBlock');if(tb)tb.style.fontSize=S.fontSize+'px';save();}
 function toggleBM(){S.bookMode=!S.bookMode;applyBookMode();save();}
-function applyBookMode(){const tb=$('tBlock');if(!tb)return;if(S.bookMode){tb.style.textAlign='justify';tb.style.hyphens='auto';}else{tb.style.textAlign='left';tb.style.hyphens='none';}$('bmBtn').style.color=S.bookMode?'var(--accent)':'';}
+function applyBookMode(){
+  const tb=$('tBlock');if(!tb)return;
+  tb.style.textAlign=S.bookMode?'justify':'left';
+  tb.style.hyphens=S.bookMode?'auto':'none';
+  $('bmBtn').style.color=S.bookMode?'var(--accent)':'';
+}
 
-// XP
+// XP / STATS
 function updStats(){$('stS').textContent=S.streak;$('stB').textContent=S.library.length;$('stM').textContent=S.totalMin;$('stX').textContent=S.xp;updXP();}
-function updXP(){const lvl=Math.floor(S.xp/100)+1,cur=S.xp%100;['xpLvl','gXpLvl'].forEach(id=>{const e=$(id);if(e)e.textContent='Уровень '+lvl;});['xpPts','gXpPts'].forEach(id=>{const e=$(id);if(e)e.textContent=cur+' / 100 XP';});['xpFill','gXpFill'].forEach(id=>{const e=$(id);if(e)e.style.width=cur+'%';});}
+function updXP(){
+  const lvl=Math.floor(S.xp/100)+1,cur=S.xp%100;
+  ['xpLvl','gXpLvl'].forEach(id=>{const e=$(id);if(e)e.textContent='Уровень '+lvl;});
+  ['xpPts','gXpPts'].forEach(id=>{const e=$(id);if(e)e.textContent=cur+' / 100 XP';});
+  ['xpFill','gXpFill'].forEach(id=>{const e=$(id);if(e)e.style.width=cur+'%';});
+}
 function addXP(n,reason){S.xp+=n;save();updStats();showXpPop('+'+n+' XP');if(reason)toast(reason);}
 function showXpPop(txt){const d=document.createElement('div');d.className='xp-pop';d.textContent=txt;d.style.left=(20+Math.random()*60)+'%';d.style.top='25%';document.body.appendChild(d);setTimeout(()=>d.remove(),1000);}
-function updStreak(){const td=new Date().toDateString();if(S.lastRead===td)return;const y=new Date();y.setDate(y.getDate()-1);if(S.lastRead!==y.toDateString()&&S.lastRead!==td)S.streak=0;save();updStats();}
-function recordRead(){const td=new Date().toDateString();const y=new Date();y.setDate(y.getDate()-1);if(S.lastRead!==td){S.streak=(S.lastRead===y.toDateString()||S.streak===0)?S.streak+1:1;S.lastRead=td;if(S.streak>1)addXP(30,'🔥 Streak '+S.streak+' дней!');}save();updStats();}
+function recordRead(){
+  const td=new Date().toDateString();const y=new Date();y.setDate(y.getDate()-1);
+  if(S.lastRead!==td){S.streak=(S.lastRead===y.toDateString()||S.streak===0)?S.streak+1:1;S.lastRead=td;if(S.streak>1)addXP(30,'🔥 Streak '+S.streak+' дней!');}
+  save();updStats();
+}
 
 // GOAL
-function saveGoal(){const v=+$('goalInp').value;if(!v||v<1)return;S.goal=v;S.goalMonth=new Date().getMonth();S.goalDone=false;save();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');}
+function saveGoal(){
+  const v=+$('goalInp').value;if(!v||v<1)return;
+  S.goal=v;S.goalMonth=new Date().getMonth();S.goalDone=false;
+  save();updGoalUI();closeModal('goalModal');toast('Цель: '+v+' книг за месяц');
+}
 function updGoalUI(){
   if(!S.goal){['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent='Поставь цель';});['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent='Нажми чтобы установить';});return;}
-  const done=S.library.filter(b=>{try{return new Date(b.addedAt).getMonth()===new Date().getMonth()}catch(e){return false;}}).length;
+  const done=S.library.filter(b=>{try{return new Date(b.addedAt).getMonth()===new Date().getMonth()}catch(e){return false}}).length;
   const pct=Math.min(100,Math.round(done/S.goal*100));
   ['goalTxt','gGoalTxt'].forEach(id=>{const e=$(id);if(e)e.textContent=done+'/'+S.goal+' книг';});
   ['goalSub','gGoalSub'].forEach(id=>{const e=$(id);if(e)e.textContent=pct>=100?'Цель достигнута! 🎉':'До цели: '+(S.goal-done);});
@@ -961,13 +990,20 @@ function updGoalUI(){
 }
 
 // BADGES
-function renderBadges(){const g=$('badgesGrid');if(!g)return;g.innerHTML=BADGES.map(b=>{const earned=S.earnedBadges.includes(b.id);return`<div class="badge-card ${earned?'earned':'locked'}"><div class="bem">${earned?b.em:'🔒'}</div><div class="binfo"><div class="bnm">${b.nm}</div><div class="bxp">${b.dsc}${earned?' ✓':''}</div></div></div>`;}).join('');}
-function checkBadges(){let nw=false;BADGES.forEach(b=>{if(!S.earnedBadges.includes(b.id)&&b.ok(S)){S.earnedBadges.push(b.id);nw=true;toast('🏆 '+b.nm+' +50 XP');S.xp+=50;}});if(nw){save();updStats();renderBadges();}}
+function renderBadges(){
+  const g=$('badgesGrid');if(!g)return;
+  g.innerHTML=BADGES.map(b=>{const e=S.earnedBadges.includes(b.id);return`<div class="badge-card ${e?'earned':''}"><div class="bem">${e?b.em:'🔒'}</div><div class="binfo"><div class="bnm">${b.nm}</div><div class="bxp">${b.dsc}${e?' ✓':''}</div></div></div>`;}).join('');
+}
+function checkBadges(){
+  let nw=false;
+  BADGES.forEach(b=>{if(!S.earnedBadges.includes(b.id)&&b.ok(S)){S.earnedBadges.push(b.id);nw=true;toast('🏆 '+b.nm+' +50 XP');S.xp+=50;}});
+  if(nw){save();updStats();renderBadges();}
+}
 
 // PREFS
 function tPref(el){const p=el.dataset.p;el.classList.toggle('active');if(S.prefs.includes(p))S.prefs=S.prefs.filter(x=>x!==p);else S.prefs.push(p);save();}
 function addCustPref(){const v=$('custPrefInp').value.trim();if(!v)return;if(S.prefs.includes(v)){toast('Уже есть');return;}if(!S.custPrefs)S.custPrefs=[];S.custPrefs.push(v);S.prefs.push(v);save();renderCustPrefs();$('custPrefInp').value='';}
-function renderCustPrefs(){document.querySelectorAll('.pchip.custom').forEach(e=>e.remove());const c=$('prefChips');(S.custPrefs||[]).forEach(p=>{const d=document.createElement('div');d.className='pchip custom'+(S.prefs.includes(p)?' active':'');d.dataset.p=p;d.textContent='✏️ '+p;d.onclick=function(){tPref(this);};c.appendChild(d);});}
+function renderCustPrefs(){document.querySelectorAll('.pchip.custom').forEach(e=>e.remove());const c=$('prefChips');(S.custPrefs||[]).forEach(p=>{const d=document.createElement('div');d.className='pchip custom'+(S.prefs.includes(p)?' active':'');d.dataset.p=p;d.textContent='✏️ '+p;d.onclick=function(){tPref(this)};c.appendChild(d);});}
 
 // AI
 async function ai(msgs,mt){
@@ -977,39 +1013,25 @@ async function ai(msgs,mt){
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},
     body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||4096,temperature:.7})
   });
-  if(!r.ok){let m='HTTP '+r.status;try{const e=await r.json();m=e.error?.message||e.message||m;}catch(x){}throw new Error(m);}
+  if(!r.ok){let m='HTTP '+r.status;try{const e=await r.json();m=e.error?.message||e.message||m}catch(x){}throw new Error(m);}
   const d=await r.json();
   if(!d.choices||!d.choices[0])throw new Error('Пустой ответ');
   return d.choices[0].message.content;
 }
 
-async function aiStream(msgs,mt,onChunk,onDone){
-  const t=S.token||TK;
-  try{
-    const r=await fetch(S.endpoint||'https://openrouter.ai/api/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+t,'HTTP-Referer':location.href},
-      body:JSON.stringify({model:MDL,messages:msgs,max_tokens:mt||2000,temperature:.7,stream:true})
-    });
-    if(!r.ok){let m='HTTP '+r.status;try{const e=await r.json();m=e.error?.message||e.message||m;}catch(x){}throw new Error(m);}
-    const reader=r.body.getReader();const dec=new TextDecoder();let buf='';let full='';
-    let queue='';let outputting=false;
-    function flushQueue(){if(!queue.length){outputting=false;return;}outputting=true;const ch=queue[0];queue=queue.slice(1);onChunk(ch,full);setTimeout(flushQueue,14);}
-    while(true){
-      const {done,value}=await reader.read();if(done)break;
-      buf+=dec.decode(value,{stream:true});
-      const lines=buf.split('\n');buf=lines.pop()||'';
-      for(const line of lines){if(!line.startsWith('data:'))continue;const data=line.slice(5).trim();if(data==='[DONE]')continue;try{const j=JSON.parse(data);const c=j.choices?.[0]?.delta?.content;if(c){full+=c;queue+=c;if(!outputting)flushQueue();}}catch(e){}}
-    }
-    await new Promise(res=>{const chk=setInterval(()=>{if(!outputting&&!queue.length){clearInterval(chk);res();}},50);});
-    if(onDone)onDone(full);
-  }catch(e){if(onDone)onDone(null,e);}
-}
-
 // RECS
 function parseRecsList(raw){
   const recs=[];const blocks=raw.split('---');
-  for(const block of blocks){const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const rec={};for(const line of lines){if(line.startsWith('TITLE:'))rec.title=line.replace('TITLE:','').trim();else if(line.startsWith('AUTHOR:'))rec.author=line.replace('AUTHOR:','').trim();else if(line.startsWith('GENRE:'))rec.genre=line.replace('GENRE:','').trim();else if(line.startsWith('WHY:'))rec.why=line.replace('WHY:','').trim();}if(rec.title&&rec.author)recs.push(rec);}
+  for(const block of blocks){
+    const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const rec={};
+    for(const line of lines){
+      if(line.startsWith('TITLE:'))rec.title=line.replace('TITLE:','').trim();
+      else if(line.startsWith('AUTHOR:'))rec.author=line.replace('AUTHOR:','').trim();
+      else if(line.startsWith('GENRE:'))rec.genre=line.replace('GENRE:','').trim();
+      else if(line.startsWith('WHY:'))rec.why=line.replace('WHY:','').trim();
+    }
+    if(rec.title&&rec.author)recs.push(rec);
+  }
   return recs;
 }
 async function getRecs(more){
@@ -1020,24 +1042,37 @@ async function getRecs(more){
   const already=S.allRecs.map(r=>r.title);const alreadyRead=S.library.map(b=>b.title);
   const exclude=[...already,...alreadyRead].filter(Boolean).join(', ');
   try{
-    const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр\nWHY: Одно предложение\n---\nТолько этот формат.`}],2000);
+    const raw=await ai([{role:'user',content:`Порекомендуй ровно 5 книг. Интересы: ${S.prefs.join(', ')}.${exclude?' Не повторяй: '+exclude:''}\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр 1-2 слова\nWHY: Одно предложение почему читать\n---\nТолько этот формат.`}],2000);
     const recs=parseRecsList(raw);if(!recs.length)throw new Error('Нет данных');
     S.allRecs=S.allRecs.concat(recs);save();renderRecs();$('clearRecsBtn').classList.remove('hidden');
   }catch(e){
     if(!more)rg.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;
-    $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Ещё</button>';
+    $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Попробовать ещё</button>';
   }
 }
 function renderRecs(){
   const rg=$('recsGrid');
-  rg.innerHTML=S.allRecs.map(r=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div><div class="rbtns"><span class="rtag">${esc(r.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('');
+  rg.innerHTML=S.allRecs.map(r=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(r.title)}</div><div class="a">${esc(r.author)}</div><div class="m">${esc(r.why||'')}</div></div><div class="rbtns"><span class="rtag">${esc(r.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(r.title)}','${esc(r.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(r.title)}','${esc(r.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('');
   $('loadMoreRow').classList.remove('hidden');
   $('loadMoreRow').innerHTML='<button class="lm-btn" onclick="getRecs(true)"><span class="ic" style="width:15px;height:15px"><svg><use href="#i-refresh"/></svg></span>Показать ещё 5</button>';
 }
 function clearRecs(){S.allRecs=[];save();$('recsGrid').innerHTML='<div class="empty"><div class="eic"><span class="ic ic-hero"><svg><use href="#i-spark"/></svg></span></div><div class="et">Очищено</div><div class="ed">Нажми «Рекомендации» снова</div></div>';$('loadMoreRow').classList.add('hidden');$('clearRecsBtn').classList.add('hidden');}
 
 // SEARCH
-function parseSearchList(raw){const books=[];const blocks=raw.split('---');for(const block of blocks){const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const b={};for(const line of lines){if(line.startsWith('TITLE:'))b.title=line.replace('TITLE:','').trim();else if(line.startsWith('AUTHOR:'))b.author=line.replace('AUTHOR:','').trim();else if(line.startsWith('GENRE:'))b.genre=line.replace('GENRE:','').trim();else if(line.startsWith('DESC:'))b.desc=line.replace('DESC:','').trim();}if(b.title&&b.author)books.push(b);}return books;}
+function parseSearchList(raw){
+  const books=[];const blocks=raw.split('---');
+  for(const block of blocks){
+    const lines=block.trim().split('\n').map(l=>l.trim()).filter(l=>l);const b={};
+    for(const line of lines){
+      if(line.startsWith('TITLE:'))b.title=line.replace('TITLE:','').trim();
+      else if(line.startsWith('AUTHOR:'))b.author=line.replace('AUTHOR:','').trim();
+      else if(line.startsWith('GENRE:'))b.genre=line.replace('GENRE:','').trim();
+      else if(line.startsWith('DESC:'))b.desc=line.replace('DESC:','').trim();
+    }
+    if(b.title&&b.author)books.push(b);
+  }
+  return books;
+}
 function qSearch(q){nav('searchScr');$('searchInp').value=q;doSearch();}
 async function doSearch(){
   const q=$('searchInp').value.trim();if(!q)return;
@@ -1045,107 +1080,156 @@ async function doSearch(){
   try{
     const raw=await ai([{role:'user',content:`Найди 5 книг: "${q}"\nФормат:\nTITLE: Название на русском\nAUTHOR: Автор\nGENRE: Жанр\nDESC: Описание одним предложением\n---\nТолько этот формат.`}],2000);
     const books=parseSearchList(raw);if(!books.length)throw new Error('Не найдено');
-    res.innerHTML='<div class="sec-title">Результаты</div><div class="recs-grid">'+books.map(b=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div><div class="rbtns"><span class="rtag">${esc(b.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('')+'</div>';
+    res.innerHTML='<div class="sec-title">Результаты</div><div class="recs-grid">'+books.map(b=>`<div class="rcard"><div class="rcover" style="background:linear-gradient(135deg,${rGrad()})">${rBookEmoji()}</div><div class="rinfo"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div><div class="m">${esc(b.desc||'')}</div></div><div class="rbtns"><span class="rtag">${esc(b.genre||'')}</span><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author)}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn go" onclick="loadAIBook('${esc(b.title)}','${esc(b.author)}')" title="Читать"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-play"/></svg></span></button></div></div>`).join('')+'</div>';
   }catch(e){res.innerHTML=`<div class="err-box"><span class="ic"><svg><use href="#i-alert"/></svg></span><div>${esc(e.message)}</div></div>`;}
 }
 
-// BOOK INFO
+// BOOK INFO MODAL — no streaming, instant response
 function showBookInfo(title,author){
   title=unesc(title);author=unesc(author);biBookTitle=title;biBookAuthor=author;
-  $('biTitle').textContent=title;$('biChat').innerHTML='';showModal('biModal');
-  startStreamMsg($('biChat'),[{role:'user',content:`Расскажи о книге "${title}" (${author}): о чём она, главные идеи, кому полезна. 3-4 абзаца на русском. Без звёздочек, без JSON.`}]);
-}
-function startStreamMsg(chatEl,msgs){
-  const msgEl=document.createElement('div');msgEl.className='bi-msg ai';
-  const cur=document.createElement('span');cur.className='cursor';
-  msgEl.appendChild(cur);chatEl.appendChild(msgEl);chatEl.scrollTop=chatEl.scrollHeight;
-  let full='';
-  aiStream(msgs,2000,(ch,fullSoFar)=>{full=fullSoFar;msgEl.textContent=full;msgEl.appendChild(cur);chatEl.scrollTop=chatEl.scrollHeight;},(finalFull,err)=>{
-    if(err){msgEl.textContent='Ошибка: '+err.message;msgEl.style.color='var(--red)';}
-    else{msgEl.textContent=finalFull||full;}cur.remove();
-  });
+  $('biTitle').textContent=title;
+  const chat=$('biChat');
+  chat.innerHTML='<div class="bi-msg loading">Загружаем информацию...</div>';
+  showModal('biModal');
+  ai([{role:'user',content:`Расскажи о книге "${title}" (${author}): о чём она, главные идеи, кому полезна. 3-4 абзаца на русском. Без звёздочек, только текст.`}],1500)
+    .then(r=>{chat.innerHTML='<div class="bi-msg ai">'+esc(r).replace(/\n/g,'<br>')+'</div>';chat.scrollTop=chat.scrollHeight;})
+    .catch(e=>{chat.innerHTML='<div class="bi-msg ai" style="color:var(--red)">Ошибка: '+esc(e.message)+'</div>';});
 }
 async function askBI(){
   const q=$('biInp').value.trim();if(!q)return;$('biInp').value='';
   const chat=$('biChat');
-  const userEl=document.createElement('div');userEl.className='bi-msg user';userEl.textContent=q;chat.appendChild(userEl);chat.scrollTop=chat.scrollHeight;
-  startStreamMsg(chat,[{role:'system',content:`Ты эксперт по книге "${biBookTitle}" (${biBookAuthor}). Отвечай кратко на русском. Без звёздочек.`},{role:'user',content:q}]);
+  chat.innerHTML+=`<div class="bi-msg user">${esc(q)}</div><div class="bi-msg loading" id="biLoading">Думаю...</div>`;
+  chat.scrollTop=chat.scrollHeight;
+  try{
+    const r=await ai([{role:'system',content:`Ты эксперт по книге "${biBookTitle}" (${biBookAuthor}). Отвечай кратко на русском. Без звёздочек.`},{role:'user',content:q}],800);
+    $('biLoading')?.remove();
+    chat.innerHTML+=`<div class="bi-msg ai">${esc(r).replace(/\n/g,'<br>')}</div>`;
+  }catch(e){$('biLoading')?.remove();chat.innerHTML+=`<div class="bi-msg ai" style="color:var(--red)">${esc(e.message)}</div>`;}
+  chat.scrollTop=chat.scrollHeight;
 }
 function readBIBook(){closeModal('biModal');loadAIBook(biBookTitle,biBookAuthor);}
 
-// LOAD BOOK — with targetPages
-function parseBlocks(raw){const parts=raw.split(/\n---\n|^---$/gm);return parts.map(p=>p.trim()).filter(p=>p.length>30&&!p.match(/^[-=*]+$/));}
+// DISCUSS with AI — from highlighted text in reader
+function discussSel(){
+  const sel=window.getSelection();
+  const txt=sel&&!sel.isCollapsed?sel.toString().trim():'';
+  // Also check stored selection
+  const useTxt=txt||discussSelectedText;
+  if(!useTxt){hideHlTT();toast('Выдели текст для обсуждения');return;}
+  discussSelectedText=useTxt;
+  hideHlTT();
+  const b=S.library.find(x=>x.id===S.curBookId);
+  // Build context from nearby blocks
+  if(b){
+    const start=Math.max(0,b.curBlock-2);
+    const end=Math.min(b.totalBlocks-1,b.curBlock+1);
+    discussBookCtx=b.blocks.slice(start,end+1).join('\n\n');
+  }
+  $('discussQuote').textContent='"'+useTxt+'"';
+  $('discussChat').innerHTML='';
+  $('discussInp').value='';
+  showModal('discussModal');
+  // Auto-ask initial context
+  ai([
+    {role:'system',content:`Ты помогаешь читателю разобраться в книге "${b?b.title:biBookTitle}". Контекст текущей страницы:\n${discussBookCtx}\n\nОтвечай кратко и ясно на русском.`},
+    {role:'user',content:`Объясни этот фрагмент из книги: "${useTxt}"`}
+  ],800).then(r=>{
+    $('discussChat').innerHTML=`<div class="bi-msg ai">${esc(r).replace(/\n/g,'<br>')}</div>`;
+    $('discussChat').scrollTop=99999;
+    S.discussCount=(S.discussCount||0)+1;save();checkBadges();
+  }).catch(e=>{
+    $('discussChat').innerHTML=`<div class="bi-msg ai" style="color:var(--red)">${esc(e.message)}</div>`;
+  });
+}
+async function askDiscuss(){
+  const q=$('discussInp').value.trim();if(!q)return;$('discussInp').value='';
+  const chat=$('discussChat');
+  chat.innerHTML+=`<div class="bi-msg user">${esc(q)}</div><div class="bi-msg loading" id="dLoad">Думаю...</div>`;
+  chat.scrollTop=chat.scrollHeight;
+  const b=S.library.find(x=>x.id===S.curBookId);
+  try{
+    const r=await ai([
+      {role:'system',content:`Ты помогаешь читателю разобраться в книге "${b?b.title:biBookTitle}". Фрагмент обсуждения: "${discussSelectedText}". Контекст:\n${discussBookCtx}\n\nОтвечай кратко на русском.`},
+      {role:'user',content:q}
+    ],800);
+    $('dLoad')?.remove();
+    chat.innerHTML+=`<div class="bi-msg ai">${esc(r).replace(/\n/g,'<br>')}</div>`;
+  }catch(e){$('dLoad')?.remove();chat.innerHTML+=`<div class="bi-msg ai" style="color:var(--red)">${esc(e.message)}</div>`;}
+  chat.scrollTop=chat.scrollHeight;
+}
 
+// LOAD BOOK FROM AI — full generation
+function parseBlocks(raw){
+  const parts=raw.split(/\n---\n|^---$/gm);
+  return parts.map(p=>p.trim()).filter(p=>p.length>30&&!p.match(/^[-=*\s]+$/));
+}
 async function loadAIBook(title,author){
   title=unesc(title);author=unesc(author);
   const ex=S.library.find(b=>b.title===title);if(ex){openBook(ex.id);return;}
+  const n=getTargetBlocks();
+  const modeDesc=n>=60?'максимально подробно, как полную книгу' : n>=40?'детально с примерами' : n>=20?'ключевые идеи и примеры' : 'только главные тезисы кратко';
   showGen('Готовим «'+title.substring(0,28)+'»...');
   try{
-    const n=getTargetBlocks();
-    // Split into multiple requests if needed for large books
+    // Generate in multiple parts if full mode
     let allBlocks=[];
-    if(n<=60){
-      // Single request
-      const raw=await ai([{role:'user',content:buildBookPrompt(title,author,n,1,1)}],9000);
+    if(n>=50){
+      // Part 1: intro + first half
+      const raw1=await ai([{role:'user',content:`Книга "${title}" (${author}). Создай первые 35 текстовых блоков для чтения. Каждый блок 120-200 слов. Начни с введения, затем ключевые идеи (главы 1-5). Пиши ${modeDesc}. Каждый блок отделяй строкой ---. Только текст без JSON и нумерации.`}],8000);
+      const b1=parseBlocks(raw1);
+      allBlocks=allBlocks.concat(b1);
+      // Part 2: second half + conclusion
+      updateGenStep(3);
+      const raw2=await ai([{role:'user',content:`Книга "${title}" (${author}). Продолжение: создай ещё 35 текстовых блоков. Главы 6-конец, финальные выводы, практические советы. Пиши ${modeDesc}. Каждый блок 120-200 слов. Каждый блок отделяй строкой ---. Только текст.`}],8000);
+      const b2=parseBlocks(raw2);
+      allBlocks=allBlocks.concat(b2);
+    }else{
+      const raw=await ai([{role:'user',content:`Книга "${title}" (${author}). Создай ровно ${n} текстовых блоков для чтения. Каждый блок 120-200 слов. Пиши ${modeDesc}. Введение → ключевые идеи → выводы. Каждый блок отделяй строкой ---. Только текст без JSON и нумерации.`}],8000);
       allBlocks=parseBlocks(raw);
-    } else {
-      // Multiple requests for large books
-      const parts=Math.ceil(n/50);
-      for(let i=1;i<=parts;i++){
-        updateGenStatus('Часть '+i+' из '+parts+'...');
-        try{
-          const raw=await ai([{role:'user',content:buildBookPrompt(title,author,50,i,parts)}],9000);
-          const blocks=parseBlocks(raw);
-          allBlocks=allBlocks.concat(blocks);
-        }catch(e){console.log('Part '+i+' error:',e.message);}
-        if(i<parts)await sleep(500);
-      }
     }
-    if(allBlocks.length<3)throw new Error('Мало контента. Попробуй ещё раз.');
-    const book={id:Date.now().toString(),title,author:author||'',blocks:allBlocks,curBlock:0,totalBlocks:allBlocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai',targetPages:n};
-    S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📚 Книга добавлена');checkBadges();
+    if(allBlocks.length<3)throw new Error('Мало контента, попробуй ещё раз');
+    const book={id:Date.now().toString(),title,author:author||'',blocks:allBlocks,curBlock:0,totalBlocks:allBlocks.length,addedAt:new Date().toISOString(),readMin:0,source:'ai',targetBlocks:n};
+    S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);
+    addXP(10,'📚 Книга добавлена ('+allBlocks.length+' блоков)');checkBadges();
   }catch(e){hideGen();toast('Ошибка: '+e.message);}
 }
-
-function buildBookPrompt(title,author,count,part,totalParts){
-  let partDesc='';
-  if(totalParts>1){
-    const partNames=['введение и первая треть','средняя часть','заключение и выводы'];
-    partDesc=`Это часть ${part} из ${totalParts}. Охвати: ${partNames[Math.min(part-1,2)]||'продолжение книги'}.`;
-  }
-  return `Ключевые идеи книги "${title}" (${author}). ${count} текстовых блоков по 150-200 слов каждый. ${partDesc}
-${part===1?'Начни с введения — о чём книга.':'Продолжай с того места где остановился.'}
-${part===totalParts?'Заверши итоговым выводом.':''}
-Русский язык. Каждый блок отделяй строкой ---. Только текст, без JSON, без нумерации, без звёздочек.`;
+function updateGenStep(s){
+  for(let i=1;i<s;i++){const e=$('gs'+i);if(e){e.classList.remove('active');e.classList.add('done');e.style.opacity='.6';}}
+  const cur=$('gs'+s);if(cur){cur.classList.add('active');cur.style.opacity='1';}
 }
-
-function updateGenStatus(msg){$('genTitle').textContent=msg;}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 // FILE UPLOAD
 let pdfjsOk=false;
-function loadPdfJs(){return new Promise(r=>{if(pdfjsOk){r();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';pdfjsOk=true;r();};s.onerror=()=>r();document.head.appendChild(s);});}
+function loadPdfJs(){return new Promise(r=>{if(pdfjsOk){r();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';pdfjsOk=true;r()};s.onerror=()=>r();document.head.appendChild(s);})}
 async function handleFile(ev){
   const f=ev.target.files[0];if(!f)return;const ext=f.name.split('.').pop().toLowerCase();
-  if(ext==='pdf'){showGen('Загружаем PDF...');try{await loadPdfJs();if(!window.pdfjsLib)throw new Error('PDF.js error');const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n\n';}hideGen();if(t.trim().length<50){toast('PDF без текста');return;}$('pasteArea').value=t.trim();$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('PDF: '+pdf.numPages+' стр.');}catch(e){hideGen();toast('PDF: '+e.message);}ev.target.value='';return;}
-  const rd=new FileReader();rd.onload=e=>{let t=e.target.result;if(ext==='fb2')t=parseFB2(t);else if(ext==='html'||ext==='htm')t=parseHTML(t);$('pasteArea').value=t;$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('Загружено');};rd.readAsText(f);ev.target.value='';
+  if(ext==='pdf'){
+    showGen('Загружаем PDF...');
+    try{await loadPdfJs();if(!window.pdfjsLib)throw new Error('PDF.js не загрузился');const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n\n';}hideGen();if(t.trim().length<50){toast('PDF без текста (скан?)');return;}$('pasteArea').value=t.trim();$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('PDF загружен: '+pdf.numPages+' стр.');}
+    catch(e){hideGen();toast('PDF: '+e.message);}
+    ev.target.value='';return;
+  }
+  const rd=new FileReader();rd.onload=e=>{let t=e.target.result;if(ext==='fb2')t=parseFB2(t);else if(ext==='html'||ext==='htm')t=parseHTML(t);$('pasteArea').value=t;$('uploadTitle').value=f.name.replace(/\.[^/.]+$/,'');toast('Файл загружен');};rd.readAsText(f);ev.target.value='';
 }
-function parseFB2(x){try{const d=new DOMParser().parseFromString(x,'text/xml');let t='';d.querySelectorAll('body p').forEach(p=>{t+=p.textContent.trim()+'\n\n';});return t.trim()||x;}catch(e){return x;}}
-function parseHTML(h){try{return new DOMParser().parseFromString(h,'text/html').body.textContent||h;}catch(e){return h;}}
+function parseFB2(x){try{const d=new DOMParser().parseFromString(x,'text/xml');let t='';d.querySelectorAll('body p').forEach(p=>{t+=p.textContent.trim()+'\n\n'});return t.trim()||x}catch(e){return x}}
+function parseHTML(h){try{return new DOMParser().parseFromString(h,'text/html').body.textContent||h}catch(e){return h}}
 async function processText(){
   const t=$('pasteArea').value.trim(),title=$('uploadTitle').value.trim()||'Моя книга';
   if(!t){toast('Вставь текст');return;}if(t.length<100){toast('Мало текста');return;}
-  showGen('Обрабатываем...');
-  let bl;try{if(t.length<5000){bl=smartSplit(t);}else{try{const r=await ai([{role:'user',content:`Раздели на блоки 150-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],9000);bl=parseBlocks(r);}catch(e){bl=smartSplit(t);}if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));}}catch(e){bl=smartSplit(t);}
+  showGen('Обрабатываем "'+title+'"...');
+  let bl;
+  try{
+    if(t.length<5000){bl=smartSplit(t);}
+    else{try{const r=await ai([{role:'user',content:`Раздели на блоки 120-200 слов. Каждый блок отдели строкой ---. Только текст.\n\n"""${t.substring(0,12000)}"""`}],8000);bl=parseBlocks(r);}catch(e){bl=smartSplit(t);}if(t.length>12000)bl=bl.concat(smartSplit(t.substring(12000)));}
+  }catch(e){bl=smartSplit(t);}
   const book={id:Date.now().toString(),title,author:'',blocks:bl,curBlock:0,totalBlocks:bl.length,addedAt:new Date().toISOString(),readMin:0,source:'upload'};
   S.library.unshift(book);save();renderLib();updStats();updGoalUI();hideGen();openBook(book.id);addXP(10,'📄 Загружено');$('pasteArea').value='';$('uploadTitle').value='';
 }
-function smartSplit(t){const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';for(const p of ps){const tr=p.trim();if(!tr)continue;if(c.length+tr.length<900){c+=(c?'\n\n':'')+tr;}else{if(c)bl.push(c);if(tr.length>900){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<900)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}}if(c)bl.push(c);return bl.length?bl:[t];}
+function smartSplit(t){const ps=t.split(/\n\s*\n/).filter(p=>p.trim());const bl=[];let c='';for(const p of ps){const tr=p.trim();if(!tr)continue;if(c.length+tr.length<800){c+=(c?'\n\n':'')+tr}else{if(c)bl.push(c);if(tr.length>800){const ss=tr.match(/[^.!?]+[.!?]+/g)||[tr];let ch='';for(const s of ss){if(ch.length+s.length<800)ch+=s;else{if(ch)bl.push(ch.trim());ch=s;}}c=ch?ch.trim():'';}else c=tr;}}if(c)bl.push(c);return bl.length?bl:[t];}
 
 // EXPORT / IMPORT
 function exportData(){const data=JSON.stringify(S,null,2);const blob=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='focusflow-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Экспорт выполнен');}
 function importData(){$('importInp').click();}
-function handleImport(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const p=JSON.parse(e.target.result);S={...S,...p};save();load();toast('Импорт выполнен!');}catch(err){toast('Ошибка: '+err.message);}};rd.readAsText(f);ev.target.value='';}
+function handleImport(ev){const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{try{const p=JSON.parse(e.target.result);S={...S,...p};save();load();toast('Данные импортированы!');}catch(err){toast('Ошибка импорта');}};rd.readAsText(f);ev.target.value='';}
 
 // GOOGLE SHEETS SYNC
 async function syncToSheets(){
@@ -1155,63 +1239,48 @@ async function syncToSheets(){
   try{
     await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(S)});
     S.lastSync=new Date().toISOString();save();
-    setSyncStatus('ok','Сохранено: '+new Date().toLocaleTimeString());
-    toast('✅ Сохранено в Google Sheets');
+    setSyncStatus('ok','Сохранено: '+new Date().toLocaleTimeString());toast('✅ Данные сохранены в Google Sheets');
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
 }
-
 async function syncFromSheets(){
   const url=($('sheetsUrl').value||S.sheetsUrl||'').trim();
-  if(!url){toast('Укажи URL');return;}
+  if(!url){toast('Укажи URL Google Apps Script');return;}
   S.sheetsUrl=url;save();setSyncStatus('loading','Загружаем...');
   try{
     const resp=await fetch(url+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     const txt=await resp.text();
-    if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных');toast('Нет данных в таблице. Сначала сохрани.');return;}
+    if(!txt||txt.includes('"status":"empty"')){setSyncStatus('ok','Нет данных');toast('В таблице нет данных. Сначала сохрани.');return;}
     let data;try{data=JSON.parse(txt);}catch(e){throw new Error('Неверный формат');}
     if(data&&data.library){S={...S,...data};save();load();setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());toast('✅ Загружено! Книг: '+S.library.length);}
     else if(data&&data.status==='error'){throw new Error(data.message||'Ошибка скрипта');}
     else{throw new Error('Неверный формат данных');}
   }catch(e){setSyncStatus('err','Ошибка: '+e.message);toast('❌ '+e.message);}
 }
-
-// AUTO SYNC (silent)
 async function autoSyncToSheets(){
   if(!S.sheetsUrl)return;
-  try{
-    await fetch(S.sheetsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(S)});
-    S.lastSync=new Date().toISOString();
-    setSyncStatus('ok','Авто: '+new Date().toLocaleTimeString());
-  }catch(e){setSyncStatus('err','Ошибка авто-сохранения');}
+  try{await fetch(S.sheetsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(S)});S.lastSync=new Date().toISOString();try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}setSyncStatus('ok','Авто: '+new Date().toLocaleTimeString());}catch(e){}
 }
-
 async function autoSyncFromSheets(){
   if(!S.sheetsUrl)return;
   try{
     const resp=await fetch(S.sheetsUrl+'?t='+Date.now(),{method:'GET',mode:'cors'});
     if(!resp.ok)return;
-    const txt=await resp.text();
-    if(!txt||txt.includes('"status":"empty"'))return;
-    const data=JSON.parse(txt);
-    if(!data||!data.library)return;
+    const txt=await resp.text();if(!txt||txt.includes('"status":"empty"'))return;
+    const data=JSON.parse(txt);if(!data||!data.library)return;
     const localTime=S.lastSync?new Date(S.lastSync):new Date(0);
     const remoteTime=data.lastSync?new Date(data.lastSync):new Date(0);
     if(remoteTime>localTime){
-      S={...S,...data};
-      localStorage.setItem('ff6',JSON.stringify(S));
+      S={...S,...data};try{localStorage.setItem('ff6',JSON.stringify(S))}catch(e){}
       renderLib();updStats();updGoalUI();updXP();renderBadges();
       if(S.allRecs&&S.allRecs.length)renderRecs();
-      setSyncStatus('ok','Загружено: '+new Date().toLocaleTimeString());
+      setSyncStatus('ok','Синхронизировано: '+new Date().toLocaleTimeString());
       toast('🔄 Данные обновлены из облака');
-    }else{
-      setSyncStatus('ok','Актуально: '+new Date().toLocaleTimeString());
-    }
-  }catch(e){console.log('AutoSync error:',e.message);}
+    }else{setSyncStatus('ok','Актуально: '+new Date().toLocaleTimeString());}
+  }catch(e){console.log('Auto sync:',e.message);}
 }
-
-function setSyncStatus(type,msg){$('syncDot').className='sync-dot '+type;$('syncMsg').textContent=msg;}
-function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Скопировано!')).catch(()=>toast('Скопируй вручную'));}
+function setSyncStatus(type,msg){const d=$('syncDot'),m=$('syncMsg');if(d)d.className='sync-dot '+type;if(m)m.textContent=msg;}
+function copyAppsScript(){const txt=$('appsScriptCode').textContent;navigator.clipboard.writeText(txt).then(()=>toast('Код скопирован!')).catch(()=>toast('Скопируй вручную'));}
 
 // LIBRARY
 function renderLib(){
@@ -1220,15 +1289,19 @@ function renderLib(){
   if(e)e.style.display='none';
   g.innerHTML=S.library.map(b=>{
     const pr=b.totalBlocks?Math.round(b.curBlock/b.totalBlocks*100):0;
-    return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`;
+    return`<div class="lcard" onclick="openBook('${b.id}')"><div class="lcover">${b.source==='ai'?'📖':'📄'}</div><div class="linfo"><div class="t">${esc(b.title)}</div><div class="lpbar"><div class="lpfill" style="width:${pr}%"></div></div><div class="lmeta">${pr}% · ${b.curBlock}/${b.totalBlocks} блоков · ${b.readMin||0} мин</div></div><div class="lbtns" onclick="event.stopPropagation()"><button class="rbtn" onclick="showBookInfo('${esc(b.title)}','${esc(b.author||'')}')" title="О книге"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-info"/></svg></span></button><button class="rbtn" onclick="delBook('${b.id}')" title="Удалить"><span class="ic" style="width:14px;height:14px"><svg><use href="#i-trash"/></svg></span></button></div></div>`;
   }).join('');
 }
-function delBook(id){if(!confirm('Удалить?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];save();renderLib();updStats();}
+function delBook(id){if(!confirm('Удалить книгу?'))return;S.library=S.library.filter(b=>b.id!==id);delete S.highlights[id];save();renderLib();updStats();}
 
 // READER
 let rtInt=null,rtSec=0;
-function getBlockLabel(idx,total){if(idx===0)return'Введение';if(idx===total-1)return'Заключение';const p=idx/(Math.max(1,total-1));if(p<0.25)return'Часть I — Начало';if(p<0.5)return'Часть II — Развитие';if(p<0.75)return'Часть III — Ключевые идеи';return'Часть IV — Финал';}
-
+function getBlockLabel(idx,total){
+  if(idx===0)return'Введение';if(idx===total-1)return'Заключение';
+  const p=idx/(Math.max(1,total-1));
+  if(p<0.2)return'Часть I — Начало';if(p<0.4)return'Часть II — Развитие';
+  if(p<0.6)return'Часть III — Ключевые идеи';if(p<0.8)return'Часть IV — Детали';return'Часть V — Финал';
+}
 function openBook(id){
   const b=S.library.find(x=>x.id===id);if(!b)return;
   S.curBookId=id;location.hash='book/'+id;
@@ -1246,112 +1319,104 @@ function openBook(id){
   },1000);
   if(b.curBlock>0)genCtx(b);else $('ctxHint').style.display='none';
   $('rfPanel').classList.remove('active');
-  // Init discuss context with book info
-  discussContext=[{role:'system',content:`Ты помощник по чтению книги "${b.title}" (${b.author||'автор неизвестен'}). Отвечай кратко и по делу на русском языке. Без звёздочек и форматирования.`}];
+  discussSelectedText='';
 }
 function openBookDirect(){const b=S.library.find(x=>x.id===S.curBookId);if(!b){nav('home');return;}openBook(b.id);}
-async function genCtx(b){const h=$('ctxHint');if(b.curBlock<=1){h.style.display='none';return;}const prev=b.blocks[b.curBlock-1]||'';if(!prev){h.style.display='none';return;}try{h.textContent='Вспоминаем...';h.style.display='';const s=await ai([{role:'user',content:`Резюме одним предложением (макс 20 слов). Начни "В прошлый раз:". Текст: "${prev.substring(0,400)}"`}],100);h.textContent=s;}catch(e){h.style.display='none';}}
-
+async function genCtx(b){
+  const h=$('ctxHint');if(b.curBlock<=1){h.style.display='none';return;}
+  const prev=b.blocks[b.curBlock-1]||'';if(!prev){h.style.display='none';return;}
+  try{h.textContent='Вспоминаем...';h.style.display='';const s=await ai([{role:'user',content:`Резюме одним предложением (макс 20 слов). Начни "В прошлый раз:". Текст: "${prev.substring(0,400)}"`}],100);h.textContent=s;}
+  catch(e){h.style.display='none';}
+}
 function showBl(idx){
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
   idx=Math.max(0,Math.min(idx,b.totalBlocks-1));b.curBlock=idx;
   const tb=$('tBlock');const pr=b.totalBlocks?Math.round((idx+1)/b.totalBlocks*100):0;
-  const lbl=$('blockLabel');if(lbl){lbl.style.display='flex';$('blockLabelTxt').textContent=getBlockLabel(idx,b.totalBlocks);$('blockNum').textContent=(idx+1)+' / '+b.totalBlocks;}
-  tb.style.opacity='0';tb.style.transform='translateY(12px)';
-  setTimeout(()=>{
-    let txt=b.blocks[idx]||'Конец!';
-    const hls=(S.highlights[b.id]||{})[idx];
-    if(hls&&hls.length){const sorted=[...hls].sort((a,c)=>c.s-a.s);for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}tb.innerHTML=txt;}
-    else{tb.textContent=txt;}
-    tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
-    tb.style.opacity='1';tb.style.transform='translateY(0)';
-    // Update discuss context with current block
-    updateDiscussContext(idx,txt.replace(/<[^>]*>/g,''));
-  },120);
-  $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';save();
+  const lbl=$('blockLabel'),lblTxt=$('blockLabelTxt'),blNum=$('blockNum');
+  if(lbl){lbl.style.display='flex';lblTxt.textContent=getBlockLabel(idx,b.totalBlocks);blNum.textContent=(idx+1)+' / '+b.totalBlocks;}
+  let txt=b.blocks[idx]||'Конец!';
+  const hls=(S.highlights[b.id]||{})[idx];
+  if(hls&&hls.length){
+    const sorted=[...hls].sort((a,c)=>c.s-a.s);
+    for(const h of sorted){txt=txt.substring(0,h.s)+'<span class="uhl" data-s="'+h.s+'" data-e="'+h.e+'">'+txt.substring(h.s,h.e)+'</span>'+txt.substring(h.e);}
+    tb.innerHTML=txt;
+  }else{tb.textContent=txt;}
+  tb.style.fontSize=S.fontSize+'px';tb.style.fontFamily=S.fontFamily;applyBookMode();
+  $('rProgF').style.width=pr+'%';$('rProgT').textContent=pr+'%';
+  save();discussSelectedText='';
 }
-
-function updateDiscussContext(idx,blockText){
-  const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  // Keep system message + add current page context
-  const sysMsg=discussContext[0];
-  discussContext=[sysMsg,{role:'user',content:`Контекст: блок ${idx+1} из ${b.totalBlocks}. Текущий текст: "${blockText.substring(0,600)}"`},{role:'assistant',content:'Понял, готов обсуждать этот фрагмент.'}];
-}
-
 function nextBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock<b.totalBlocks-1)showBl(b.curBlock+1);else{toast('Книга прочитана! 🎉');addXP(50,'📚 Книга завершена! +50 XP');checkBadges();}}
 function prevBl(){const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;if(b.curBlock>0)showBl(b.curBlock-1);}
-function exitReader(){clearInterval(rtInt);$('rfPanel').classList.remove('active');hideDiscTT();const b=S.library.find(x=>x.id===S.curBookId);if(b){const m=Math.ceil(rtSec/60);b.readMin=(b.readMin||0)+m;S.totalMin+=m;if(m>0)recordRead();}save();nav('home');renderLib();updStats();updGoalUI();checkBadges();}
-function sessDone(){toast('✅ '+S.readTime+' мин прочитано!');const b=S.library.find(x=>x.id===S.curBookId);if(b&&b.curBlock>2)setTimeout(()=>trigQuiz(b),2000);}
+function exitReader(){
+  clearInterval(rtInt);$('rfPanel').classList.remove('active');
+  const b=S.library.find(x=>x.id===S.curBookId);
+  if(b){const m=Math.ceil(rtSec/60);b.readMin=(b.readMin||0)+m;S.totalMin+=m;if(m>0)recordRead();}
+  save();nav('home');renderLib();updStats();updGoalUI();checkBadges();
+}
+function sessDone(){
+  toast('✅ '+S.readTime+' мин прочитано!');
+  const b=S.library.find(x=>x.id===S.curBookId);
+  if(b&&b.curBlock>2){
+    // Save scroll position and trigger quiz after delay
+    savedScrollPos=window.scrollY;
+    setTimeout(()=>trigQuiz(b),2500);
+  }
+}
+function backToReader(){
+  // Return to reader from quiz without losing position
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('readerScr').classList.add('active');
+  window.scrollTo(0,savedScrollPos||0);
+}
 
-// SELECTION / HIGHLIGHT / DISCUSS
-$('rContent').addEventListener('mouseup',handleSel);
-$('rContent').addEventListener('touchend',()=>setTimeout(handleSel,80));
+// HIGHLIGHTING + SELECTION
+let selectionTimeout=null;
+let lastSelText='';
+
+$('rContent').addEventListener('mouseup',()=>{setTimeout(handleSel,50)});
+$('rContent').addEventListener('touchend',()=>{setTimeout(handleSel,150)});
 
 function handleSel(){
   const sel=window.getSelection();
-  if(!sel||sel.isCollapsed||!sel.toString().trim()){hideDiscTT();return;}
+  if(!sel||sel.isCollapsed){
+    // Don't hide if just clicked on a word (check after small delay)
+    return;
+  }
+  const txt=sel.toString().trim();
+  if(!txt||txt.length<2){hideHlTT();return;}
   if(!$('readerScr').classList.contains('active'))return;
-  selectedText=sel.toString().trim();
-  const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('discTT');
-  tt.style.left=Math.max(8,Math.min(innerWidth-200,rect.left+rect.width/2-90))+'px';
-  tt.style.top=(rect.top<80?rect.bottom+6:rect.top-112)+'px';
+  lastSelText=txt;
+  discussSelectedText=txt; // Store immediately
+  const rng=sel.getRangeAt(0),rect=rng.getBoundingClientRect(),tt=$('hlTT');
+  const ttLeft=Math.max(8,Math.min(innerWidth-230,rect.left+rect.width/2-100));
+  const ttTop=rect.top<60?rect.bottom+6:rect.top-50;
+  tt.style.left=ttLeft+'px';tt.style.top=ttTop+'px';
   tt.classList.add('active');
 }
 
-function hideDiscTT(){$('discTT').classList.remove('active');window.getSelection()?.removeAllRanges();selectedText='';}
+function hideHlTT(){$('hlTT').classList.remove('active');}
 
 function hlSel(){
-  if(!selectedText)return;
+  const sel=window.getSelection();
+  let txt='';let si=-1;
   const b=S.library.find(x=>x.id===S.curBookId);if(!b)return;
-  const bi=b.curBlock,bt=b.blocks[bi]||'',si=bt.indexOf(selectedText);
-  if(si===-1){hideDiscTT();toast('Не удалось найти текст');return;}
-  const ei=si+selectedText.length;
+  const bi=b.curBlock,bt=b.blocks[bi]||'';
+  // Try current selection first
+  if(sel&&!sel.isCollapsed){txt=sel.toString().trim();}
+  // Fallback to stored
+  if(!txt)txt=lastSelText;
+  if(!txt){hideHlTT();toast('Выдели текст');return;}
+  si=bt.indexOf(txt);
+  if(si===-1){hideHlTT();toast('Не удалось найти текст в блоке');return;}
+  const ei=si+txt.length;
   if(!S.highlights[b.id])S.highlights[b.id]={};
   if(!S.highlights[b.id][bi])S.highlights[b.id][bi]=[];
   S.highlights[b.id][bi]=S.highlights[b.id][bi].filter(h=>!(h.s>=si&&h.e<=ei));
   S.highlights[b.id][bi].push({s:si,e:ei});
   S.hlCount=(S.hlCount||0)+1;
-  save();hideDiscTT();showBl(bi);toast('Выделено');checkBadges();
+  save();hideHlTT();showBl(bi);toast('Выделено');checkBadges();
 }
 
-function discussSel(){
-  if(!selectedText)return;
-  hideDiscTT();
-  openDiscussModal(selectedText);
-}
-
-function openDiscussModal(text){
-  const chat=$('discussChat');chat.innerHTML='';
-  // Show selected text as context
-  const ctxEl=document.createElement('div');
-  ctxEl.className='bi-msg context';
-  ctxEl.textContent='💬 Обсуждаем: "'+text.substring(0,120)+(text.length>120?'...':'')+'"';
-  chat.appendChild(ctxEl);
-  showModal('discussModal');
-  $('discussInp').focus();
-  // Add selected text to discuss context
-  const prevCtx=discussContext.slice();
-  discussContext=prevCtx;
-  discussContext.push({role:'user',content:`Пользователь выделил этот фрагмент для обсуждения: "${text}". Что ты можешь рассказать об этом в контексте книги?`});
-  // Auto-start answer
-  startStreamMsg(chat,discussContext.slice(-4));
-  // Add to context
-  discussContext.push({role:'assistant',content:'[ответ]'});
-  S.discussCount=(S.discussCount||0)+1;save();checkBadges();
-}
-
-async function askDiscuss(){
-  const q=$('discussInp').value.trim();if(!q)return;$('discussInp').value='';
-  const chat=$('discussChat');
-  const userEl=document.createElement('div');userEl.className='bi-msg user';userEl.textContent=q;chat.appendChild(userEl);chat.scrollTop=chat.scrollHeight;
-  discussContext.push({role:'user',content:q});
-  // Keep context manageable
-  const msgs=[discussContext[0],...discussContext.slice(-6)];
-  startStreamMsg(chat,msgs);
-  discussContext.push({role:'assistant',content:'[ответ]'});
-}
-
-// Click on highlighted text to remove
 $('rContent').addEventListener('click',e=>{
   if(e.target.classList.contains('uhl')){
     if(confirm('Убрать выделение?')){const s=+e.target.dataset.s,en=+e.target.dataset.e;const b=S.library.find(x=>x.id===S.curBookId);if(b&&S.highlights[b.id]&&S.highlights[b.id][b.curBlock]){S.highlights[b.id][b.curBlock]=S.highlights[b.id][b.curBlock].filter(h=>!(h.s===s&&h.e===en));save();showBl(b.curBlock);}}return;}
