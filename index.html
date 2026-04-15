@@ -883,6 +883,49 @@ function load(){
   if(S.sheetsUrl){setTimeout(()=>autoSyncFromSheets(),2000);}
 }
 
+
+
+// АВТОПРОВЕРКА ОБЛАКА КАЖДЫЕ 30 СЕКУНД
+let cloudCheckInterval = null;
+
+function startCloudAutoCheck() {
+  if (cloudCheckInterval) clearInterval(cloudCheckInterval);
+  
+  cloudCheckInterval = setInterval(async () => {
+    // Проверяем только если приложение активно и URL настроен
+    if (S.sheetsUrl && document.visibilityState === 'visible') {
+      await autoSyncFromSheets();
+    }
+  }, 30000); // Каждые 30 секунд
+}
+
+// Остановка проверки при уходе со страницы
+function stopCloudAutoCheck() {
+  if (cloudCheckInterval) {
+    clearInterval(cloudCheckInterval);
+    cloudCheckInterval = null;
+  }
+}
+
+// Запускаем при загрузке
+window.addEventListener('load', () => {
+  startCloudAutoCheck();
+});
+
+// Останавливаем при закрытии
+window.addEventListener('beforeunload', () => {
+  stopCloudAutoCheck();
+});
+
+// Пауза когда вкладка неактивна
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    startCloudAutoCheck();
+  } else {
+    stopCloudAutoCheck();
+  }
+});
+  
 // COMPRESS UI
 function initCompressUI(){
   const cur=S.targetBlocks||0;
