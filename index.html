@@ -885,21 +885,23 @@ function load(){
 
 
 
-// АВТОПРОВЕРКА ОБЛАКА КАЖДЫЕ 30 СЕКУНД
+// ============ БЫСТРАЯ АВТОСИНХРОНИЗАЦИЯ ============
 let cloudCheckInterval = null;
+let saveTimer = null;
 
+// Запуск быстрой проверки облака
 function startCloudAutoCheck() {
   if (cloudCheckInterval) clearInterval(cloudCheckInterval);
   
   cloudCheckInterval = setInterval(async () => {
-    // Проверяем только если приложение активно и URL настроен
-    if (S.sheetsUrl && document.visibilityState === 'visible') {
+    if (S.sheetsUrl && document.visibilityState === 'visible' && navigator.onLine) {
+      console.log('🔄 Проверка облака...');
       await autoSyncFromSheets();
     }
-  }, 30000); // Каждые 30 секунд
+  }, 5000); // Каждые 5 секунд (вместо 30)
 }
 
-// Остановка проверки при уходе со страницы
+// Остановка проверки
 function stopCloudAutoCheck() {
   if (cloudCheckInterval) {
     clearInterval(cloudCheckInterval);
@@ -907,24 +909,126 @@ function stopCloudAutoCheck() {
   }
 }
 
-// Запускаем при загрузке
+// Мгновенное сохранение при изменениях (переопределяем markModified)
+const originalMarkModified = markModified;
+markModified = function() {
+  S.lastModified = Date.now();
+  save();
+  
+  // Быстрое автосохранение в облако (1 секунда вместо 4)
+  if (S.sheetsUrl) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      if (navigator.onLine) {
+        autoSyncToSheets();
+        console.log('💾 Автосохранение в облако');
+      }
+    }, 1000);
+  }
+  
+  // Вызываем оригинальную логику если нужно
+  if (originalMarkModified) originalMarkModified();
+};
+
+// Запуск при загрузке
 window.addEventListener('load', () => {
-  startCloudAutoCheck();
+  if (S.sheetsUrl) {
+    startCloudAutoCheck();
+    // Мгновенная проверка при старте
+    setTimeout(() => {
+      if (navigator.onLine) {
+        autoSyncFromSheets();
+        console.log('🚀 Стартовая синхронизация');
+      }
+    }, 500);
+  }
 });
 
-// Останавливаем при закрытии
+// Остановка при закрытии
 window.addEventListener('beforeunload', () => {
   stopCloudAutoCheck();
+  // Финальное сохранение перед закрытием
+  if (S.sheetsUrl && navigator.onLine) {
+    autoSyncToSheets();
+  }
 });
 
 // Пауза когда вкладка неактивна
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
+  if (document.visibilityState === 'visible' && S.sheetsUrl) {
     startCloudAutoCheck();
+    // Сразу проверяем при возврате
+    setTimeout(() => {
+      if (navigator.onLine) autoSyncFromSheets();
+    }, 300);
   } else {
     stopCloudAutoCheck();
   }
 });
+
+// Возобновление при появлении интернета
+window.addEventListener('online', () => {
+  if (S.sheetsUrl && document.visibilityState === 'visible') {
+    startCloudAutoCheck();
+    toast('📡 Онлайн — синхронизируем...');
+    setTimeout(() => autoSyncFromSheets(), 500);
+    setTimeout(() => autoSyncToSheets(), 800);
+  }
+});
+
+// Пауза при отключении интернета
+window.addEventListener('offline', () => {
+  stopCloudAutoCheck();
+  toast('📴 Офлайн — данные сохранятся локально');
+});
+
+// ============ КНОПКА МГНОВЕННОЙ СИНХРОНИЗАЦИИ ============
+function forceSyncNow() {
+  if (!navigator.onLine) {
+    toast('❌ Нет интернета');
+    return;
+  }
+  
+  if (!S.sheetsUrl) {
+    toast('❌ Настройте URL в синхронизации');
+    return;
+  }
+  
+  toast('🔄 Синхронизация...');
+  
+  Promise.all([
+    autoSyncToSheets(),
+    autoSyncFromSheets()
+  ]).then(() => {
+    toast('✅ Синхронизировано!');
+    setSyncStatus('ok', 'Синхронизировано: ' + new Date().toLocaleTimeString());
+  }).catch(e => {
+    toast('❌ Ошибка: ' + e.message);
+  });
+}
+
+// Добавляем кнопку в интерфейс (вызовите эту функцию после загрузки)
+function addForceSyncButton() {
+  const headerRight = document.querySelector('.hdr-r');
+  if (!headerRight) return;
+  
+  const syncBtn = document.createElement('button');
+  syncBtn.className = 'ibtn';
+  syncBtn.onclick = forceSyncNow;
+  syncBtn.title = 'Мгновенная синхронизация';
+  syncBtn.innerHTML = '<span class="ic"><svg><use href="#i-refresh"/></svg></span>';
+  
+  // Вставляем перед кнопкой настроек
+  const settingsBtn = headerRight.querySelector('[onclick*="setModal"]');
+  if (settingsBtn) {
+    headerRight.insertBefore(syncBtn, settingsBtn);
+  } else {
+    headerRight.appendChild(syncBtn);
+  }
+}
+
+// Запускаем добавление кнопки после полной загрузки
+setTimeout(addForceSyncButton, 1000);
   
 // COMPRESS UI
 function initCompressUI(){
